@@ -1,3 +1,30 @@
+USE project_management;
+
+DROP PROCEDURE IF EXISTS users_login;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-05
+-- Descripcion         : select a record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE users_login
+( IN pvchuserr varchar(50)
+, IN pvchpassword varchar(50) )
+BEGIN
+
+    SELECT id , company_id , role_id , name
+        , lastname , email , user , password
+        , gender , position , department , campus
+        , create_at , create_by , update_at , update_by
+     FROM users
+    WHERE
+        name = pvchuserr
+    AND password = pvchpassword;
+
+END $$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS users_all;
 -- =========================================================
 -- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-05
