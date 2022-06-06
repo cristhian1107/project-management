@@ -2,6 +2,7 @@
     (class) User.
 """
 from models.base_model import BaseModel
+import hashlib
 
 
 class User(BaseModel):
@@ -23,7 +24,7 @@ class User(BaseModel):
     department = ''
     campus = ''
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         """Initialize a new instance of the class.
         """
         if 'password' in kwargs:
@@ -31,4 +32,4 @@ class User(BaseModel):
             m = hashlib.md5()
             m.update(str.encode(password))
             kwargs['password'] = m.hexdigest()
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
