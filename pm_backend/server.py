@@ -5,14 +5,14 @@
 from os import getenv
 from flask import Flask, jsonify
 from flask_cors import CORS
-#from models import storage
-#from api.v1.views import app_views
+from models import storage
+from api.v1.views import app_views
 from flasgger import Swagger
 from flasgger.utils import swag_from
 
 
 app = Flask(__name__)
-#app.register_blueprint(app_views)
+app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
