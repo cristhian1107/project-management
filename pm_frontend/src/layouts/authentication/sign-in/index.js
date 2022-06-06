@@ -34,8 +34,8 @@ export default function SignInSide() {
     const data = new FormData(e.currentTarget);
     const username = data.get('username');
     const password = data.get('password');
-    console.log({username, password});
-    // login({username, password})
+    console.log(`Hacking->${username + ":" + password}`);
+    //login({username, password})
   };
 
   return (
