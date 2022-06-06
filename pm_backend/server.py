@@ -3,8 +3,8 @@
 from os import getenv
 from flask import Flask, jsonify
 from flask_cors import CORS
-from pm_backend import storage
-from api.v1.views import app_views
+from database.db_user import DBUser
+from routes import app_views
 from flasgger import Swagger
 from flasgger.utils import swag_from
 
@@ -24,7 +24,7 @@ def teardown(self):
 def error(e):
     """Handler for 404 errors"""
     return jsonify({"error": "Not found"}), 404
-
+print(DBUser.login(hola, mundo))
 
 if __name__ == '__main__':
     host = getenv("HBNB_API_HOST") if getenv("HBNB_API_HOST") else "0.0.0.0"
