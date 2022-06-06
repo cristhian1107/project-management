@@ -1,8 +1,8 @@
+#!/usr/bin/python3
 from database import storage
 from models.user import User
 
-class DBUser ():
-
+class DBUser():
     @staticmethod
     def login(user='', pwd='') -> User:
         result = storage.exec_procedure('users_login', ['hola', 'mundo'])
