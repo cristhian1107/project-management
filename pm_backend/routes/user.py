@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """route for User"""
-from pm_backend import storage
-from pm_backend.user import User
-from pm_backend.routes import app_views
+from database import storage
+from models.user import User
+from routes import app_views
 from flask import jsonify, abort, request
 from flasgger.utils import swag_from
 

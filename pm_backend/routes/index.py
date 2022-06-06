@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """This module implement a rule that returns the status of the application"""
 from flask import jsonify
-import pm_backend
-from pm_backend.routes import app_views
+from database.engine import db_storage
+from routes import app_views
 from models.user import User
 
 
@@ -16,5 +16,6 @@ def view_status():
 def view_stats():
     """Veiw function that retrieves the number of each object by type"""
     return jsonify({
-        "users": models.storage.count(User)
+        "data": 2
+#        "users": storage.count(User)
     })
