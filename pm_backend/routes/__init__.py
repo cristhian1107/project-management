@@ -5,5 +5,6 @@ from flask import Blueprint
 
 app_views = Blueprint("app_views", __name__, url_prefix='/pm_backend/routes')
 
-from pm_backend.routes.index import *
-from pm_backend.routes.users import *
+from routes.index import *
+from routes.user import *
+
