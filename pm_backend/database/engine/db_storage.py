@@ -1,8 +1,7 @@
+#!/usr/bin/python3
 """Contains:
     (class) DBStorage.
 """
-
-from requests import session
 import mysql.connector
 
 
@@ -15,12 +14,10 @@ class DBStorage:
     def __init__(self):
         """Initialize a new instance of the class.
         """
-        self.__connector = mysql.connector.connect(
-                                                user='development',
-                                                password='dev_pwd(001)',
-                                                host='localhost',
-                                                database='project_management'
-                                              )
+        self.__connector = mysql.connector.connect(user='development',
+                                                   password='dev_pwd(001)',
+                                                   host='localhost',
+                                                   database='project_management')
         self.__connector.autocommit = False
 
     def open_db(self):
