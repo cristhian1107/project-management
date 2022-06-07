@@ -6,7 +6,7 @@ from routes import app_views
 from flask import jsonify, abort, request, make_response
 from flasgger.utils import swag_from
 from database.db_procedure import DBProcedures
-
+import jwt
 
 @app_views.route('/login', methods=['POST', 'GET'],
                  strict_slashes=False)
@@ -21,4 +21,6 @@ def password():
     user = DBProcedures.users_login('javier.pilco', 'ja-pi')
     if user == {}:
         return make_response(jsonify({'status': 'failure'}), 401) # RFC 7235
+    encoded_jwt = jwt.encode({"some": user.user}, "secret", algorithm="HS256")
+    setattr(user, 'Tokencillo', str(encoded_jwt))
     return make_response(jsonify(user.to_dict()), 201)
