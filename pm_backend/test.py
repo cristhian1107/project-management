@@ -8,3 +8,5 @@ uuuser = DBProcedures.users_login('javier.pilco', 'ja-pi')
 
 print(uuuser)
 print(uuuser.to_dict())
+for oo in uuuser.options:
+    print(oo.to_dict())

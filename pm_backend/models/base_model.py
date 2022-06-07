@@ -34,17 +34,27 @@ class BaseModel:
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
 
-    def to_dict(self):
+    def to_dict(self, audit=False):
         """Generate a dictionary containing all keys/values of the instance.
         """
         new_dict = self.__dict__.copy()
-        if 'created_at' in new_dict:
-            new_dict['created_at'] = new_dict['created_at'].strftime(time)
-        if 'updated_at' in new_dict:
-            new_dict['updated_at'] = new_dict['updated_at'].strftime(time)
+        if audit:
+            if 'created_at' in new_dict:
+                new_dict['created_at'] = new_dict['created_at'].strftime(time)
+            if 'updated_at' in new_dict:
+                new_dict['updated_at'] = new_dict['updated_at'].strftime(time)
+        else:
+            if 'created_at' in new_dict:
+                del new_dict['created_at']
+            if 'created_by' in new_dict:
+                del new_dict['created_at']
+            if 'update_at' in new_dict:
+                del new_dict['created_at']
+            if 'update_by' in new_dict:
+                del new_dict['created_at']
         if 'password' in new_dict:
             del new_dict['password']
         new_dict['__class__'] = self.__class__.__name__
         if '_sa_instance_state' in new_dict:
             del new_dict['_sa_instance_state']
-        return new_dict
+        return (new_dict)

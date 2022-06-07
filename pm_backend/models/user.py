@@ -24,6 +24,8 @@ class User(BaseModel):
     position = ''
     department = ''
     campus = ''
+    role = None
+    options = []
 
     def __init__(self, **kwargs):
         """Initialize a new instance of the class.

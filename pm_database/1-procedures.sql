@@ -13,14 +13,33 @@ CREATE PROCEDURE users_login
 , IN pvchpassword varchar(50) )
 BEGIN
 
+    DECLARE v_user_id, v_role_id bigint;
+    SELECT id, role_id INTO v_user_id, v_role_id
+    FROM users
+    WHERE
+        user = pvchuserr AND
+        password = pvchpassword;
+
+    -- Info user.
     SELECT id , company_id , role_id , name
         , lastname , email , user , password
         , gender , position , department , campus
-        , create_at , create_by , update_at , update_by
-     FROM users
+    FROM users
     WHERE
-        user = pvchuserr
-    AND password = pvchpassword;
+        id = v_user_id;
+
+    -- Info role.
+    SELECT id , name , description , is_active
+    FROM roles
+    WHERE id = v_role_id;
+
+    -- Info options.
+    SELECT opt.id , opt.name , opt.alias , opt.description, rop.is_active
+    FROM options opt
+    INNER JOIN roles_options rop ON opt.id = rop.option_id
+    WHERE
+        rop.role_id = v_role_id AND
+        rop.is_active = 1;
 
 END $$
 DELIMITER ;
