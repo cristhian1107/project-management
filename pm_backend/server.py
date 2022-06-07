@@ -3,7 +3,7 @@
 from os import getenv
 from flask import Flask, jsonify
 from flask_cors import CORS
-from database.db_user import DBUser
+from database.db_procedure import DBProcedures
 from database import storage
 from routes import app_views
 from flasgger import Swagger
