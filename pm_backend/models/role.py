@@ -11,7 +11,12 @@ class Role(BaseModel):
     Args:
         BaseModel (cls): Parent class - Inheritance.
     """
-    id = 0
-    name = ''
-    description = ''
-    is_active = False;
+
+    def __init__(self, **kwargs):
+        """Initialize a new instance of the class.
+        """
+        self.id = 0
+        self.name = ''
+        self.description = ''
+        self.is_active = False
+        super().__init__(**kwargs)

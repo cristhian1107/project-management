@@ -12,7 +12,7 @@ class DBProcedures():
 
     @staticmethod
     def users_login(user, pwd) -> User:
-        """
+        """Check if the user exists.
 
         Args:
             user (str): Username.
