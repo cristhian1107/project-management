@@ -4,4 +4,7 @@
 from database.db_procedure import DBProcedures
 
 
-print(DBProcedures.users_login('hola', 'mundo'))
+uuuser = DBProcedures.users_login('javier.pilco', 'ja-pi')
+
+print(uuuser)
+print(uuuser.to_dict())

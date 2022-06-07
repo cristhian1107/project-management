@@ -52,7 +52,9 @@ class DBStorage:
             records = []
             self.__cursor.callproc(name, parameters)
             for result in self.__cursor.stored_results():
-                records.append(result.fetchall())
+                data = result.fetchall()
+                if data:
+                    records.append(data)
             self.__connector.commit()
             return records
         except mysql.connector.Error as error:

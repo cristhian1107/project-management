@@ -19,7 +19,7 @@ BEGIN
         , create_at , create_by , update_at , update_by
      FROM users
     WHERE
-        name = pvchuserr
+        user = pvchuserr
     AND password = pvchpassword;
 
 END $$
