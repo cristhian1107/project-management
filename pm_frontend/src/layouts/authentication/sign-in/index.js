@@ -34,8 +34,8 @@ export default function SignInSide() {
     const data = new FormData(e.currentTarget);
     const username = data.get('username');
     const password = data.get('password');
-    console.log(`Hacking->${username + ":" + password}`);
-    //login({username, password})
+    console.log({username, password});
+    login({username, password})
   };
 
   return (
@@ -62,12 +62,16 @@ export default function SignInSide() {
           sm={8}
           md={5}
           component={Paper}
-          elevation={6} 
+          elevation={6}
+          sx={{
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          }}
         >
           <Box
             sx={{
               my: 8,
-              mx: 4,
+              px: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -109,7 +113,11 @@ export default function SignInSide() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  background: 'var(--btn-gradient)',
+                }}
               >
                 Sign In
               </Button>
