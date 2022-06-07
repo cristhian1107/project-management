@@ -14,7 +14,7 @@ def view_status():
 
 @app_views.route("/stats", strict_slashes=False)
 def view_stats():
-    """Veiw function that retrieves the number of each object by type"""
+    """View function that retrieves the number of each object by type"""
     return make_response(jsonify({
         "users": storage.count(User)
     }), 200)
