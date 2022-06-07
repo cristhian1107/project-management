@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ This script starts a Flask web application """
 from os import getenv
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from database.db_procedure import DBProcedures
 from database import storage
@@ -12,7 +12,7 @@ from flasgger.utils import swag_from
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-# cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.teardown_appcontext
@@ -24,8 +24,7 @@ def teardown(self):
 @app.errorhandler(404)
 def error(e):
     """Handler for 404 errors"""
-    return jsonify({"error": "Not found"}), 404
-# print(DBUser.login(hola, mundo))
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
