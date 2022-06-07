@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This module implement a rule that returns the status of the application"""
 from flask import jsonify
-from database.engine import db_storage
+from database import storage
 from routes import app_views
 from models.user import User
 
