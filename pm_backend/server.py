@@ -6,8 +6,6 @@ from flask_cors import CORS
 from database.db_procedure import DBProcedures
 from database import storage
 from routes import app_views
-from flasgger import Swagger
-from flasgger.utils import swag_from
 
 
 app = Flask(__name__)
