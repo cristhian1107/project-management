@@ -12,7 +12,7 @@ from flasgger.utils import swag_from
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+# cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.teardown_appcontext
@@ -25,7 +25,8 @@ def teardown(self):
 def error(e):
     """Handler for 404 errors"""
     return jsonify({"error": "Not found"}), 404
-#print(DBUser.login(hola, mundo))
+# print(DBUser.login(hola, mundo))
+
 
 if __name__ == '__main__':
     host = getenv("HBNB_API_HOST") if getenv("HBNB_API_HOST") else "0.0.0.0"

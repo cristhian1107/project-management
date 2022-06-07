@@ -16,6 +16,5 @@ def view_status():
 def view_stats():
     """Veiw function that retrieves the number of each object by type"""
     return jsonify({
-        "data": 2
-#        "users": storage.count(User)
+        "users": storage.count(User)
     })
