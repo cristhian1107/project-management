@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Contains:
     (class) User.
 """
@@ -6,7 +7,7 @@ import hashlib
 
 
 class User(BaseModel):
-    """_summary_
+    """Class that reflects the structure of the tables Users.
 
     Args:
         BaseModel (cls): Parent class - Inheritance.
