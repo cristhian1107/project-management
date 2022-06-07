@@ -3,7 +3,7 @@ import react, { useState } from 'react';
 const UserContext = react.createContext();
 
 export function UserContextProvider({children}) {
-  const [jwt, setJWT] = useState(null);
+  const [jwt, setJWT] = useState(() => window.localStorage.getItem('token'));
 
   return (
     <UserContext.Provider value={{jwt, setJWT}}>
