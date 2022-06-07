@@ -17,8 +17,9 @@ class DBStorage:
         self.__connector = mysql.connector.connect(
                                     user='development',
                                     password='dev_pwd(001)',
-                                    host='localhost',
+                                    host='127.0.0.1',
                                     database='project_management')
+
         self.__connector.autocommit = False
 
     def open_db(self):
