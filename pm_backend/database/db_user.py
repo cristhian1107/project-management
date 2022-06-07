@@ -2,6 +2,7 @@
 from database import storage
 from models.user import User
 
+
 class DBUser():
     @staticmethod
     def login(user='', pwd='') -> User:
