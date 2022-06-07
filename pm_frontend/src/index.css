@@ -11,6 +11,10 @@
 /*   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', */
 /*     monospace; */
 /* } */
+:root {
+  --btn-primary: rgba(25, 118, 210, 1);
+  --btn-gradient: linear-gradient(195deg, rgb(73, 163, 241), rgb(26, 115, 232));
+}
 body {
   overflow-y: hidden;
   width: 100%;
