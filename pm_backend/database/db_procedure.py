@@ -24,7 +24,6 @@ class DBProcedures():
         parameters.append(user)
         parameters.append(pwd)
         result = storage.exec_procedure('users_login', parameters)
-        print(result);
         dict_user = result[0][0]
         if result:
             new_user = User(**dict_user)
