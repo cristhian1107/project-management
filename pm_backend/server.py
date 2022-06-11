@@ -12,12 +12,13 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-
+"""
 @app.teardown_appcontext
 def teardown(self):
-    """Removes the current mysql.connector Session"""
+    """#Removes the current mysql.connector Session
+"""
     return storage.close_db()
-
+"""
 
 @app.errorhandler(404)
 def error(e):

@@ -12,6 +12,7 @@ export default function login ({ username, password }) {
     return res.json();
   }).then(res => {
     const { jwt } = res;
+    window.localStorage.setItem('token', jwt);
     return jwt;
   });
 }
