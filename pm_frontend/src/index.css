@@ -14,10 +14,19 @@
 :root {
   --btn-primary: rgba(25, 118, 210, 1);
   --btn-gradient: linear-gradient(195deg, rgb(73, 163, 241), rgb(26, 115, 232));
+  --bg-white: rgba(240, 242, 245, 1);
 }
 body {
   overflow-y: hidden;
   width: 100%;
   min-height: 100vh;
   max-height: 100vh;
+}
+a {
+  text-decoration: none;
+  color: #fff;
+  width: 100%;
+}
+.is-active {
+  background: var(--btn-gradient);
 }

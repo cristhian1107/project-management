@@ -1,10 +1,10 @@
 const ENDPOINT = 'http://127.0.0.1:5000';
 
-export default function login({ username, password }) {
+export default function login ({ username, password }) {
   return fetch(`${ENDPOINT}/login`, {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'applicatio/json'
     },
     body: JSON.stringify({ username, password })
   }).then(res => {
@@ -13,5 +13,5 @@ export default function login({ username, password }) {
   }).then(res => {
     const { jwt } = res;
     return jwt;
-  })
+  });
 }

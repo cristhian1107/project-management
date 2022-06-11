@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 // Context provider
 import { UserContextProvider } from 'context/UserContext';
+import { HandleDrawerProvider } from 'context/DrawerContext';
 // Styles
 import 'index.css'
 // Componenet
@@ -15,7 +16,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <UserContextProvider>
-      <App />
+      <HandleDrawerProvider>
+        <App />
+      </HandleDrawerProvider>
     </UserContextProvider>
   </BrowserRouter>
 );

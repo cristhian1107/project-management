@@ -7,6 +7,10 @@ import useUser from 'hooks/useUser';
 // Routes
 import SignIn from 'layouts/authentication/sign-in';
 import Dashboard from 'layouts/dashboard';
+import Profile from 'layouts/profile';
+import Tables from 'layouts/tables';
+import Projects from 'layouts/projects';
+import SideNav from 'components/sideNav';
 
 const customTheme = createTheme({
   palette: {
@@ -18,13 +22,19 @@ const customTheme = createTheme({
 
 function App() {
   const { isLogged } = useUser();
-  
+
   return (
     <ThemeProvider theme={customTheme}>
       {isLogged ? (
         <Routes>
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='*' element={<Navigate to='/dashboard' />} />
+            <Route path='/' element={<SideNav />} >
+              <Route index element={<Navigate to='/dashboard' />} />
+              <Route path='dashboard' element={<Dashboard />} />
+              <Route path='Projects' element={<Projects />} />
+              <Route path='tables' element={<Tables />} />
+              <Route path='profile' element={<Profile />} />
+              <Route path='*' element={<Navigate to='/' />} />
+            </Route>
         </Routes>
       ) : (
           <Routes>
