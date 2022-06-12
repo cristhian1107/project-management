@@ -15,7 +15,7 @@ VALUES
 (5, 'JEFE DE PROYECTO', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
 
 
---* Tablas *--
+-- * Tablas * --
 INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
 VALUES
 (1, 1, 'Tablas', 'TAB', 'Tablas generales', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
@@ -23,20 +23,20 @@ VALUES
 (1, 3, 'Estados', 'STA', 'Tablas de estados', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (1, 4, 'Prioridades', 'PRI', 'Tablas de prioridades', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
 
---* Solicitudes *--
+-- * Solicitudes * --
 INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
 VALUES
 (2, 1, 'Requerimiento', 'REQ', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (2, 2, 'Proyectos', 'PRO', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
 
---* Estados *--
+-- * Estados * --
 INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
 VALUES
 (3, 1, 'Solicitado', 'SLC', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
 
---* Prioridades *--
+-- * Prioridades * --
 INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
 VALUES
 (3, 1, 'Baja', 'BAJ', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
-(3, 1, 'Normal', 'NOR', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
-(3, 1, 'Alta', 'ALT', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+(3, 2, 'Normal', 'NOR', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 3, 'Alta', 'ALT', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
