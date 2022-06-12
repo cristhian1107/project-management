@@ -159,8 +159,8 @@ PRIMARY KEY (`table`, `code`)
 CREATE TABLE IF NOT EXISTS `requests`
 (
  `id`             bigint NOT NULL ,
- `table_typ`      int NOT NULL ,
- `code_typ`       int NOT NULL ,
+ `table_typ`      int NULL ,
+ `code_typ`       int NULL ,
  `code`           varchar(50) NOT NULL ,
  `company_id`     bigint NOT NULL ,
  `user_id`        bigint NOT NULL ,
