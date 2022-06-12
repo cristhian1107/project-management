@@ -39,11 +39,12 @@ export default function CustomAppBar () {
     <AppBar
       position="fixed"
       sx={{
-        width: { xs: `calc(100% - 16px)`, lg: `calc(100% - ${drawerWidth}px - 16px)` },
+        width: { xs: `calc(100% - 16px)`, lg: `calc(100% - ${drawerWidth}px - 24px)` },
         ml: { lg: `calc(${drawerWidth}px)` },
         boxShadow: 'none',
         m: 1,
         background: '#fff',
+        borderRadius: 2,
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
@@ -69,7 +70,6 @@ export default function CustomAppBar () {
           display: 'flex',
           alignItems: 'center',
           color: 'rgb(66, 66, 74)',
-          justifyContent: 'space-between',
         }}
         >
           <IconButton sx={{
