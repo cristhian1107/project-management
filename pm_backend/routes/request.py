@@ -21,7 +21,7 @@ def all_request(date):
     # Necesito una lista de diccionarios de todos los proyectos con
     # todos sus datos en ese rango de fecha
     res = DBProcedures.request_all(start, end)
-    make_response(jsonify(res.to_dict()), 200)
+    return make_response(jsonify(res.to_dict()), 200)
 
 
 @app_views.route('/request', methods=['GET'],
@@ -55,4 +55,39 @@ def insert_request():
     print(item.to_list())
     if res is None:
         return make_response(jsonify({'request': 'failure'}), 204)
+    return make_response(jsonify({'request': 'success'}), 201)
+
+
+@app_views.route('/request', methods=['PUT'],
+                 strict_slashes=False)
+def update_request():
+    """updates a new requirement/project"""
+    data = request.get_json()
+    item.date_tentative = datetime.strptime(
+        data.get('date_tentative', None), time)
+    item.user_id = data.get('user_id', None)
+    item.tables_typ = tables.get('TYP')
+    item.code_typ = data.get('code_typ', None)
+    item.company_id = data.get('company_id', None)
+    item.name = data.get('name', None)
+    item.description = data.get('description', None)
+    item.table_pri = tables.get('PRI')
+    item.code_pri = data.get('code_pri', None)
+    res = DBProcedures.requests_update(item)
+    if res is None:
+        return make_response(jsonify({'request': 'failure'}), 204)
+    return make_response(jsonify({'request': 'success'}), 201)
+
+
+@app_views.route('/state', methods=['get'],
+                 strict_slashes=False)
+def update_state():
+    """changes state"""
+    """
+    enviar cambio de estado a procedure
+    iduser
+    id requereimineto
+    id estado
+    res = DBProcedures.requests_state(item)
+    """
     return make_response(jsonify({'request': 'success'}), 201)
