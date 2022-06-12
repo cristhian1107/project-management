@@ -75,5 +75,16 @@ class BaseModel:
 
             if type(value).__name__ in class_list:
                 new_dict[key] = value.to_dict(audit)
-
         return (new_dict)
+
+    def to_list(self, audit=False):
+        """Generate a list containing all values of the instance.
+        """
+        new_dict = self.__dict__.copy()
+        avoid = ['create_at', 'create_by', 'update_at', 'update_by',
+                 'password', '_sa_instance_state']
+        list_data = []
+        for key, value in new_dict.items():
+            if key not in avoid:
+                list_data.append(value)
+        return list_data
