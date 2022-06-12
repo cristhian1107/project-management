@@ -228,8 +228,8 @@ BEGIN
         , pbigcompany_id , pbiguser_id , pvchsubject , pvchreason
         , pvchname , pvchdescription , pvchdepartment , pvchcampus
         , pdtmdate_issue , pdtmdate_tentative , pinttable_sta , pintcode_sta
-        , pinttable_pri , pintcode_pri , pdecpercentage , pdtmcreate_at
-        , CURRENT_TIMESTAMP() , NULL , NULL);
+        , pinttable_pri , pintcode_pri , pdecpercentage , CURRENT_TIMESTAMP()
+        , pvchcreate_by , NULL , NULL);
 
 END $$
 DELIMITER ;
