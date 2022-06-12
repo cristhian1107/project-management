@@ -37,6 +37,6 @@ VALUES
 -- * Prioridades * --
 INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
 VALUES
-(3, 1, 'Baja', 'BAJ', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
-(3, 2, 'Normal', 'NOR', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
-(3, 3, 'Alta', 'ALT', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+(4, 1, 'Baja', 'BAJ', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(4, 2, 'Normal', 'NOR', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(4, 3, 'Alta', 'ALT', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
