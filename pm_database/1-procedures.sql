@@ -227,7 +227,7 @@ BEGIN
         ( pbigid , pinttable_typ , pintcode_typ , pvchcode
         , pbigcompany_id , pbiguser_id , pvchsubject , pvchreason
         , pvchname , pvchdescription , pvchdepartment , pvchcampus
-        , pdtmdate_issue , pdtmdate_tentative , pinttable_sta , pintcode_sta
+        , pdtmdate_issue , pdtmdate_tentative , 3 , 1
         , pinttable_pri , pintcode_pri , pdecpercentage , CURRENT_TIMESTAMP()
         , pvchcreate_by , NULL , NULL);
 
