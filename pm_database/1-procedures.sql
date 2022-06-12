@@ -174,6 +174,53 @@ END $$
 DELIMITER ;
 
 
+DROP PROCEDURE IF EXISTS requests_events_insert;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-11
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE requests_events_insert
+( INOUT pbigproject_id bigint
+, IN pintitem int
+, IN pinttable_sta int
+, IN pintcode_sta int
+, IN pdtmdate_issue datetime
+, IN pbiguser_id bigint
+, IN pdtmcreate_at datetime
+, IN pvchcreate_by varchar(50)
+, IN pdtmupdate_at datetime
+, IN pvchupdate_by varchar(50) )
+BEGIN
+
+    -- * Correlative * --
+    SELECT IF(ISNULL(MAX(item)), 1, MAX(item) + 1)  INTO pintitem
+    FROM requests_events
+    WHERE
+        project_id = pbigproject_id;
+
+    -- * User * --
+    SELECT user INTO pvchcreate_by
+    FROM users
+    WHERE
+        id = pbiguser_id;
+
+    -- * Insert event * --
+    INSERT INTO requests_events
+        ( project_id , item , table_sta , code_sta
+        , date_issue , user_id , create_at , create_by
+        , update_at , update_by)
+    VALUES
+        ( pbigproject_id , pintitem , pinttable_sta , pintcode_sta
+        , pdtmdate_issue , pbiguser_id , CURRENT_TIMESTAMP() , pvchcreate_by
+        , NULL , NULL);
+
+END $$
+DELIMITER ;
+
+
 DROP PROCEDURE IF EXISTS requests_insert;
 -- =========================================================
 -- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-11
@@ -208,14 +255,24 @@ CREATE PROCEDURE requests_insert
 , IN pvchupdate_by varchar(50) )
 BEGIN
 
+    -- * Correlative * --
     SELECT IF(ISNULL(MAX(id)), 1, MAX(id) + 1)  INTO pbigid
     FROM requests;
 
+    -- * User * --
     SELECT company_id, department, campus, user INTO pbigcompany_id, pvchdepartment, pvchcampus, pvchcreate_by
     FROM users
     WHERE
         id = pbiguser_id;
 
+    -- * State * --
+    SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
+    FROM tables
+    WHERE
+        `table` = 3 AND
+        `alias` = 'SOL';
+
+    -- * Insert request * --
     INSERT INTO requests
         ( id , table_typ , code_typ , code
         , company_id , user_id , subject , reason
@@ -227,9 +284,23 @@ BEGIN
         ( pbigid , pinttable_typ , pintcode_typ , pvchcode
         , pbigcompany_id , pbiguser_id , pvchsubject , pvchreason
         , pvchname , pvchdescription , pvchdepartment , pvchcampus
-        , pdtmdate_issue , pdtmdate_tentative , 3 , 1
+        , pdtmdate_issue , pdtmdate_tentative , pinttable_sta , pintcode_sta
         , pinttable_pri , pintcode_pri , pdecpercentage , CURRENT_TIMESTAMP()
         , pvchcreate_by , NULL , NULL);
 
+    -- * Insert event * --
+    call requests_events_insert
+        ( pbigid
+        , NULL
+        , pinttable_sta
+        , pintcode_sta
+        , pdtmdate_issue
+        , pbiguser_id
+        , pdtmcreate_at
+        , pvchcreate_by
+        , NULL
+        , NULL);
+
 END $$
 DELIMITER ;
+

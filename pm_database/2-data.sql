@@ -32,7 +32,15 @@ VALUES
 -- * Estados * --
 INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
 VALUES
-(3, 1, 'Solicitado', 'SLC', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+(3, 1, 'Solicitado', 'SOL', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 2, 'Confirmado', 'CON', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 3, 'Aprobado', 'APR', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 4, 'Definido', 'DEF', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 5, 'En Proceso', 'EPR', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 6, 'Culminado', 'CUL', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 7, 'Rechazado', 'REC', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 8, 'Cancelado', 'CAN', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 9, 'Pausado', 'PAU', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
 
 -- * Prioridades * --
 INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
