@@ -217,6 +217,15 @@ BEGIN
         , pdtmdate_issue , pbiguser_id , CURRENT_TIMESTAMP() , pvchcreate_by
         , NULL , NULL);
 
+    -- * Update Request * --
+    UPDATE requests
+    	   SET table_sta = pinttable_sta
+	   , code_sta = pintcode_sta
+	   , update_at = CURRENT_TIMESTAMP()
+	   , update_by = pvchcreate_by
+    WHERE
+	id = pbigproject_id;
+
 END $$
 DELIMITER ;
 
