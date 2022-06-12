@@ -16,9 +16,9 @@ class_list = [
 class BaseModel:
     """Base model containing general definition.
     """
-    create_at = create_at = datetime.utcnow()
+    create_at = datetime.utcnow()
     create_by = ''
-    update_at = create_at = datetime.utcnow()
+    update_at = datetime.utcnow()
     update_by = ''
 
     def __init__(self, **kwargs):
@@ -38,7 +38,9 @@ class BaseModel:
                 self.update_at = datetime.utcnow()
         else:
             self.create_at = datetime.utcnow()
+            self.create_by = ''
             self.update_at = datetime.utcnow()
+            self.update_by = ''
 
     def to_dict(self, audit=False):
         """Generate a dictionary containing all keys/values of the instance.
@@ -81,8 +83,7 @@ class BaseModel:
         """Generate a list containing all values of the instance.
         """
         new_dict = self.__dict__.copy()
-        avoid = ['create_at', 'create_by', 'update_at', 'update_by',
-                 'password', '_sa_instance_state']
+        avoid = ['password', '_sa_instance_state']
         list_data = []
         for key, value in new_dict.items():
             if key not in avoid:
