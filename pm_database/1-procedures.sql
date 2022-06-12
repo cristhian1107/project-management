@@ -219,10 +219,11 @@ BEGIN
 
     -- * Update Request * --
     UPDATE requests
-    	   SET table_sta = pinttable_sta
-	   , code_sta = pintcode_sta
-	   , update_at = CURRENT_TIMESTAMP()
-	   , update_by = pvchcreate_by
+        SET
+          table_sta = pinttable_sta
+        , code_sta = pintcode_sta
+        , update_at = CURRENT_TIMESTAMP()
+        , update_by = pvchcreate_by
     WHERE
 	id = pbigproject_id;
 
@@ -313,3 +314,94 @@ BEGIN
 END $$
 DELIMITER ;
 
+
+DROP PROCEDURE IF EXISTS requests_update;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-12
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE requests_update
+( INOUT pbigid bigint
+, IN pinttable_typ int
+, IN pintcode_typ int
+, IN pvchcode varchar(50)
+, IN pbigcompany_id bigint
+, IN pbiguser_id bigint
+, IN pvchsubject varchar(50)
+, IN pvchreason varchar(250)
+, IN pvchname varchar(50)
+, IN pvchdescription varchar(250)
+, IN pvchdepartment varchar(50)
+, IN pvchcampus varchar(50)
+, IN pdtmdate_issue datetime
+, IN pdtmdate_tentative datetime
+, IN pinttable_sta int
+, IN pintcode_sta int
+, IN pinttable_pri int
+, IN pintcode_pri int
+, IN pdecpercentage decimal(5, 2)
+, IN pdtmcreate_at datetime
+, IN pvchcreate_by varchar(50)
+, IN pdtmupdate_at datetime
+, IN pvchupdate_by varchar(50) )
+BEGIN
+
+    -- * User * --
+    SELECT user INTO pvchupdate_by
+    FROM users
+    WHERE
+        id = pbiguser_id;
+
+    -- * State * --
+    SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
+    FROM tables
+    WHERE
+        `table` = 3 AND
+        `alias` = 'CON';
+
+    -- * Code correlative * --
+
+    SELECT CONCAT(t.alias, CONVERT(YEAR(pdtmdate_issue), char), '-',
+            IF( COUNT(id),
+                LPAD(CONVERT(COUNT(id), char), 7, '0'),
+                '0000000')) INTO pvchcode
+    FROM requests r
+    INNER JOIN tables t ON r.table_typ = t.table AND r.code_typ = t.code
+        WHERE
+        table_typ = pinttable_typ AND
+        code_typ = pintcode_typ;
+
+    -- * Update request * --
+    UPDATE requests
+        SET
+          table_typ = pinttable_typ
+        , code_typ = pintcode_typ
+        , code = pvchcode
+        , name = pvchname
+        , description = pvchdescription
+        , date_tentative = pdtmdate_tentative
+        , table_pri = pinttable_pri
+        , code_pri = pintcode_pri
+        , update_at = CURRENT_TIMESTAMP()
+        , update_by = pvchupdate_by
+    WHERE
+        id = pbigid;
+
+    -- * Insert event * --
+    call requests_events_insert
+        ( pbigid
+        , NULL
+        , pinttable_sta
+        , pintcode_sta
+        , pdtmdate_issue
+        , pbiguser_id
+        , pdtmupdate_at
+        , pvchupdate_by
+        , NULL
+        , NULL);
+
+END $$
+DELIMITER ;

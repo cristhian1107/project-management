@@ -60,3 +60,18 @@ class DBProcedures():
             return (False)
         parameters = item.to_list()
         return (storage.exec_procedure('requests_insert', parameters))
+
+    @staticmethod
+    def requests_update(item=Request()) -> Boolean:
+        """Update new requests
+
+        Args:
+            item (Request): New object.
+
+        Returns:
+            Boolean: True or False.
+        """
+        if item is None:
+            return (False)
+        parameters = item.to_list()
+        return (storage.exec_procedure('requests_insert', parameters))
