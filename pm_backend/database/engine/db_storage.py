@@ -61,3 +61,26 @@ class DBStorage:
         except mysql.connector.Error as error:
             self.__connector.rollback()
             print(error)
+
+    def exec_save(self, name, parameters=[]):
+        """Execute a stored procedure on the MySQL Database.
+
+        Args:
+            name (str): Stored procedure name.
+            parameters (list): Sorted parameter list.
+
+        Returns:
+            bool: True or False.
+        """
+        try:
+            records = []
+            self.__cursor.callproc(name, parameters)
+            self.__connector.commit()
+            if self.__cursor.rowcount > 1:
+                return (True)
+            else:
+                return (False)
+        except mysql.connector.Error as error:
+            self.__connector.rollback()
+            print(error)
+            return (False)

@@ -7,3 +7,4 @@ app_views = Blueprint("app_views", __name__, url_prefix='')
 
 from routes.index import *
 from routes.user import *
+from routes.request import *

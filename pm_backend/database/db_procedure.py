@@ -2,10 +2,12 @@
 """Contains:
     (class) DBProcedure.
 """
+from xmlrpc.client import Boolean
 from database import storage
 from models.user import User
 from models.role import Role
 from models.option import Option
+from models.request import Request
 
 
 class DBProcedures():
@@ -41,4 +43,20 @@ class DBProcedures():
             if x == 2:
                 for opt in tables[x]:
                     new_user.options.append(Option(**opt))
+
         return(new_user)
+
+    @staticmethod
+    def requests_insert(item=Request()) -> Boolean:
+        """Insert new requests
+
+        Args:
+            item (Request): New object.
+
+        Returns:
+            Boolean: True or False.
+        """
+        if item is None:
+            return (False)
+        parameters = item.to_list()
+        return (storage.exec_procedure('requests_insert', parameters))

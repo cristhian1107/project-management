@@ -172,3 +172,64 @@ BEGIN
     WHERE id = pbigid;
 END $$
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS requests_insert;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-11
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE requests_insert
+( INOUT pbigid bigint
+, IN pinttable_typ int
+, IN pintcode_typ int
+, IN pvchcode varchar(50)
+, IN pbigcompany_id bigint
+, IN pbiguser_id bigint
+, IN pvchsubject varchar(50)
+, IN pvchreason varchar(250)
+, IN pvchname varchar(50)
+, IN pvchdescription varchar(250)
+, IN pvchdepartment varchar(50)
+, IN pvchcampus varchar(50)
+, IN pdtmdate_issue datetime
+, IN pdtmdate_tentative datetime
+, IN pinttable_sta int
+, IN pintcode_sta int
+, IN pinttable_pri int
+, IN pintcode_pri int
+, IN pdecpercentage decimal(5, 2)
+, IN pdtmcreate_at datetime
+, IN pvchcreate_by varchar(50)
+, IN pdtmupdate_at datetime
+, IN pvchupdate_by varchar(50) )
+BEGIN
+
+    SELECT IF(ISNULL(MAX(id)), 1, MAX(id) + 1)  INTO pbigid
+    FROM requests;
+
+    SELECT company_id, department, campus, user INTO pbigcompany_id, pvchdepartment, pvchcampus, pvchcreate_by
+    FROM users
+    WHERE
+        id = pbiguser_id;
+
+    INSERT INTO requests
+        ( id , table_typ , code_typ , code
+        , company_id , user_id , subject , reason
+        , name , description , department , campus
+        , date_issue , date_tentative , table_sta , code_sta
+        , table_pri , code_pri , percentage , create_at
+        , create_by , update_at , update_by)
+    VALUES
+        ( pbigid , pinttable_typ , pintcode_typ , pvchcode
+        , pbigcompany_id , pbiguser_id , pvchsubject , pvchreason
+        , pvchname , pvchdescription , pvchdepartment , pvchcampus
+        , pdtmdate_issue , pdtmdate_tentative , 3 , 1
+        , pinttable_pri , pintcode_pri , pdecpercentage , CURRENT_TIMESTAMP()
+        , pvchcreate_by , NULL , NULL);
+
+END $$
+DELIMITER ;
