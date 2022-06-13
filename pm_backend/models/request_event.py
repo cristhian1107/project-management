@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """Contains:
-    (class) Request_event.
+    (class) RequestEvent.
 """
 from models.base_model import BaseModel
 import hashlib
 
 
 class RequestEvent(BaseModel):
-    """Class that reflects the structure of the tables Request_event.
+    """Class that reflects the structure of the tables RequestEvent.
 
     Args:
         BaseModel (cls): Parent class - Inheritance.
@@ -22,8 +22,4 @@ class RequestEvent(BaseModel):
         self.code_sta = None
         self.date_issue = None
         self.user_id = None
-        self.create_at = None
-        self.create_by = None
-        self.update_at = None
-        self.update_by = None
         super().__init__(**kwargs)
