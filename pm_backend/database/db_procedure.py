@@ -75,3 +75,34 @@ class DBProcedures():
             return (False)
         parameters = item.to_list()
         return (storage.exec_procedure('requests_insert', parameters))
+
+    @staticmethod
+    def requests_all(date_begin, date_end, company_id, department) -> list:
+        """All requests.
+
+        Args:
+            date_begin (dtm): Filter by date begin.
+            date_end (dtm): Filter by date end.
+            company_id (long): Filter by company.
+            department (str): Filter by department.
+
+        Returns:
+            list: List of contain all requests
+        """
+        items = []
+        parameters = []
+        parameters.append(date_begin)
+        parameters.append(date_end)
+        parameters.append(company_id)
+        parameters.append(department)
+        tables = storage.exec_procedure('users_login', parameters)
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            if x == 0:
+                for opt in tables[x]:
+                    items.append(Request(**opt))
+
+        return(items)
