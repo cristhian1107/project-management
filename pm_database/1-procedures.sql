@@ -460,7 +460,7 @@ DROP PROCEDURE IF EXISTS requests_one;
 -- =========================================================
 DELIMITER $$
 CREATE PROCEDURE requests_one
-( IN pbigid datetime )
+( IN pbigid bigint )
 BEGIN
 
     SELECT
