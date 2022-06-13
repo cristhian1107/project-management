@@ -202,7 +202,7 @@ CONSTRAINT `fk_requests_tables_typ` FOREIGN KEY `table_code_typ` (`table_typ`, `
 -- ***************************************************
 CREATE TABLE IF NOT EXISTS `requests_events`
 (
- `project_id` bigint NOT NULL ,
+ `request_id` bigint NOT NULL ,
  `item`       int NOT NULL ,
  `table_sta`  int NOT NULL ,
  `code_sta`   int NOT NULL ,
@@ -213,9 +213,9 @@ CREATE TABLE IF NOT EXISTS `requests_events`
  `update_at`  datetime NULL ,
  `update_by`  varchar(50) NULL ,
 
-PRIMARY KEY (`project_id`, `item`),
-KEY `project_id` (`project_id`),
-CONSTRAINT `fk_requests_events` FOREIGN KEY `project_id` (`project_id`) REFERENCES `requests` (`id`),
+PRIMARY KEY (`request_id`, `item`),
+KEY `request_id` (`request_id`),
+CONSTRAINT `fk_requests_events` FOREIGN KEY `request_id` (`request_id`) REFERENCES `requests` (`id`),
 KEY `table_code_sta` (`table_sta`, `code_sta`),
 CONSTRAINT `fk_requests_events_tables_sta` FOREIGN KEY `table_code_sta` (`table_sta`, `code_sta`) REFERENCES `tables` (`table`, `code`),
 KEY `user_id` (`user_id`),

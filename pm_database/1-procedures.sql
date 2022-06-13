@@ -183,7 +183,7 @@ DROP PROCEDURE IF EXISTS requests_events_insert;
 -- =========================================================
 DELIMITER $$
 CREATE PROCEDURE requests_events_insert
-( INOUT pbigproject_id bigint
+( INOUT pbigrequest_id bigint
 , IN pintitem int
 , IN pinttable_sta int
 , IN pintcode_sta int
@@ -199,7 +199,7 @@ BEGIN
     SELECT IF(ISNULL(MAX(item)), 1, MAX(item) + 1)  INTO pintitem
     FROM requests_events
     WHERE
-        project_id = pbigproject_id;
+        request_id = pbigrequest_id;
 
     -- * User * --
     SELECT user INTO pvchcreate_by
@@ -209,11 +209,11 @@ BEGIN
 
     -- * Insert event * --
     INSERT INTO requests_events
-        ( project_id , item , table_sta , code_sta
+        ( request_id , item , table_sta , code_sta
         , date_issue , user_id , create_at , create_by
         , update_at , update_by)
     VALUES
-        ( pbigproject_id , pintitem , pinttable_sta , pintcode_sta
+        ( pbigrequest_id , pintitem , pinttable_sta , pintcode_sta
         , pdtmdate_issue , pbiguser_id , CURRENT_TIMESTAMP() , pvchcreate_by
         , NULL , NULL);
 
@@ -225,7 +225,7 @@ BEGIN
         , update_at = CURRENT_TIMESTAMP()
         , update_by = pvchcreate_by
     WHERE
-	id = pbigproject_id;
+	id = pbigrequest_id;
 
 END $$
 DELIMITER ;

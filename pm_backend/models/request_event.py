@@ -16,7 +16,7 @@ class RequestEvent(BaseModel):
     def __init__(self, **kwargs):
         """Initialize a new instance of the class.
         """
-        self.project_id = None
+        self.request_id = None
         self.item = None
         self.table_sta = None
         self.code_sta = None
