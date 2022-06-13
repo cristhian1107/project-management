@@ -485,7 +485,7 @@ BEGIN
     FROM requests_events re
     LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
     WHERE
-        r.project_id = pbigid;
+        re.project_id = pbigid;
 
 END $$
 DELIMITER ;
