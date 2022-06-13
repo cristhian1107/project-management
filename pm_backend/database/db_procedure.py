@@ -89,6 +89,7 @@ class DBProcedures():
         Returns:
             list: List of contain all requests
         """
+        item = Request()
         items = []
         parameters = []
         parameters.append(date_begin)
@@ -96,13 +97,11 @@ class DBProcedures():
         parameters.append(company_id)
         parameters.append(department)
         tables = storage.exec_procedure('requests_all', parameters)
-
         if not tables:
             return (None)
-
+        
         for x in range(0, len(tables)):
-            if x == 0:
-                for opt in tables[x]:
-                    items.append(Request(**opt))
-
+            for opt in tables[x]:
+                item = Request(**opt)
+                items.append(item.to_dict())
         return(items)
