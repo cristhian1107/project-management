@@ -135,4 +135,4 @@ class DBProcedures():
             if x == 1:
                 for opt in tables[x]:
                     item.states.append(RequestEvent(**opt))
-        return(items)
+        return(item)
