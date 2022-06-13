@@ -449,3 +449,43 @@ BEGIN
 
 END $$
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS requests_one;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-13
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE requests_one
+( IN pbigid datetime )
+BEGIN
+
+    SELECT
+          r.id , r.table_typ , r.code_typ , r.code
+        , r.company_id , r.user_id , r.subject , r.reason
+        , r.name , r.description , r.department , r.campus
+        , r.date_issue , r.date_tentative , r.table_sta , r.code_sta
+        , r.table_pri , r.code_pri , r.percentage
+        , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
+        , r.create_at, r.create_by , r.update_at , r.update_by
+    FROM requests r
+    LEFT JOIN tables typ ON r.table_typ = typ.table AND r.code_typ = typ.code
+    LEFT JOIN tables sta ON r.table_sta = sta.table AND r.code_sta = sta.code
+    LEFT JOIN tables pri ON r.table_pri = pri.table AND r.code_pri = pri.code
+    WHERE
+        r.id = pbigid;
+
+    SELECT
+          re.project_id , re.item , re.table_sta , re.code_sta
+        , re.date_issue , re.user_id , sta.name as name_sta
+        , re.create_at , re.create_by , re.update_at , re.update_by
+    FROM requests_events re
+    LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+    WHERE
+        r.project_id = pbigid;
+
+END $$
+DELIMITER ;

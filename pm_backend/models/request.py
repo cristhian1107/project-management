@@ -34,4 +34,5 @@ class Request(BaseModel):
         self.table_pri = None
         self.code_pri = None
         self.percentage = None
+        self.states = []
         super().__init__(**kwargs)

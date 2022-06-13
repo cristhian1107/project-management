@@ -8,6 +8,7 @@ from models.user import User
 from models.role import Role
 from models.option import Option
 from models.request import Request
+from models.request_event import RequestEvent
 
 
 class DBProcedures():
@@ -105,4 +106,33 @@ class DBProcedures():
             for opt in tables[x]:
                 item = Request(**opt)
                 items.append(item.to_dict())
+        return(items)
+
+    @staticmethod
+    def requests_one(id) -> Request:
+        """Get one record request.
+
+        Args:
+            id (long): Filter by id.
+
+        Returns:
+            Request: object request.
+        """
+        item = Request()
+        items = []
+        parameters = []
+        parameters.append(id)
+        tables = storage.exec_procedure('requests_one', parameters)
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            # Info request.
+            if x == 0:
+                item = User(**tables[x][0])
+            # Info states.
+            if x == 1:
+                for opt in tables[x]:
+                    item.states.append(RequestEvent(**opt))
         return(items)

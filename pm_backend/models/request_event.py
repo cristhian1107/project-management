@@ -6,7 +6,7 @@ from models.base_model import BaseModel
 import hashlib
 
 
-class Request_event(BaseModel):
+class RequestEvent(BaseModel):
     """Class that reflects the structure of the tables Request_event.
 
     Args:
