@@ -95,7 +95,7 @@ class DBProcedures():
         parameters.append(date_end)
         parameters.append(company_id)
         parameters.append(department)
-        tables = storage.exec_procedure('users_login', parameters)
+        tables = storage.exec_procedure('requests_all', parameters)
 
         if not tables:
             return (None)
