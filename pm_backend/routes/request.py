@@ -41,7 +41,7 @@ def insert_request():
     item = Request()
     data = request.get_json()
     item.date_issue = datetime.strptime(data.get('date_issue', None), time)
-    # item.date_tentative = request.args.get('date_tentative', None)
+    # item.date_tentative = datetime.strptime(data.get('date_tentative', None), time)
     item.user_id = data.get('user_id', None)
     item.reason = data.get('reason', None)
     item.subject = data.get('subject', None)
@@ -63,16 +63,24 @@ def insert_request():
 def update_request():
     """updates a new requirement/project"""
     data = request.get_json()
+    item = Request()
+    item.id = data.get('id', None)
     item.date_tentative = datetime.strptime(
         data.get('date_tentative', None), time)
+    item.date_issue = datetime.strptime(data.get(
+        'date_issue', None), time)
     item.user_id = data.get('user_id', None)
-    item.tables_typ = tables.get('TYP')
-    item.code_typ = data.get('code_typ', None)
-    item.company_id = data.get('company_id', None)
     item.name = data.get('name', None)
     item.description = data.get('description', None)
+    item.table_typ = tables.get('TYP')
     item.table_pri = tables.get('PRI')
+    item.code_typ = data.get('code_typ', None)
     item.code_pri = data.get('code_pri', None)
+    print("************************************")
+    print(item.to_list())
+    print("************************************")
+    print(item.to_dict(True))
+    print("************************************")
     res = DBProcedures.requests_update(item)
     if res is None:
         return make_response(jsonify({'request': 'failure'}), 204)
