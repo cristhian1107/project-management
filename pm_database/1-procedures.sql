@@ -349,6 +349,8 @@ CREATE PROCEDURE requests_update
 , IN pvchupdate_by varchar(50) )
 BEGIN
 
+    DECLARE v_alias_typ char(3);
+
     -- * User * --
     SELECT user INTO pvchupdate_by
     FROM users
@@ -363,14 +365,13 @@ BEGIN
         `alias` = 'CON';
 
     -- * Code correlative * --
-    DECLARE vvch_alias VARCHAR;
-    SELECT `alias` INTO vvch_alias
+    SELECT `alias` INTO v_alias_typ
     FROM tables
     WHERE
-	`table` = pinttable_typ AND
-	code = pintcode_typ;
-	
-    SELECT CONCAT(vvch_alias, CONVERT(YEAR(pdtmdate_issue), char), '-',
+	    `table` = pinttable_typ AND
+	    code = pintcode_typ;
+
+    SELECT CONCAT(v_alias_typ, CONVERT(YEAR(pdtmdate_issue), char), '-',
             IF( COUNT(id),
                 LPAD(CONVERT(COUNT(id), char), 7, '0'),
                 '0000000')) INTO pvchcode
