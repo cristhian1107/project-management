@@ -79,7 +79,7 @@ class BaseModel:
             if type(value).__name__ in class_list:
                 new_dict[key] = value.to_dict(audit)
 
-            if type(value) in datetime.datetime:
+            if type(value) is datetime:
                 new_dict[key] = value.strftime(time)
         return (new_dict)
 
