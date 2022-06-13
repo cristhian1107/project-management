@@ -130,7 +130,7 @@ class DBProcedures():
         for x in range(0, len(tables)):
             # Info request.
             if x == 0:
-                item = User(**tables[x][0])
+                item = Request(**tables[x][0])
             # Info states.
             if x == 1:
                 for opt in tables[x]:
