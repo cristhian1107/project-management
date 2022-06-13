@@ -33,11 +33,13 @@ def all_request():
 
 @app_views.route('/request', methods=['GET'],
                  strict_slashes=False)
-def get_request(date):
+def get_request():
     """returns a list of specific projects"""
     id = request.args.get('id', None)
     # Necesito un diccionario de el proyectos con todos sus datos
-    res = DBProcedures.request_one(id)
+    res = DBProcedures.requests_one(id)
+    if res is None:
+        return make_response(jsonify({'request': 'empty'}), 204)
     return make_response(jsonify(res.to_dict()), 200)
 
 
