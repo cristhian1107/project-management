@@ -9,7 +9,9 @@ time = '%Y-%m-%dT%H:%M:%S.%f'
 class_list = [
     'User',
     'Role',
-    'Option'
+    'Option',
+    'Request',
+    'RequestEvent'
 ]
 
 
@@ -66,9 +68,8 @@ class BaseModel:
         if '_sa_instance_state' in new_dict:
             del new_dict['_sa_instance_state']
 
-        # Dictionary and List.
+        # Dictionary and List and Date.
         for key, value in new_dict.items():
-            print(key)
             if type(value) == list:
                 child_list = []
                 for item in value:
@@ -77,6 +78,9 @@ class BaseModel:
 
             if type(value).__name__ in class_list:
                 new_dict[key] = value.to_dict(audit)
+
+            if 'date' in key:
+                new_dict[key] = value.strftime(time)
         return (new_dict)
 
     def to_list(self, audit=False):
