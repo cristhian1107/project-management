@@ -3,7 +3,9 @@
     (class) Request.
 """
 from models.base_model import BaseModel
-import hashlib
+from datetime import datetime
+
+dt_time = '%Y-%m-%dT%H:%M:%S.%f'
 
 
 class Request(BaseModel):
@@ -35,4 +37,15 @@ class Request(BaseModel):
         self.table_pri = None
         self.code_pri = None
         self.percentage = None
+
+        new_date = None
+        if (kwargs.get('date_issue', None)
+                and type(self.date_issue) is str):
+            new_date = datetime.strptime(kwargs['date_issue'], dt_time)
+            self.date_issue = new_date
+        if (kwargs.get('date_tentative', None)
+                and type(self.date_tentative) is str):
+            new_date = datetime.strptime(kwargs['date_tentative'], dt_time)
+            self.date_tentative = new_date
+
         super().__init__(**kwargs)

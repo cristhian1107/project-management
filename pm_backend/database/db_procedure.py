@@ -97,9 +97,10 @@ class DBProcedures():
         parameters.append(company_id)
         parameters.append(department)
         tables = storage.exec_procedure('requests_all', parameters)
+
         if not tables:
             return (None)
-        
+
         for x in range(0, len(tables)):
             for opt in tables[x]:
                 item = Request(**opt)
