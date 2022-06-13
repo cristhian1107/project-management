@@ -479,13 +479,13 @@ BEGIN
         r.id = pbigid;
 
     SELECT
-          re.project_id , re.item , re.table_sta , re.code_sta
+          re.request_id , re.item , re.table_sta , re.code_sta
         , re.date_issue , re.user_id , sta.name as name_sta
         , re.create_at , re.create_by , re.update_at , re.update_by
     FROM requests_events re
     LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
     WHERE
-        re.project_id = pbigid;
+        re.request_id = pbigid;
 
 END $$
 DELIMITER ;
