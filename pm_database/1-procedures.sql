@@ -363,8 +363,14 @@ BEGIN
         `alias` = 'CON';
 
     -- * Code correlative * --
-
-    SELECT CONCAT(t.alias, CONVERT(YEAR(pdtmdate_issue), char), '-',
+    DECLARE vvch_alias VARCHAR;
+    SELECT `alias` INTO vvch_alias
+    FROM tables
+    WHERE
+	`table` = pinttable_typ AND
+	code = pintcode_typ;
+	
+    SELECT CONCAT(vvch_alias, CONVERT(YEAR(pdtmdate_issue), char), '-',
             IF( COUNT(id),
                 LPAD(CONVERT(COUNT(id), char), 7, '0'),
                 '0000000')) INTO pvchcode
