@@ -10,18 +10,25 @@ from database.db_procedure import DBProcedures
 import jwt
 from datetime import datetime
 time = '%Y-%m-%dT%H:%M:%S.%f'
+dt_date = '%Y-%m-%d'
 
 
-@app_views.route('/allrequest', methods=['GET'],
+@app_views.route('/requestall', methods=['GET'],
                  strict_slashes=False)
-def all_request(date):
+def all_request():
     """returns list of all projects"""
-    start = request.args.get('start', None)
-    end = request.args.get('end', None)
+    date_begin = datetime.strptime(request.args.get('date_begin', None), dt_date)
+    date_end = datetime.strptime(request.args.get('date_end', None), dt_date)
+    if date_end is None or date_begin is None:
+        return make_response(jsonify({'request': 'failure'}), 204)
+    company_id = request.args.get('company_id', None)
+    department = request.args.get('department', None)
     # Necesito una lista de diccionarios de todos los proyectos con
     # todos sus datos en ese rango de fecha
-    res = DBProcedures.request_all(start, end)
-    return make_response(jsonify(res.to_dict()), 200)
+    res = DBProcedures.requests_all(date_begin, date_end, company_id, department)
+    if res is None:
+        return make_response(jsonify({'request': 'empty'}), 204)
+    return make_response(jsonify(res), 200)
 
 
 @app_views.route('/request', methods=['GET'],
