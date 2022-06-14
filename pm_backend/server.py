@@ -1,28 +1,36 @@
 #!/usr/bin/python3
-""" This script starts a Flask web application """
+"""This script starts a Flask web application.
+"""
 from os import getenv
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
-from database.db_procedure import DBProcedures
-from database import storage
 from routes import app_views
+from database import storage
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-"""
+
 @app.teardown_appcontext
 def teardown(self):
-    """#Removes the current mysql.connector Session
-"""
-    return storage.close_db()
-"""
+    """Removes the current mysql connector Session.
+    """
+    # return storage.close_db()
+    return (None)
+
 
 @app.errorhandler(404)
 def error(e):
-    """Handler for 404 errors"""
+    """Handler for 404 errors.
+
+    Args:
+        e (err): Error message.
+
+    Returns:
+        response: json response.
+    """
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
