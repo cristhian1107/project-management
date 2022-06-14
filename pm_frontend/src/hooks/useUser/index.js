@@ -10,9 +10,9 @@ export default function useUser () {
 
   const login = useCallback(({username, password}) => {
     // setJWT(True)
+    console.log(username, password)
      loginService({username, password})
        .then(jwt => {
-         console.log("aaaa")
          console.log(jwt);
          setJWT(jwt);
        })
