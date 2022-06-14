@@ -18,15 +18,18 @@ dt_date = '%Y-%m-%d'
                  strict_slashes=False)
 def all_request():
     """returns list of all projects"""
-    date_begin = datetime.strptime(request.args.get('date_begin', None), dt_date)
-    date_end = datetime.strptime(request.args.get('date_end', None), dt_date)
+    date_begin = datetime.strptime(
+        request.args.get('date_begin', None), dt_date)
+    date_end = datetime.strptime(
+        request.args.get('date_end', None), dt_date)
     if date_end is None or date_begin is None:
         return make_response(jsonify({'request': 'failure'}), 204)
     company_id = request.args.get('company_id', None)
     department = request.args.get('department', None)
     # Necesito una lista de diccionarios de todos los proyectos con
     # todos sus datos en ese rango de fecha
-    res = DBProcedures.requests_all(date_begin, date_end, company_id, department)
+    res = DBProcedures.requests_all(
+        date_begin, date_end, company_id, department)
     if res is None:
         return make_response(jsonify({'request': 'empty'}), 204)
     return make_response(jsonify(res), 200)
@@ -51,8 +54,8 @@ def insert_request():
     """inserts a new requirement/project"""
     item = Request()
     data = request.get_json()
-    item.date_issue = datetime.strptime(data.get('date_issue', None), time)
-    # item.date_tentative = datetime.strptime(data.get('date_tentative', None), time)
+    item.date_issue = datetime.strptime(
+        data.get('date_issue', None), time)
     item.user_id = data.get('user_id', None)
     item.reason = data.get('reason', None)
     item.subject = data.get('subject', None)
