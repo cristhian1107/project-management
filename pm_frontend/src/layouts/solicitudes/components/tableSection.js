@@ -7,19 +7,39 @@ import Search from '@mui/icons-material/Search';
 
 import Button from 'layouts/solicitudes/components/button';
 import Input from 'layouts/solicitudes/components/input';
-
-
-
+import TableRoot from 'layouts/solicitudes/components/tableRoot';
 
 export default function TableSection ({ css }) {
 
   return (
-    <Box sx={{ ...css }}>
-      <Box sx={{ display: 'flex', alignItems: 'center'}}>
-        <Typography sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+    <Box sx={{ ...css}}>
+      <Box
+        sx={{
+          position: 'realtive',
+          display: 'flex',
+          alignItems: 'center',
+          overflowX: 'auto',
+          flexWrap: 'wrap',
+        }}
+      >
+        <Typography
+          sx={{
+            position: 'sticky',
+            left: 0,
+            fontSize: '1rem',
+            fontWeight: 'bold',
+          }}
+        >
           Filtrar por estado:
         </Typography>
-        <List sx={{ display: 'flex', gap: 1, pl: 1 }}>
+        <List
+          sx={{
+            minWidth: 558,
+            display: 'flex',
+            gap: 1,
+            pl: { sm: 1 },
+          }}
+        >
           <Button>Todos</Button>
           <Button
             css={{
@@ -96,7 +116,7 @@ export default function TableSection ({ css }) {
         </Grid>
       </Box>
       <Box sx={{ mt: 2 }}>
-        Póngame la tabla here!!
+        <TableRoot />
       </Box>
     </Box>
   )
