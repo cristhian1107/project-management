@@ -8,7 +8,7 @@ export default function Projects() {
   return (
     <>
       <HeaderSection />
-      <FiltersSection css={{ my: 7 }}/>
+      <FiltersSection css={{ my: 10 }}/>
       <TableSection />
     </>
   )

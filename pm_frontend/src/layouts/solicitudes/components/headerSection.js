@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from '@mui/icons-material/Add';
+import ModalFormInsertRequest from './modal';
 
 export default function HeaderSection() {
   return (
@@ -14,10 +15,11 @@ export default function HeaderSection() {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}
-    >
+      >
       <Typography variant='h4'>
         Solicitudes
-      </Typography>
+    </Typography>
+      <ModalFormInsertRequest>
       <IconButton
         sx={{
           display: 'flex',
@@ -28,13 +30,16 @@ export default function HeaderSection() {
           '&:hover': { background: 'var(--btn-gradient)', color: '#fff' },
         }}
       >
+
         <Icon>
           <AddIcon />
         </Icon>
-        <Typography sx={{ fontWeight: 'inherit', fontSize: { lg: '1.15rem' } }}>
-          Nueva solicitud
-        </Typography>
+      <Typography sx={{ fontWeight: 'inherit', fontSize: { lg: '1.15rem' } }}>
+      Nueva solicitud
+      </Typography>
       </IconButton>
+      </ModalFormInsertRequest>
     </Box>
   )
 }
+

@@ -4,7 +4,7 @@ export default function login ({ username, password }) {
   return fetch(`${ENDPOINT}/login`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'applicatio/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({ username, password })
   }).then(res => {
