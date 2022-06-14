@@ -32,11 +32,7 @@ export default function BasicLayout ({children}) {
     <Box
       sx={{
         borderRadius: 2,
-        my: 1,
         px: 1,
-        height: '100vh',
-        backgroundColor: 'transparent',
-        background: 'linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25))',
       }}
     >
       <Toolbar sx={{ display: 'inherit', p: 2 }}>
@@ -50,8 +46,9 @@ export default function BasicLayout ({children}) {
               color: 'white',
               letterSpacing: 4,
               fontWeight: 'bold',
+              textAlign: 'center',
             }}>
-            HelpProjectssss
+            GP Autrisa
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

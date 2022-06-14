@@ -13,9 +13,9 @@ const links = [
     icon: <DashboardIcon />
   },
   {
-    name: 'Projects',
-    route: '/projects',
-    key: 'projects',
+    name: 'Solicitudes',
+    route: '/solicitudes',
+    key: 'solicitudes',
     icon: <ProjectsIcon />
   },
   {
