@@ -9,7 +9,7 @@ export default function Projects() {
     <>
       <HeaderSection />
       <FiltersSection css={{ my: 7 }}/>
-      <TableSection css={{ minWidth: '728px' }}/>
+      <TableSection />
     </>
   )
 }
