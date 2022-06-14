@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 // Context provider
 import { UserContextProvider } from 'context/UserContext';
 import { HandleDrawerProvider } from 'context/DrawerContext';
-// Styles
+// Global Styles
 import 'index.css'
 // Componenet
 import App from './App';
