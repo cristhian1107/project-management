@@ -13,25 +13,12 @@ app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-<<<<<<< HEAD
 @app.teardown_appcontext
 def teardown(self):
     """Removes the current mysql connector Session.
     """
     # return storage.close_db()
     return (None)
-
-=======
-"""
-@app.teardown_appcontext
-def teardown(self):
-"""
-# Removes the current mysql.connector Session
-"""
-    return storage.close_db()
-"""
->>>>>>> 55c585af578f02977c7bdd82a1ad29a907ef9233
-
 
 @app.errorhandler(404)
 def error(e):
