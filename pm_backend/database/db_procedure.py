@@ -60,7 +60,7 @@ class DBProcedures():
         if item is None:
             return (False)
         parameters = item.to_list()
-        return (storage.exec_procedure('requests_insert', parameters))
+        return (storage.exec_save('requests_insert', parameters))
 
     @staticmethod
     def requests_events_insert(item=RequestEvent()) -> Boolean:

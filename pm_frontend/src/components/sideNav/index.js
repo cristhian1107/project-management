@@ -36,7 +36,7 @@ export default function SideNav () {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: { xs: 1, sm: 3, lg: 5 },
           width: { md: `calc(100% - ${drawerWidth}px)` },
           overflowX: 'hidden',
         }}

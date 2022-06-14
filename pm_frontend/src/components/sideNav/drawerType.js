@@ -24,10 +24,14 @@ export default function DrawerType ({ typeOfDrawer, children }) {
             sx={{
               display: { xs: 'block', lg: 'none' },
               '& .MuiDrawer-paper': {
+                minHeight: 'min-content',
+                borderRadius: 2,
+                my: 1,
                 mx: 1,
+                height: 'calc(100% - 16px)',
                 boxSizing: 'border-box',
                 width: drawerWidth,
-                backgroundColor: 'transparent',
+                background: 'linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25))',
                 boxShadow: 'none',
               },
             }}
@@ -41,10 +45,14 @@ export default function DrawerType ({ typeOfDrawer, children }) {
             sx={{
               display: { xs: 'none', lg: 'block' },
               '& .MuiDrawer-paper': {
+                minHeight: 'min-content',
+                borderRadius: 2,
+                my: 1,
                 mx: 1,
+                height: 'calc(100% - 16px)',
                 boxSizing: 'border-box',
                 width: drawerWidth,
-                backgroundColor: 'transparent',
+                background: 'linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25))',
                 boxShadow: 'none',
               },
             }}

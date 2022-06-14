@@ -73,7 +73,6 @@ class DBStorage:
             bool: True or False.
         """
         try:
-            records = []
             self.__cursor.callproc(name, parameters)
             self.__connector.commit()
             if self.__cursor.rowcount > 1:

@@ -61,7 +61,10 @@ export default function CustomAppBar () {
             variant="h6"
             noWrap
             component="div"
-            sx={{ textTransform: 'capitalize', fontSize: {xs: '1rem', sm: '1.25rem' }}}
+            sx={{
+              textTransform: 'capitalize',
+              fontSize: { xs: '1rem', sm: '1.25rem' },
+            }}
           >
             {pathname}
           </Typography>
