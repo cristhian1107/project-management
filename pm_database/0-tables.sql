@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `requests`
  `company_id`     bigint NOT NULL ,
  `user_id`        bigint NOT NULL ,
  `subject`        varchar(50) NOT NULL ,
- `reason`         varchar(250) NOT NULL ,
+ `reason`         varchar(500) NOT NULL ,
  `name`           varchar(50) NULL ,
  `description`    varchar(250) NULL ,
  `department`     varchar(50) NOT NULL ,

@@ -42,7 +42,6 @@ def get_request():
     id = request.args.get('id', None)
     # Necesito un diccionario de el proyectos con todos sus datos
     res = DBProcedures.requests_one(id)
-    print(res)
     if res is None:
         return make_response(jsonify({'request': 'empty'}), 204)
     return make_response(jsonify(res.to_dict()), 200)
@@ -66,7 +65,7 @@ def insert_request():
     # Data is sent to procedures and is returned on success or failure.
     res = DBProcedures.requests_insert(item)
     print(res)
-    if res is None:
+    if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
     return make_response(jsonify({'request': 'success'}), 201)
 
@@ -90,7 +89,7 @@ def update_request():
     item.code_typ = data.get('code_typ', None)
     item.code_pri = data.get('code_pri', None)
     res = DBProcedures.requests_update(item)
-    if res is None:
+    if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
     return make_response(jsonify({'request': 'success'}), 201)
 

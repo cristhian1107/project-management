@@ -45,7 +45,7 @@ class DBProcedures():
                 for opt in tables[x]:
                     new_user.options.append(Option(**opt))
 
-        return(new_user)
+        return (new_user)
 
     @staticmethod
     def requests_insert(item=Request()) -> Boolean:
@@ -75,7 +75,7 @@ class DBProcedures():
         if item is None:
             return (False)
         parameters = item.to_list()
-        return (storage.exec_procedure('requests_events_insert', parameters))
+        return (storage.exec_save('requests_events_insert', parameters))
 
     @staticmethod
     def requests_update(item=Request()) -> Boolean:
@@ -90,7 +90,7 @@ class DBProcedures():
         if item is None:
             return (False)
         parameters = item.to_list()
-        return (storage.exec_procedure('requests_insert', parameters))
+        return (storage.exec_save('requests_update', parameters))
 
     @staticmethod
     def requests_all(date_begin, date_end, company_id, department) -> list:
@@ -121,7 +121,7 @@ class DBProcedures():
             for opt in tables[x]:
                 item = Request(**opt)
                 items.append(item.to_dict())
-        return(items)
+        return (items)
 
     @staticmethod
     def requests_one(id) -> Request:
@@ -150,4 +150,4 @@ class DBProcedures():
             if x == 1:
                 for opt in tables[x]:
                     item.states.append(RequestEvent(**opt))
-        return(item)
+        return (item)
