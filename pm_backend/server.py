@@ -20,6 +20,7 @@ def teardown(self):
     # return storage.close_db()
     return (None)
 
+
 @app.errorhandler(404)
 def error(e):
     """Handler for 404 errors.
