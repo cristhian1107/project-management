@@ -9,7 +9,7 @@ import SignIn from 'layouts/authentication/sign-in';
 import Dashboard from 'layouts/dashboard';
 import Profile from 'layouts/profile';
 import Tables from 'layouts/tables';
-import Projects from 'layouts/projects';
+import Solicitudes from 'layouts/solicitudes';
 import SideNav from 'components/sideNav';
 
 const customTheme = createTheme({
@@ -30,7 +30,7 @@ function App() {
             <Route path='/' element={<SideNav />} >
               <Route index element={<Navigate to='/dashboard' />} />
               <Route path='dashboard' element={<Dashboard />} />
-              <Route path='Projects' element={<Projects />} />
+              <Route path='Solicitudes' element={<Solicitudes />} />
               <Route path='tables' element={<Tables />} />
               <Route path='profile' element={<Profile />} />
               <Route path='*' element={<Navigate to='/' />} />
