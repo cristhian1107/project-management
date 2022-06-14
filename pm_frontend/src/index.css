@@ -12,9 +12,14 @@
 /*     monospace; */
 /* } */
 :root {
-  --btn-primary: rgba(25, 118, 210, 1);
-  --btn-gradient: linear-gradient(195deg, rgb(73, 163, 241), rgb(26, 115, 232));
+  /* --btn-primary: rgba(25, 118, 210, 1); */
+  --btn-primary: rgba(26, 115, 232, 1);
+  --btn-secondary: rgba(73, 163, 241, 1);
+  --btn-gradient: linear-gradient(195deg, rgba(73, 163, 241, 1), rgba(26, 115, 232, 1));
   --bg-white: rgba(240, 242, 245, 1);
+  --box-primary: rgba(31, 31, 31, 1);
+  --box-secondary: rgba(70, 70, 70, 1);
+  --box-gradient: linear-gradient(195deg, rgba(70, 70, 70 , 1), rgba(31, 31, 31, 1));
 }
 body {
   overflow-x: hidden;
