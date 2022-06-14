@@ -183,7 +183,7 @@ DROP PROCEDURE IF EXISTS requests_events_insert;
 -- =========================================================
 DELIMITER $$
 CREATE PROCEDURE requests_events_insert
-( INOUT pbigproject_id bigint
+( INOUT pbigrequest_id bigint
 , IN pintitem int
 , IN pinttable_sta int
 , IN pintcode_sta int
@@ -199,7 +199,7 @@ BEGIN
     SELECT IF(ISNULL(MAX(item)), 1, MAX(item) + 1)  INTO pintitem
     FROM requests_events
     WHERE
-        project_id = pbigproject_id;
+        request_id = pbigrequest_id;
 
     -- * User * --
     SELECT user INTO pvchcreate_by
@@ -209,11 +209,11 @@ BEGIN
 
     -- * Insert event * --
     INSERT INTO requests_events
-        ( project_id , item , table_sta , code_sta
+        ( request_id , item , table_sta , code_sta
         , date_issue , user_id , create_at , create_by
         , update_at , update_by)
     VALUES
-        ( pbigproject_id , pintitem , pinttable_sta , pintcode_sta
+        ( pbigrequest_id , pintitem , pinttable_sta , pintcode_sta
         , pdtmdate_issue , pbiguser_id , CURRENT_TIMESTAMP() , pvchcreate_by
         , NULL , NULL);
 
@@ -225,7 +225,7 @@ BEGIN
         , update_at = CURRENT_TIMESTAMP()
         , update_by = pvchcreate_by
     WHERE
-	id = pbigproject_id;
+	id = pbigrequest_id;
 
 END $$
 DELIMITER ;
@@ -446,6 +446,46 @@ BEGIN
         r.date_issue BETWEEN pdtmdate_begin AND pdtmdate_end AND
         r.company_id = IFNULL(pbigcompany_id, r.company_id) AND
         r.department = IFNULL(pvchdepartment, r.department);
+
+END $$
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS requests_one;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-13
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE requests_one
+( IN pbigid bigint )
+BEGIN
+
+    SELECT
+          r.id , r.table_typ , r.code_typ , r.code
+        , r.company_id , r.user_id , r.subject , r.reason
+        , r.name , r.description , r.department , r.campus
+        , r.date_issue , r.date_tentative , r.table_sta , r.code_sta
+        , r.table_pri , r.code_pri , r.percentage
+        , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
+        , r.create_at, r.create_by , r.update_at , r.update_by
+    FROM requests r
+    LEFT JOIN tables typ ON r.table_typ = typ.table AND r.code_typ = typ.code
+    LEFT JOIN tables sta ON r.table_sta = sta.table AND r.code_sta = sta.code
+    LEFT JOIN tables pri ON r.table_pri = pri.table AND r.code_pri = pri.code
+    WHERE
+        r.id = pbigid;
+
+    SELECT
+          re.request_id , re.item , re.table_sta , re.code_sta
+        , re.date_issue , re.user_id , sta.name as name_sta
+        , re.create_at , re.create_by , re.update_at , re.update_by
+    FROM requests_events re
+    LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+    WHERE
+        re.request_id = pbigid;
 
 END $$
 DELIMITER ;

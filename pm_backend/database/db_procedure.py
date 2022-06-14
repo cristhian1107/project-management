@@ -8,6 +8,7 @@ from models.user import User
 from models.role import Role
 from models.option import Option
 from models.request import Request
+from models.request_event import RequestEvent
 
 
 class DBProcedures():
@@ -59,7 +60,22 @@ class DBProcedures():
         if item is None:
             return (False)
         parameters = item.to_list()
-        return (storage.exec_procedure('requests_insert', parameters))
+        return (storage.exec_save('requests_insert', parameters))
+
+    @staticmethod
+    def requests_events_insert(item=RequestEvent()) -> Boolean:
+        """Insert new requests events.
+
+        Args:
+            item (RequestEvent): New object.
+
+        Returns:
+            Boolean: True or False.
+        """
+        if item is None:
+            return (False)
+        parameters = item.to_list()
+        return (storage.exec_procedure('requests_events_insert', parameters))
 
     @staticmethod
     def requests_update(item=Request()) -> Boolean:
@@ -97,11 +113,41 @@ class DBProcedures():
         parameters.append(company_id)
         parameters.append(department)
         tables = storage.exec_procedure('requests_all', parameters)
+
         if not tables:
             return (None)
-        
+
         for x in range(0, len(tables)):
             for opt in tables[x]:
                 item = Request(**opt)
                 items.append(item.to_dict())
         return(items)
+
+    @staticmethod
+    def requests_one(id) -> Request:
+        """Get one record request.
+
+        Args:
+            id (long): Filter by id.
+
+        Returns:
+            Request: object request.
+        """
+        item = Request()
+        items = []
+        parameters = []
+        parameters.append(id)
+        tables = storage.exec_procedure('requests_one', parameters)
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            # Info request.
+            if x == 0:
+                item = Request(**tables[x][0])
+            # Info states.
+            if x == 1:
+                for opt in tables[x]:
+                    item.states.append(RequestEvent(**opt))
+        return(item)

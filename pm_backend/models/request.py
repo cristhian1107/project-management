@@ -3,7 +3,6 @@
     (class) Request.
 """
 from models.base_model import BaseModel
-import hashlib
 
 
 class Request(BaseModel):
@@ -35,4 +34,5 @@ class Request(BaseModel):
         self.table_pri = None
         self.code_pri = None
         self.percentage = None
+        self.states = []
         super().__init__(**kwargs)
