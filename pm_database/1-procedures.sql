@@ -535,3 +535,28 @@ BEGIN
 
 END $$
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS departments_all;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-15
+-- Descripcion         : Select all departments
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE departments_all
+( IN pbigcompany_id bigint )
+BEGIN
+
+    SELECT DISTINCT
+          u.company_id AS company_id
+        , c.name AS company_name
+        , u.department AS department
+    FROM users u
+    INNER JOIN companies c ON u.company_id = c.id
+    WHERE
+        u.company_id = IFNULL(pbigcompany_id, u.company_id);
+
+END $$
+DELIMITER ;
