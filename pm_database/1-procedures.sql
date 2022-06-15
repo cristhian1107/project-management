@@ -515,3 +515,23 @@ BEGIN
 
 END $$
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS companies_all;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-15
+-- Descripcion         : Select all companies
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE companies_all ()
+BEGIN
+
+    SELECT
+          id, ruc, name, tradename, address
+        , create_at, create_by, update_at, update_by
+    FROM companies;
+
+END $$
+DELIMITER ;
