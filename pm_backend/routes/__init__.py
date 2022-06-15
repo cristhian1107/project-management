@@ -9,3 +9,4 @@ from routes.index import *
 from routes.user import *
 from routes.request import *
 from routes.table import *
+from routes.companie import *
