@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """Contains:
-    (class) Table.
+    (class) Companie.
 """
 from models.base_model import BaseModel
 
 
-class Table(BaseModel):
-    """Class that reflects the structure of the table Tables.
+class Companie(BaseModel):
+    """Class that reflects the structure of the table Companies.
 
     Args:
         BaseModel (cls): Parent class - Inheritance.

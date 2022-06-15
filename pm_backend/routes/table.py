@@ -3,8 +3,6 @@
 """
 from database import tables
 from models.table import Table
-from models.request import Request
-from models.request_event import RequestEvent
 from routes import app_views
 from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures

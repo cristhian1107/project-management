@@ -6,7 +6,7 @@ from models.base_model import BaseModel
 
 
 class Option(BaseModel):
-    """Class that reflects the structure of the tables Option.
+    """Class that reflects the structure of the table Options.
 
     Args:
         BaseModel (cls): Parent class - Inheritance.
