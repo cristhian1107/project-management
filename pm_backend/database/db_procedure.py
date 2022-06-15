@@ -181,7 +181,7 @@ class DBProcedures():
         return (items)
 
     @staticmethod
-    def tables_all() -> list:
+    def companies_all() -> list:
         """Get all companies.
 
         Returns:
