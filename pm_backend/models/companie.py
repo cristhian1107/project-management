@@ -15,10 +15,9 @@ class Companie(BaseModel):
     def __init__(self, **kwargs):
         """Initialize a new instance of the class.
         """
-        self.table = None
-        self.code = None
+        self.id = None
+        self.ruc = None
         self.name = None
-        self.alias = None
-        self.description = None
-        self.is_active = False
+        self.tradename = None
+        self.address = None
         super().__init__(**kwargs)
