@@ -6,7 +6,7 @@ export default function ItemButton ({ css, children }) {
       sx={{
         background: 'var(--box-gradient)',
         color: '#fff',
-        borderRadius: 4,
+        borderRadius: 2,
         textTransform: 'none',
         px: 4,
         py: 0,

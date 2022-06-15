@@ -9,14 +9,15 @@ export default function Input({ css, ...data }) {
       {...data}
       sx={{
         border: 'none',
-        borderRadius:{ xs: 4, sm: 0} ,
-        color: '#fff',
+        borderRadius: 0,
         px: 1,
         py: 1,
         fontSize: '1.15rem',
         outline: 'none',
-        background: 'var(--btn-gradient)',
-        '&::placeholder': { color: '#fffa' },
+        background: 'transparent',
+        borderBottom: '1px solid #0005',
+        color: '#000a',
+        '&::placeholder': { color: '#0005' },
         ...css,
       }}
     />

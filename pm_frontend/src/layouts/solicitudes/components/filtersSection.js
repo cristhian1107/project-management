@@ -19,7 +19,7 @@ export default function FiltersSection ({ css }) {
           pt: 2,
           px: { sm: 2 },
           justifyContent: { xs: 'space-between', sm: 'space-around', lg: 'center' },
-          gap: { xs: 1, sm: 0 },
+          gap: { xs: 1, sm: 1, xl: 2 },
         }}
       >
         <Input
@@ -27,50 +27,43 @@ export default function FiltersSection ({ css }) {
           type='date'
           placeholder='Fecha Inicio'
           xs={5.8}
-          sm={2.5}
-          lg={1.5}
-          css={{
-            borderRadius: { xs: 4, sm: '16px 0 0 16px' },
-          }}
+          sm={2.8}
+          xl={2}
         />
         <Input
           component='input'
           type='date'
           placeholder='Fecha Fin'
           xs={5.8}
-          sm={2.5}
-          lg={1.5}
+          sm={2.8}
+          xl={2}
         />
         <Input
           component='input'
           type='text'
           placeholder='Empresa'
           xs={12}
-          sm={2.5}
-          lg={1.5}
+          sm={2.8}
+          xl={2}
         />
         <Input
           component='input'
           type='select'
           placeholder='Area'
           xs={12}
-          sm={2.5}
-          lg={1.5}
-          css={{
-            borderRadius: { xs: 4, sm: '0 16px 16px 0' },
-          }}
+          sm={2.8}
+          xl={2}
         />
         <Grid
           item
           component='div'
           sx={{
-            // ml: { sm: 2 },
             display: 'flex',
             justifyContent: { xs: 'flex-end', sm: 'auto' },
+            mr: { sm: 0.4 },
           }}
           xs={12}
-          sm={2}
-          lg={1}
+          xl={1}
         >
           <IconButton
             type='submit'
@@ -78,9 +71,17 @@ export default function FiltersSection ({ css }) {
               color: 'inherit',
               width: 'min-content',
               background: 'var(--box-gradient)',
-              color: '#fff',
+              background: 'transparent',
+              color: 'var(--box-primary)',
               borderRadius: 4,
+              border: '1px solid var(--box-primary)',
+              mt: 1,
               px: 4,
+              py: 0.5,
+              '&:hover': {
+                background: 'var(--box-gradient)',
+                color: '#fff',
+              },
             }}
           >
             <SearchIcon />

@@ -76,7 +76,7 @@ export default function TableSection ({ css }) {
           sx={{
             background: '#fff',
             width: {xs: 'calc(100vw - 16px)', sm: '380px' },
-            boxShadow: '1px 2px 5px var(--box-secondary)',
+            boxShadow: '2px 2px 5px #0005',
             borderRadius: 4,
             overflow: 'hidden',
           }}
@@ -88,9 +88,10 @@ export default function TableSection ({ css }) {
             type='text'
             placeholder='Buscar'
             css={{
-              borderRadius: 0,
+              borderBottom: 0,
               background: 'none',
               color: '#000a',
+              boxShadow: 'none',
               '&::placeholder': { color: '#0007' },
             }}
           />
@@ -101,16 +102,28 @@ export default function TableSection ({ css }) {
           >
             <Button
               css={{
-                py: 1,
+                px: 0.5,
+                py: 0.5,
+                color: '#000a',
+                width: '100%',
                 borderRadius: 0,
                 background: 'none',
-                color: '#000a',
-                px: 0,
-                minWidth: 'fit-content',
-                width: '100%',
+                justifyContent: 'flex-end',
+                '&:hover > svg': {
+                  background: 'var(--box-secondary)',
+                  color: '#fff',
+                  boxShadow: '1px 1px 5px var(--box-secondary)',
+                },
               }}
             >
-              <Search />
+              <Search
+                sx={{
+                  width: 38,
+                  height: 38,
+                  p: 1,
+                  borderRadius: '100%',
+                }}
+              />
             </Button>
           </Grid>
         </Grid>
