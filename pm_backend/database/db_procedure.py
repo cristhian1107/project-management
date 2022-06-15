@@ -199,3 +199,26 @@ class DBProcedures():
                 item = Companie(**opt)
                 items.append(item.to_dict())
         return (items)
+
+    @staticmethod
+    def departments_all(company_id=None) -> list:
+        """Get all departments by company.
+
+        Args:
+            id (long): Filter by id.
+
+        Returns:
+            list: List of contain all departments.
+        """
+        items = []
+        parameters = []
+        parameters.append(company_id)
+        tables = storage.exec_procedure('departments_all', parameters)
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            for opt in tables[x]:
+                items.append(opt)
+        return (items)

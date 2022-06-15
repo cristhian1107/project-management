@@ -20,3 +20,17 @@ def all_tables():
     if res is None:
         return make_response(jsonify({'request': 'empty'}), 204)
     return make_response(jsonify(res), 200)
+
+
+@app_views.route('/departmentall', methods=['GET'], strict_slashes=False)
+def all_departments():
+    """API (GET) Route /departmentall
+
+    Returns:
+        response: JSON contain records of departments.
+    """
+    company_id = request.args.get('company_id', None)
+    res = DBProcedures.departments_all(company_id)
+    if res is None:
+        return make_response(jsonify({'request': 'empty'}), 204)
+    return make_response(jsonify(res), 200)
