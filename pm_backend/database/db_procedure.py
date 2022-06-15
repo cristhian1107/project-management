@@ -10,6 +10,7 @@ from models.option import Option
 from models.request import Request
 from models.request_event import RequestEvent
 from models.table import Table
+from models.companie import Companie
 
 
 class DBProcedures():
@@ -176,5 +177,25 @@ class DBProcedures():
         for x in range(0, len(tables)):
             for opt in tables[x]:
                 item = Table(**opt)
+                items.append(item.to_dict())
+        return (items)
+
+    @staticmethod
+    def tables_all() -> list:
+        """Get all companies.
+
+        Returns:
+            list: List of contain all companies.
+        """
+        item = Companie()
+        items = []
+        tables = storage.exec_procedure('companies_all')
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            for opt in tables[x]:
+                item = Companie(**opt)
                 items.append(item.to_dict())
         return (items)
