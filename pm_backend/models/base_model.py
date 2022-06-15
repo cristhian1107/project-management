@@ -70,17 +70,19 @@ class BaseModel:
 
         # Dictionary and List and Date.
         for key, value in new_dict.items():
+            # Lists
             if type(value) == list:
                 child_list = []
                 for item in value:
                     child_list.append(item.to_dict(audit))
                 new_dict[key] = child_list
-
+            # Objects
             if type(value).__name__ in class_list:
                 new_dict[key] = value.to_dict(audit)
-
+            # Datetime
             if type(value) is datetime:
                 new_dict[key] = value.strftime(time)
+
         return (new_dict)
 
     def to_list(self, audit=False):
@@ -89,7 +91,17 @@ class BaseModel:
         new_dict = self.__dict__.copy()
         avoid = ['password', '_sa_instance_state']
         list_data = []
+
+        # Exclude information.
         for key, value in new_dict.items():
+            # Lists
+            if type(value) == list:
+                continue
+            # Objects
+            if type(value).__name__ in class_list:
+                continue
+            # Custom
             if key not in avoid:
                 list_data.append(value)
-        return list_data
+
+        return (list_data)

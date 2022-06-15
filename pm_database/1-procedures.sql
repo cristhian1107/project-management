@@ -324,7 +324,7 @@ DROP PROCEDURE IF EXISTS requests_update;
 -- =========================================================
 DELIMITER $$
 CREATE PROCEDURE requests_update
-( INOUT pbigid bigint
+( IN pbigid bigint
 , IN pinttable_typ int
 , IN pintcode_typ int
 , IN pvchcode varchar(50)
@@ -371,16 +371,16 @@ BEGIN
 	    `table` = pinttable_typ AND
 	    code = pintcode_typ;
 
-    SELECT CONCAT(v_alias_typ, CONVERT(YEAR(pdtmdate_issue), char), '-',
-            IF( COUNT(id),
-                LPAD(CONVERT(COUNT(id), char), 7, '0'),
-                '0000000')) INTO pvchcode
+    -- ?SELECT v_alias_typ;
+
+    SELECT CONCAT(v_alias_typ, CONVERT(YEAR(pdtmdate_issue), char), '-', LPAD(CONVERT(COUNT(id), char), 7, '0')) INTO pvchcode
     FROM requests r
     INNER JOIN tables t ON r.table_typ = t.table AND r.code_typ = t.code
-        WHERE
+    WHERE
         table_typ = pinttable_typ AND
         code_typ = pintcode_typ;
 
+    -- ?SELECT pvchcode;
     -- * Update request * --
     UPDATE requests
         SET

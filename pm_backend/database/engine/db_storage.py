@@ -2,6 +2,7 @@
 """Contains:
     (class) DBStorage.
 """
+from sqlite3 import Cursor
 import mysql.connector
 
 
@@ -57,7 +58,7 @@ class DBStorage:
                 if data:
                     records.append(data)
             self.__connector.commit()
-            return records
+            return (records)
         except mysql.connector.Error as error:
             self.__connector.rollback()
             print(error)
@@ -72,14 +73,14 @@ class DBStorage:
         Returns:
             bool: True or False.
         """
+        is_correct = False
         try:
             self.__cursor.callproc(name, parameters)
             self.__connector.commit()
-            if self.__cursor.rowcount > 1:
-                return (True)
-            else:
-                return (False)
+            if self.__cursor.rowcount > 0:
+                is_correct = True
+            return (is_correct)
         except mysql.connector.Error as error:
             self.__connector.rollback()
             print(error)
-            return (False)
+            return (is_correct)
