@@ -5,9 +5,9 @@ import Grid from '@mui/material/Grid';
 import List from '@mui/material/List'
 import Search from '@mui/icons-material/Search';
 
-import Button from 'layouts/solicitudes/components/button';
-import Input from 'layouts/solicitudes/components/input';
-import TableRoot from 'layouts/solicitudes/components/tableRoot';
+import TableRoot from 'layouts/solicitudes/components/tableSection/tableRoot';
+import Button from 'components/button';
+import Input from 'components/input';
 
 export default function TableSection ({ css }) {
 

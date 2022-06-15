@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Box from '@mui/material/Box';
 import IconButton from "@mui/material/IconButton";
 import AddIcon from '@mui/icons-material/Add';
-import ModalFormInsertRequest from './modal';
+import ModalFormInsertRequest from 'components/modal';
 
 export default function HeaderSection() {
   return (
