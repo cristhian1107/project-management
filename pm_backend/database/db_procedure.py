@@ -9,6 +9,7 @@ from models.role import Role
 from models.option import Option
 from models.request import Request
 from models.request_event import RequestEvent
+from models.table import Table
 
 
 class DBProcedures():
@@ -151,3 +152,29 @@ class DBProcedures():
                 for opt in tables[x]:
                     item.states.append(RequestEvent(**opt))
         return (item)
+
+    @staticmethod
+    def tables_all(table, all_records=False) -> list:
+        """Get one table type.
+
+        Args:
+            id (long): Filter by id.
+
+        Returns:
+            list: List of contain all tables.
+        """
+        item = Table()
+        items = []
+        parameters = []
+        parameters.append(table)
+        parameters.append(all_records)
+        tables = storage.exec_procedure('tables_all', parameters)
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            for opt in tables[x]:
+                item = Table(**opt)
+                items.append(item.to_dict())
+        return (items)

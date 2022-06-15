@@ -489,3 +489,29 @@ BEGIN
 
 END $$
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS tables_all;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-15
+-- Descripcion         : Select all table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE tables_all
+( IN pinttable int
+, IN pbitall bit )
+BEGIN
+
+    SELECT
+          `table` , `code` , `name` , `alias`
+        , `description` , `is_active`
+        , `create_at` , `create_by` , `update_at` , `update_by`
+    FROM tables
+    WHERE
+        `table` = IFNULL(pinttable, `table`) AND
+        `is_active` = IF(pbitall, `is_active`, 1);
+
+END $$
+DELIMITER ;
