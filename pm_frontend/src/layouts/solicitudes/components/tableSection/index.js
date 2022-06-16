@@ -31,7 +31,7 @@ export default function TableSection({ css }) {
     });
   }, [])
 
-  console.log(states)
+  //? console.log(states)
   return (
     <Box sx={{ ...css }}>
       <Box
@@ -63,7 +63,7 @@ export default function TableSection({ css }) {
         >
           <Button>Todos</Button>
           {
-            states.length != 0 ? (
+            states.length !== 0 ? (
               states.map((state) => {
                 return (
                   <Button
