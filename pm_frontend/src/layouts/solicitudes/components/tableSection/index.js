@@ -64,9 +64,11 @@ export default function TableSection({ css }) {
           <Button>Todos</Button>
           {
             states.map((state) => {
+              console.log(state);
               return (
                 <Button
                   css={{
+                    minWidth: 'max-content',
                     background: 'transparent',
                     color: '#000',
                     border: `2px solid ${state.description}`,
