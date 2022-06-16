@@ -4,15 +4,36 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List'
 import Search from '@mui/icons-material/Search';
+import { useState, useEffect } from 'react';
 
 import TableRoot from 'layouts/solicitudes/components/tableSection/tableRoot';
 import Button from 'components/button';
 import Input from 'components/input';
 
-export default function TableSection ({ css }) {
 
+export default function TableSection({ css }) {
+
+  const ENDPOINT = 'http://127.0.0.1:5000/'
+
+  const [states, setStates] = useState([])
+
+  useEffect(() => {
+    fetch(`${ENDPOINT}/tableall?table_code=3`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then(res => {
+      if (!res.ok) throw new Error('Response is NOT ok');
+      return res.json();
+    }).then(res => {
+      setStates(res) // Set values.
+    });
+  }, [])
+
+  console.log(states)
   return (
-    <Box sx={{ ...css}}>
+    <Box sx={{ ...css }}>
       <Box
         sx={{
           position: 'realtive',
@@ -41,41 +62,60 @@ export default function TableSection ({ css }) {
           }}
         >
           <Button>Todos</Button>
-          <Button
-            css={{
-              background: 'transparent',
-              color: '#000',
-              border: 1,
-            }}
-          >
-            Pendientes
-          </Button>
-          <Button
-            css={{
-              background: 'transparent',
-              color: '#000',
-              border: 1,
-            }}
-          >
-            Solicitados
-          </Button>
-          <Button
-            css={{
-              background: 'transparent',
-              color: '#000',
-              border: 1,
-            }}
-          >
-            En proceso
-          </Button>
+          {
+            states.length != 0 ? (
+              states.map((state) => {
+                return (
+                  <Button
+                    css={{
+                      background: 'transparent',
+                      color: '#000',
+                      border: '1px solid #f55',
+                    }}
+                  >
+                    {state.name}
+                  </Button>
+                )
+              })
+            ) : (
+              <>
+                <Button
+                  css={{
+                    background: 'transparent',
+                    color: '#000',
+                    border: 1,
+                  }}
+                >
+                  Pendientes
+                </Button>
+                <Button
+                  css={{
+                    background: 'transparent',
+                    color: '#000',
+                    border: 1,
+                  }}
+                >
+                  Solicitados
+                </Button>
+                <Button
+                  css={{
+                    background: 'transparent',
+                    color: '#000',
+                    border: 1,
+                  }}
+                >
+                  En proceso
+                </Button>
+              </>
+            )}
         </List>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: {sm: 'flex-end'} }}>
+      <Box sx={{ display: 'flex', justifyContent: { sm: 'flex-end' } }}>
         <Grid
           container
           sx={{
             background: '#fff',
-            width: {xs: 'calc(100vw - 16px)', sm: '380px' },
+            width: { xs: 'calc(100vw - 16px)', sm: '380px' },
             boxShadow: '2px 2px 5px #0005',
             borderRadius: 4,
             overflow: 'hidden',
