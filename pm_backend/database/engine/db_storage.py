@@ -2,8 +2,11 @@
 """Contains:
     (class) DBStorage.
 """
+from multiprocessing import parent_process
 from sqlite3 import Cursor
 import mysql.connector
+import traceback
+from general.library import Libraries
 
 
 class DBStorage:
@@ -61,7 +64,9 @@ class DBStorage:
             return (records)
         except mysql.connector.Error as error:
             self.__connector.rollback()
-            print(error)
+            Libraries.write_traceback(error.msg, traceback.format_exc())
+        finally:
+            self.close_db()
 
     def exec_save(self, name, parameters=[]):
         """Execute a stored procedure on the MySQL Database.
@@ -84,3 +89,5 @@ class DBStorage:
             self.__connector.rollback()
             print(error)
             return (is_correct)
+        finally:
+            self.close_db()

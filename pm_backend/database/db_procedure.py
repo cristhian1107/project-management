@@ -2,8 +2,8 @@
 """Contains:
     (class) DBProcedure.
 """
+from database.engine.db_storage import DBStorage
 from xmlrpc.client import Boolean
-from database import storage
 from models.user import User
 from models.role import Role
 from models.option import Option
@@ -30,6 +30,8 @@ class DBProcedures():
         parameters = []
         parameters.append(user)
         parameters.append(pwd)
+        storage = DBStorage()
+        storage.open_db()
         tables = storage.exec_procedure('users_login', parameters)
 
         if not tables:
@@ -61,6 +63,8 @@ class DBProcedures():
         """
         if item is None:
             return (False)
+        storage = DBStorage()
+        storage.open_db()
         parameters = item.to_list()
         return (storage.exec_save('requests_insert', parameters))
 
@@ -76,6 +80,8 @@ class DBProcedures():
         """
         if item is None:
             return (False)
+        storage = DBStorage()
+        storage.open_db()
         parameters = item.to_list()
         return (storage.exec_save('requests_events_insert', parameters))
 
@@ -91,6 +97,8 @@ class DBProcedures():
         """
         if item is None:
             return (False)
+        storage = DBStorage()
+        storage.open_db()
         parameters = item.to_list()
         return (storage.exec_save('requests_update', parameters))
 
@@ -114,6 +122,8 @@ class DBProcedures():
         parameters.append(date_end)
         parameters.append(company_id)
         parameters.append(department)
+        storage = DBStorage()
+        storage.open_db()
         tables = storage.exec_procedure('requests_all', parameters)
 
         if not tables:
@@ -139,6 +149,8 @@ class DBProcedures():
         items = []
         parameters = []
         parameters.append(id)
+        storage = DBStorage()
+        storage.open_db()
         tables = storage.exec_procedure('requests_one', parameters)
 
         if not tables:
@@ -169,6 +181,8 @@ class DBProcedures():
         parameters = []
         parameters.append(table)
         parameters.append(all_records)
+        storage = DBStorage()
+        storage.open_db()
         tables = storage.exec_procedure('tables_all', parameters)
 
         if not tables:
@@ -189,6 +203,8 @@ class DBProcedures():
         """
         item = Companie()
         items = []
+        storage = DBStorage()
+        storage.open_db()
         tables = storage.exec_procedure('companies_all')
 
         if not tables:
@@ -213,6 +229,8 @@ class DBProcedures():
         items = []
         parameters = []
         parameters.append(company_id)
+        storage = DBStorage()
+        storage.open_db()
         tables = storage.exec_procedure('departments_all', parameters)
 
         if not tables:
