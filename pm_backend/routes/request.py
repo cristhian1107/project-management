@@ -1,20 +1,18 @@
 #!/usr/bin/python3
 """route for request"""
-from database import storage, tables
-from models.user import User
+from database import tables
 from models.request import Request
 from models.request_event import RequestEvent
 from routes import app_views
 from flask import jsonify, abort, request, make_response
-# from flasgger.utils import swag_from
 from database.db_procedure import DBProcedures
-# import jwt
 from datetime import datetime
+
 time = '%Y-%m-%dT%H:%M:%S.%f'
 dt_date = '%Y-%m-%d'
 
 
-@app_views.route('/requestall', methods=['GET'],
+@app_views.route('/request/all', methods=['GET'],
                  strict_slashes=False)
 def all_request():
     """returns list of all projects"""
@@ -94,18 +92,22 @@ def update_request():
     return make_response(jsonify({'request': 'success'}), 201)
 
 
-@app_views.route('/event', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/request/event', methods=['POST'], strict_slashes=False)
 def update_event():
-    """changes state"""
+    """API (POST) Route /request/event.
+    Change the status of the request.
+
+    Returns:
+        Response: JSON success or failure.
+    """
     data = request.get_json()
     item = RequestEvent()
-    item.project_id = data.get('project_id', None)
+    item.request_id = data.get('request_id', None)
     item.code_sta = data.get('code_sta', None)
-    item.tabe_sta = tables.get('STA')
+    item.table_sta = tables.get('STA')
     item.date_issue = data.get('date_issue', None)
     item.user_id = data.get('user_id', None)
     res = DBProcedures.requests_events_insert(item)
-    if res is None:
+    if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
     return make_response(jsonify({'request': 'success'}), 201)

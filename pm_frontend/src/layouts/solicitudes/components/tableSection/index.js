@@ -18,7 +18,7 @@ export default function TableSection({ css }) {
   const [states, setStates] = useState([])
 
   useEffect(() => {
-    fetch(`${ENDPOINT}/tableall?table_code=3`, {
+    fetch(`${ENDPOINT}/table/all?table_code=3`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -66,13 +66,10 @@ export default function TableSection({ css }) {
             states.map((state) => {
               return (
                 <Button
-                  key={`${state?.alias}_${state?.name}`}
-                  onClick={(e) => console.log(e.currentTarget)}
                   css={{
-                    minWidth: 'max-content',
                     background: 'transparent',
                     color: '#000',
-                    border: '1px solid #f55',
+                    border: `2px solid ${state.description}`,
                   }}
                 >
                   {state.name}

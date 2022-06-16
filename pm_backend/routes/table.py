@@ -8,9 +8,9 @@ from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
 
 
-@app_views.route('/tableall', methods=['GET'], strict_slashes=False)
+@app_views.route('/table/all', methods=['GET'], strict_slashes=False)
 def all_tables():
-    """API (GET) Route /tableall
+    """API (GET) Route /table/all
 
     Returns:
         response: JSON contain records of tables.
@@ -22,7 +22,7 @@ def all_tables():
     return make_response(jsonify(res), 200)
 
 
-@app_views.route('/departmentall', methods=['GET'], strict_slashes=False)
+@app_views.route('/department/all', methods=['GET'], strict_slashes=False)
 def all_departments():
     """API (GET) Route /departmentall
 

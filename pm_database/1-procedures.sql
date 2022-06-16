@@ -437,15 +437,18 @@ BEGIN
         , r.date_issue , r.date_tentative , r.table_sta , r.code_sta
         , r.table_pri , r.code_pri , r.percentage
         , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
+        , com.name as company_name, com.tradename as company_tradename
         , r.create_at, r.create_by , r.update_at , r.update_by
     FROM requests r
     LEFT JOIN tables typ ON r.table_typ = typ.table AND r.code_typ = typ.code
     LEFT JOIN tables sta ON r.table_sta = sta.table AND r.code_sta = sta.code
     LEFT JOIN tables pri ON r.table_pri = pri.table AND r.code_pri = pri.code
+    LEFT JOIN companies com ON r.company_id = com.id
     WHERE
-        r.date_issue BETWEEN pdtmdate_begin AND pdtmdate_end AND
+        CONVERT(r.date_issue, date) BETWEEN CONVERT(pdtmdate_begin, date) AND CONVERT(pdtmdate_end, date) AND
         r.company_id = IFNULL(pbigcompany_id, r.company_id) AND
-        r.department = IFNULL(pvchdepartment, r.department);
+        r.department = IFNULL(pvchdepartment, r.department)
+    ORDER BY r.id desc;
 
 END $$
 DELIMITER ;
@@ -485,7 +488,8 @@ BEGIN
     FROM requests_events re
     LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
     WHERE
-        re.request_id = pbigid;
+        re.request_id = pbigid
+    ORDER BY re.request_id desc, re.item desc;
 
 END $$
 DELIMITER ;
