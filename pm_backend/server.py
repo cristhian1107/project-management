@@ -5,7 +5,6 @@ from os import getenv
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from routes import app_views
-from database import storage
 
 
 app = Flask(__name__)

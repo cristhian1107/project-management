@@ -1,1 +1,5 @@
+# File compilation.
 **/__pycache__
+
+# Log file
+log.txt
