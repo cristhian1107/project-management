@@ -7,7 +7,7 @@ from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
 
 
-@app_views.route('/companyall', methods=['GET'], strict_slashes=False)
+@app_views.route('/company/all', methods=['GET'], strict_slashes=False)
 def all_companies():
     """API (GET) Route /companyall
 
