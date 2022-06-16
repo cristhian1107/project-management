@@ -1,15 +1,13 @@
 #!/usr/bin/python3
 """route for request"""
-from database import storage, tables
-from models.user import User
+from database import tables
 from models.request import Request
 from models.request_event import RequestEvent
 from routes import app_views
 from flask import jsonify, abort, request, make_response
-# from flasgger.utils import swag_from
 from database.db_procedure import DBProcedures
-# import jwt
 from datetime import datetime
+
 time = '%Y-%m-%dT%H:%M:%S.%f'
 dt_date = '%Y-%m-%d'
 
