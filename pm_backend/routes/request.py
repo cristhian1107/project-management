@@ -12,7 +12,7 @@ time = '%Y-%m-%dT%H:%M:%S.%f'
 dt_date = '%Y-%m-%d'
 
 
-@app_views.route('/requestall', methods=['GET'],
+@app_views.route('/request/all', methods=['GET'],
                  strict_slashes=False)
 def all_request():
     """returns list of all projects"""
