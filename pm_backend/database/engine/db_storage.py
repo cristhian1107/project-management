@@ -2,8 +2,6 @@
 """Contains:
     (class) DBStorage.
 """
-from multiprocessing import parent_process
-from sqlite3 import Cursor
 import mysql.connector
 import traceback
 from general.library import Libraries
@@ -31,7 +29,7 @@ class DBStorage:
         """
         try:
             self.__cursor = self.__connector.cursor(dictionary=True)
-            print("Connection is open")
+            Libraries.write_log('Connection is open MySQL')
         except mysql.connector.Error as error:
             print(error)
 
@@ -41,7 +39,7 @@ class DBStorage:
         if self.__connector.is_connected():
             self.__cursor.close()
             self.__connector.close()
-            print("Connection is closed")
+            Libraries.write_log('Connection is closed MySQL')
 
     def exec_procedure(self, name, parameters=[]):
         """Execute a stored procedure on the MySQL Database.
@@ -64,7 +62,7 @@ class DBStorage:
             return (records)
         except mysql.connector.Error as error:
             self.__connector.rollback()
-            Libraries.write_traceback(error.msg, traceback.format_exc())
+            Libraries.write_log(error.msg, traceback.format_exc())
         finally:
             self.close_db()
 

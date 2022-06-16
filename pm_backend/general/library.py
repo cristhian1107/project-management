@@ -14,7 +14,7 @@ class Libraries():
     """
 
     @staticmethod
-    def write_traceback(msm_error, trace_error=None):
+    def write_log(msm_error, trace_error=None):
         """Write events and error in log.txt file.
 
         Args:
