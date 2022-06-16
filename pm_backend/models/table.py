@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """Contains:
-    (class) Role.
+    (class) Table.
 """
 from models.base_model import BaseModel
 
 
-class Role(BaseModel):
-    """Class that reflects the structure of the table Roles.
+class Table(BaseModel):
+    """Class that reflects the structure of the table Tables.
 
     Args:
         BaseModel (cls): Parent class - Inheritance.
@@ -15,8 +15,10 @@ class Role(BaseModel):
     def __init__(self, **kwargs):
         """Initialize a new instance of the class.
         """
-        self.id = 0
-        self.name = ''
-        self.description = ''
+        self.table = None
+        self.code = None
+        self.name = None
+        self.alias = None
+        self.description = None
         self.is_active = False
         super().__init__(**kwargs)

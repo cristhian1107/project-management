@@ -6,7 +6,7 @@ from models.base_model import BaseModel
 
 
 class Request(BaseModel):
-    """Class that reflects the structure of the tables Request.
+    """Class that reflects the structure of the table Requests.
 
     Args:
         BaseModel (cls): Parent class - Inheritance.

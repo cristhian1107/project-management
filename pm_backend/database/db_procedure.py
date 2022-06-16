@@ -9,6 +9,8 @@ from models.role import Role
 from models.option import Option
 from models.request import Request
 from models.request_event import RequestEvent
+from models.table import Table
+from models.companie import Companie
 
 
 class DBProcedures():
@@ -151,3 +153,72 @@ class DBProcedures():
                 for opt in tables[x]:
                     item.states.append(RequestEvent(**opt))
         return (item)
+
+    @staticmethod
+    def tables_all(table, all_records=False) -> list:
+        """Get one table type.
+
+        Args:
+            id (long): Filter by id.
+
+        Returns:
+            list: List of contain all tables.
+        """
+        item = Table()
+        items = []
+        parameters = []
+        parameters.append(table)
+        parameters.append(all_records)
+        tables = storage.exec_procedure('tables_all', parameters)
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            for opt in tables[x]:
+                item = Table(**opt)
+                items.append(item.to_dict())
+        return (items)
+
+    @staticmethod
+    def companies_all() -> list:
+        """Get all companies.
+
+        Returns:
+            list: List of contain all companies.
+        """
+        item = Companie()
+        items = []
+        tables = storage.exec_procedure('companies_all')
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            for opt in tables[x]:
+                item = Companie(**opt)
+                items.append(item.to_dict())
+        return (items)
+
+    @staticmethod
+    def departments_all(company_id=None) -> list:
+        """Get all departments by company.
+
+        Args:
+            id (long): Filter by id.
+
+        Returns:
+            list: List of contain all departments.
+        """
+        items = []
+        parameters = []
+        parameters.append(company_id)
+        tables = storage.exec_procedure('departments_all', parameters)
+
+        if not tables:
+            return (None)
+
+        for x in range(0, len(tables)):
+            for opt in tables[x]:
+                items.append(opt)
+        return (items)

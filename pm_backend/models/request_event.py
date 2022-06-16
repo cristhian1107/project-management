@@ -7,7 +7,7 @@ import hashlib
 
 
 class RequestEvent(BaseModel):
-    """Class that reflects the structure of the tables RequestEvent.
+    """Class that reflects the structure of the table RequestsEvents.
 
     Args:
         BaseModel (cls): Parent class - Inheritance.

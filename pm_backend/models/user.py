@@ -7,7 +7,7 @@ import hashlib
 
 
 class User(BaseModel):
-    """Class that reflects the structure of the tables Users.
+    """Class that reflects the structure of the table Users.
 
     Args:
         BaseModel (cls): Parent class - Inheritance.
