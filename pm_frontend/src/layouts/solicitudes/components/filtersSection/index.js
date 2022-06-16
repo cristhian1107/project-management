@@ -3,10 +3,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
 
 import SearchIcon from '@mui/icons-material/Search';
 
+import TextFieldFullWidth from 'components/textFieldFullWidth';
 import Calendar from 'components/calendar';
 
 export default function FiltersSection ({ css }) {
@@ -23,7 +23,7 @@ export default function FiltersSection ({ css }) {
           px: { sm: 2 },
           justifyContent: { xs: 'space-between', lg: 'center' },
           gap: { xs: 1, xl: 2 },
-          '& > div > div': { width: '100%' },
+          // '& > div > div': { width: '100%' },
         }}
       >
         <Grid item xs={5.8} sm={2.8} xl={2}>
@@ -33,7 +33,7 @@ export default function FiltersSection ({ css }) {
           <Calendar label='Fecha fin' onChange={() => console.log('set end date')} />
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
-        <TextField
+        <TextFieldFullWidth
           select
           id="filter_empresa"
           label="Empresa"
@@ -41,7 +41,7 @@ export default function FiltersSection ({ css }) {
         />
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
-        <TextField
+        <TextFieldFullWidth
           select
           id="filter_area"
           label="Area"
@@ -62,9 +62,7 @@ export default function FiltersSection ({ css }) {
           <IconButton
             type='submit'
             sx={{
-              color: 'inherit',
               width: 'min-content',
-              background: 'var(--box-gradient)',
               background: 'transparent',
               color: 'var(--box-primary)',
               borderRadius: 4,

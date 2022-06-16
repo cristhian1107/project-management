@@ -14,25 +14,25 @@ export default function HeaderSection() {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}
-      >
+    >
       <Typography variant='h4'>
         Solicitudes
-    </Typography>
-      <ModalFormInsertRequest>
-      <IconButton
-        sx={{
-          display: 'flex',
-          borderRadius: 2,
-          color: 'var(--btn-primary)',
-          border: '1px solid var(--btn-primary)',
-          '&:hover': { background: 'var(--btn-gradient)', color: '#fff' },
-        }}
-      >
-        <AddIcon />
-      <Typography sx={{ fontWeight: 'inherit', fontSize: { lg: '1.15rem' } }}>
-      Nueva solicitud
       </Typography>
-      </IconButton>
+      <ModalFormInsertRequest>
+        <IconButton
+          sx={{
+            display: 'flex',
+            borderRadius: 2,
+            color: 'var(--btn-primary)',
+            border: '1px solid var(--btn-primary)',
+            '&:hover': { background: 'var(--btn-gradient)', color: '#fff' },
+          }}
+        >
+          <AddIcon />
+          <Typography sx={{ fontWeight: 'inherit', fontSize: { lg: '1.15rem' } }}>
+            Nueva solicitud
+          </Typography>
+        </IconButton>
       </ModalFormInsertRequest>
     </Box>
   )
