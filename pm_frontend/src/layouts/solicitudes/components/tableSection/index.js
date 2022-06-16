@@ -13,7 +13,7 @@ import Input from 'components/input';
 
 export default function TableSection({ css }) {
 
-  const ENDPOINT = 'http://127.0.0.1:5000/'
+  const ENDPOINT = 'http://127.0.0.1:5000'
 
   const [states, setStates] = useState([])
 
@@ -31,7 +31,7 @@ export default function TableSection({ css }) {
     });
   }, [])
 
-  //? console.log(states)
+  console.log(states);
   return (
     <Box sx={{ ...css }}>
       <Box
@@ -63,51 +63,23 @@ export default function TableSection({ css }) {
         >
           <Button>Todos</Button>
           {
-            states.length !== 0 ? (
-              states.map((state) => {
-                return (
-                  <Button
-                    css={{
-                      background: 'transparent',
-                      color: '#000',
-                      border: '1px solid #f55',
-                    }}
-                  >
-                    {state.name}
-                  </Button>
-                )
-              })
-            ) : (
-              <>
+            states.map((state) => {
+              return (
                 <Button
+                  key={`${state?.alias}_${state?.name}`}
+                  onClick={(e) => console.log(e.currentTarget)}
                   css={{
+                    minWidth: 'max-content',
                     background: 'transparent',
                     color: '#000',
-                    border: 1,
+                    border: '1px solid #f55',
                   }}
                 >
-                  Pendientes
+                  {state.name}
                 </Button>
-                <Button
-                  css={{
-                    background: 'transparent',
-                    color: '#000',
-                    border: 1,
-                  }}
-                >
-                  Solicitados
-                </Button>
-                <Button
-                  css={{
-                    background: 'transparent',
-                    color: '#000',
-                    border: 1,
-                  }}
-                >
-                  En proceso
-                </Button>
-              </>
-            )}
+              )
+            })
+          }
         </List>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: { sm: 'flex-end' } }}>

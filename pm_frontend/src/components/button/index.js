@@ -1,8 +1,9 @@
 import Button from '@mui/material/Button';
 
-export default function ItemButton ({ css, children }) {
+export default function ItemButton ({ css, children, ...attributes }) {
   return (
     <Button
+      {...attributes}
       sx={{
         background: 'var(--box-gradient)',
         color: '#fff',

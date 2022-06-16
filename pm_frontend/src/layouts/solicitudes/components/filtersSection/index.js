@@ -10,6 +10,8 @@ import TextFieldFullWidth from 'components/textFieldFullWidth';
 import Calendar from 'components/calendar';
 
 export default function FiltersSection ({ css }) {
+  // fetch(`${process.env.REACT_APP_API_URL}/`)
+  // Me despiertan!! (:
   return (
     <Box sx={{ ...css }}>
       <Typography variant='h5' textAlign='center'>
@@ -38,7 +40,8 @@ export default function FiltersSection ({ css }) {
           id="filter_empresa"
           label="Empresa"
           variant="standard"
-        />
+        >
+        </TextFieldFullWidth>
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
         <TextFieldFullWidth
@@ -46,7 +49,8 @@ export default function FiltersSection ({ css }) {
           id="filter_area"
           label="Area"
           variant="standard"
-        />
+        >
+        </TextFieldFullWidth>
         </Grid>
         <Grid
           item

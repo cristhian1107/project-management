@@ -54,7 +54,7 @@ export default function ModalFormInsertRequest(props) {
                 <TextFieldFullWidth
                   required
                   id="outlined-basic"
-                  label="Titulo"
+                  label="Asunto"
                   variant="outlined"
                 />
               </Grid>
@@ -78,18 +78,7 @@ export default function ModalFormInsertRequest(props) {
                 <TextFieldFullWidth
                   required
                   id="outlined-basic"
-                  label="Asunto"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-              >
-                <TextFieldFullWidth
-                  required
-                  id="outlined-basic"
-                  label="Description"
+                  label="Razon"
                   variant="outlined"
                   multiline={true}
                   inputProps={{ maxLength: 500 }}

@@ -1,7 +1,5 @@
-const ENDPOINT = 'http://127.0.0.1:5000';
-
 export default function login ({ username, password }) {
-  return fetch(`${ENDPOINT}/login`, {
+  return fetch(`${process.env.REACT_APP_API_URL}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -11,6 +9,7 @@ export default function login ({ username, password }) {
     if (!res.ok) throw new Error('Response is NOT ok');
     return res.json();
   }).then(res => {
+    console.log(res);
     const { jwt } = res;
     window.localStorage.setItem('token', jwt);
     return jwt;
