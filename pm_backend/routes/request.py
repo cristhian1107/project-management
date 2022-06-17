@@ -53,6 +53,8 @@ def insert_request():
     data = request.get_json()
     item.date_issue = datetime.strptime(
         data.get('date_issue', None), time)
+    if item.date_issue is None or type(item.date_issue) is not datetime:
+        return make_response(jsonify({'request': 'failure'}), 204)
     item.user_id = data.get('user_id', None)
     item.reason = data.get('reason', None)
     item.subject = data.get('subject', None)

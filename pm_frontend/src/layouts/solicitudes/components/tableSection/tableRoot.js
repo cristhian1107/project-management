@@ -10,15 +10,9 @@ function createData(code, name, priority, bussines, creation) {
   return { code, name, priority, bussines, creation };
 }
 // Request, method Get, ENPOINT: http://127.0.0.1:5000/requests
+
 const rows = [
-  createData(159, 'Frozen yoghurt', 6.0, 24, 4.0),
-  createData(237, 'Ice cream sandwich', 9.0, 37, 4.3),
-  createData(262, 'Eclair', 16.0, 24, 6.0),
-  createData(305, 'Cupcake', 3.7, 67, 4.3),
-  createData(356, 'Gingerbread', 16.0, 49, 3.9),
-  createData(262, 'Autrisa', 16.0, 24, 6.0),
-  createData(305, 'Inkamotors', 3.7, 67, 4.3),
-  createData(356, 'Toy Story', 16.0, 49, 3.9),
+  createData(159, 'Frozen yoghurt', 6.0, 24, 4.0)
 ];
 
 export default function TableRoot () {
