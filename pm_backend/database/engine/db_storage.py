@@ -53,7 +53,7 @@ class DBStorage:
         """
         records = []
         try:
-            self.__cursor.callproc(name)
+            self.__cursor.callproc(name, parameters)
             for result in self.__cursor.stored_results():
                 data = result.fetchall()
                 if data:

@@ -76,6 +76,11 @@ export default function ModalFormInsertRequest(props) {
                 xs={12}
               >
                 <TextFieldFullWidth
+                  css={{
+                    "& textarea" : {
+                      minheight: 200,
+                    }
+                  }}
                   required
                   id="outlined-basic"
                   label="Razon"
