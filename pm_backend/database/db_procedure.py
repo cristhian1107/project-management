@@ -11,6 +11,8 @@ from models.request import Request
 from models.request_event import RequestEvent
 from models.table import Table
 from models.companie import Companie
+from general.library import Libraries
+import traceback
 
 
 class DBProcedures():
@@ -26,31 +28,36 @@ class DBProcedures():
         Returns:
             User: Information of the user who login.
         """
-        new_user = User()
-        parameters = []
-        parameters.append(user)
-        parameters.append(pwd)
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        tables = storage.exec_procedure('users_login', parameters)
-        del storage
+        try:
+            new_user = User()
+            parameters = []
+            parameters.append(user)
+            parameters.append(pwd)
+            storage.open_db()
+            tables = storage.exec_procedure('users_login', parameters)
 
-        if not tables:
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                # Info user.
+                if x == 0:
+                    new_user = User(**tables[x][0])
+                # Info role.
+                if x == 1:
+                    new_user.role = Role(**tables[x][0])
+                # Info options.
+                if x == 2:
+                    for opt in tables[x]:
+                        new_user.options.append(Option(**opt))
+            return (new_user)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
             return (None)
-
-        for x in range(0, len(tables)):
-            # Info user.
-            if x == 0:
-                new_user = User(**tables[x][0])
-            # Info role.
-            if x == 1:
-                new_user.role = Role(**tables[x][0])
-            # Info options.
-            if x == 2:
-                for opt in tables[x]:
-                    new_user.options.append(Option(**opt))
-        return (new_user)
+        finally:
+            del storage
 
     @staticmethod
     def requests_insert(item=Request()) -> Boolean:
@@ -62,14 +69,19 @@ class DBProcedures():
         Returns:
             Boolean: True or False.
         """
-        if item is None:
-            return (False)
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        parameters = item.to_list()
-        del storage
-        return (storage.exec_save('requests_insert', parameters))
+        try:
+            if item is None:
+                return (False)
+            storage.open_db()
+            parameters = item.to_list()
+            return (storage.exec_save('requests_insert', parameters))
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (False)
+        finally:
+            del storage
 
     @staticmethod
     def requests_events_insert(item=RequestEvent()) -> Boolean:
@@ -81,14 +93,19 @@ class DBProcedures():
         Returns:
             Boolean: True or False.
         """
-        if item is None:
-            return (False)
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        parameters = item.to_list()
-        del storage
-        return (storage.exec_save('requests_events_insert', parameters))
+        try:
+            if item is None:
+                return (False)
+            storage.open_db()
+            parameters = item.to_list()
+            return (storage.exec_save('requests_events_insert', parameters))
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (False)
+        finally:
+            del storage
 
     @staticmethod
     def requests_update(item=Request()) -> Boolean:
@@ -100,14 +117,19 @@ class DBProcedures():
         Returns:
             Boolean: True or False.
         """
-        if item is None:
-            return (False)
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        parameters = item.to_list()
-        del storage
-        return (storage.exec_save('requests_update', parameters))
+        try:
+            if item is None:
+                return (False)
+            storage.open_db()
+            parameters = item.to_list()
+            return (storage.exec_save('requests_update', parameters))
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (False)
+        finally:
+            del storage
 
     @staticmethod
     def requests_all(date_begin, date_end, company_id, department) -> list:
@@ -122,27 +144,32 @@ class DBProcedures():
         Returns:
             list: List of contain all requests
         """
-        item = Request()
-        items = []
-        parameters = []
-        parameters.append(date_begin)
-        parameters.append(date_end)
-        parameters.append(company_id)
-        parameters.append(department)
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        tables = storage.exec_procedure('requests_all', parameters)
-        del storage
+        try:
+            item = Request()
+            items = []
+            parameters = []
+            parameters.append(date_begin)
+            parameters.append(date_end)
+            parameters.append(company_id)
+            parameters.append(department)
+            storage.open_db()
+            tables = storage.exec_procedure('requests_all', parameters)
 
-        if not tables:
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                for opt in tables[x]:
+                    item = Request(**opt)
+                    items.append(item.to_dict())
+            return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
             return (None)
-
-        for x in range(0, len(tables)):
-            for opt in tables[x]:
-                item = Request(**opt)
-                items.append(item.to_dict())
-        return (items)
+        finally:
+            del storage
 
     @staticmethod
     def requests_one(id) -> Request:
@@ -154,28 +181,32 @@ class DBProcedures():
         Returns:
             Request: object request.
         """
-        item = Request()
-        items = []
-        parameters = []
-        parameters.append(id)
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        tables = storage.exec_procedure('requests_one', parameters)
-        del storage
+        try:
+            item = Request()
+            parameters = []
+            parameters.append(id)
+            storage.open_db()
+            tables = storage.exec_procedure('requests_one', parameters)
 
-        if not tables:
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                # Info request.
+                if x == 0:
+                    item = Request(**tables[x][0])
+                # Info states.
+                if x == 1:
+                    for opt in tables[x]:
+                        item.states.append(RequestEvent(**opt))
+            return (item)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
             return (None)
-
-        for x in range(0, len(tables)):
-            # Info request.
-            if x == 0:
-                item = Request(**tables[x][0])
-            # Info states.
-            if x == 1:
-                for opt in tables[x]:
-                    item.states.append(RequestEvent(**opt))
-        return (item)
+        finally:
+            del storage
 
     @staticmethod
     def tables_all(table, all_records=False) -> list:
@@ -187,25 +218,30 @@ class DBProcedures():
         Returns:
             list: List of contain all tables.
         """
-        item = Table()
-        items = []
-        parameters = []
-        parameters.append(table)
-        parameters.append(all_records)
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        tables = storage.exec_procedure('tables_all', parameters)
-        del storage
+        try:
+            item = Table()
+            items = []
+            parameters = []
+            parameters.append(table)
+            parameters.append(all_records)
+            storage.open_db()
+            tables = storage.exec_procedure('tables_all', parameters)
 
-        if not tables:
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                for opt in tables[x]:
+                    item = Table(**opt)
+                    items.append(item.to_dict())
+            return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
             return (None)
-
-        for x in range(0, len(tables)):
-            for opt in tables[x]:
-                item = Table(**opt)
-                items.append(item.to_dict())
-        return (items)
+        finally:
+            del storage
 
     @staticmethod
     def companies_all() -> list:
@@ -214,22 +250,27 @@ class DBProcedures():
         Returns:
             list: List of contain all companies.
         """
-        item = Companie()
-        items = []
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        tables = storage.exec_procedure('companies_all')
-        del storage
+        try:
+            item = Companie()
+            items = []
+            storage.open_db()
+            tables = storage.exec_procedure('companies_all')
 
-        if not tables:
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                for opt in tables[x]:
+                    item = Companie(**opt)
+                    items.append(item.to_dict())
+            return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
             return (None)
-
-        for x in range(0, len(tables)):
-            for opt in tables[x]:
-                item = Companie(**opt)
-                items.append(item.to_dict())
-        return (items)
+        finally:
+            del storage
 
     @staticmethod
     def departments_all(company_id=None) -> list:
@@ -241,19 +282,24 @@ class DBProcedures():
         Returns:
             list: List of contain all departments.
         """
-        items = []
-        parameters = []
-        parameters.append(company_id)
         # TODO: Connect to Database.
         storage = DBStorage()
-        storage.open_db()
-        tables = storage.exec_procedure('departments_all', parameters)
-        del storage
+        try:
+            items = []
+            parameters = []
+            parameters.append(company_id)
+            storage.open_db()
+            tables = storage.exec_procedure('departments_all', parameters)
 
-        if not tables:
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                for opt in tables[x]:
+                    items.append(opt)
+            return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
             return (None)
-
-        for x in range(0, len(tables)):
-            for opt in tables[x]:
-                items.append(opt)
-        return (items)
+        finally:
+            del storage
