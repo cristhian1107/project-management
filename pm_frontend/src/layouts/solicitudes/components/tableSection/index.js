@@ -20,7 +20,7 @@ export default function TableSection({ css }) {
   const [states, setStates] = useState([])
 
   useEffect(() => {
-    events().then(console.log);
+    events().then(setStates);
   }, []);
 
   return (

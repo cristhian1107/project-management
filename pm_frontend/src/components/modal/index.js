@@ -1,12 +1,12 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-
+import MenuItem from '@mui/material/MenuItem';
 import TextFieldFullWidth from 'components/textFieldFullWidth';
-
+import { useBackend } from 'hooks/useBackend';
+import { useState, useEffect } from 'react';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -19,10 +19,25 @@ const style = {
 };
 
 export default function ModalFormInsertRequest(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { priorities } = useBackend();
+  const [listPriorities, setListPriorities] = useState([]);
+  useEffect(() => {
+    priorities().then(setListPriorities);
+  }, []);
 
+  function handleSubmit (e) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const subject = data.get('subject');
+    const code_pri = data.get('priority');
+    const reason = data.get('reason');
+    console.log({subject, code_pri, reason})
+    //login({username, password});
+  };
+  
   return (
     <>
       <Box onClick={handleOpen}>{props.children}</Box>
@@ -39,6 +54,7 @@ export default function ModalFormInsertRequest(props) {
             <Grid
               container
               component="form"
+              onSubmit= {handleSubmit}
               sx={{
                 '& > :not(style)': { m: 1 },
                 justifyContent: 'space-between',
@@ -55,6 +71,7 @@ export default function ModalFormInsertRequest(props) {
                   required
                   id="outlined-basic"
                   label="Asunto"
+                  name="subject"
                   variant="outlined"
                 />
               </Grid>
@@ -68,8 +85,16 @@ export default function ModalFormInsertRequest(props) {
                   select
                   id="outlined-basic"
                   label="Prioridad"
+                  name="priority"
                   variant="outlined"
-                />
+                >
+                  {
+                    listPriorities.map(({ alias, code, name }) => {
+                      return (
+                        <MenuItem key={alias} value={code}>{name}</MenuItem>)
+                    })
+                  }
+                </TextFieldFullWidth>
               </Grid>
               <Grid
                 item
@@ -78,19 +103,29 @@ export default function ModalFormInsertRequest(props) {
                 <TextFieldFullWidth
                   css={{
                     "& textarea" : {
-                      minheight: 200,
+                      minHeight: 200,
                     }
                   }}
                   required
                   id="outlined-basic"
                   label="Razon"
+                  name="reason"
                   variant="outlined"
                   multiline={true}
                   inputProps={{ maxLength: 500 }}
                 />
               </Grid>
               <Grid item>
-                <Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    background: 'var(--btn-gradient)',
+                  }}
+                >
                   Enviar
                 </Button>
               </Grid>

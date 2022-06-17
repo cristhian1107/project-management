@@ -9,7 +9,7 @@ export default function login ({ username, password }) {
     if (!res.ok) throw new Error('Response is NOT ok');
     return res.json();
   }).then(res => {
-    console.log(res);
+    console.table(res);
     const { jwt } = res;
     window.localStorage.setItem('token', jwt);
     return jwt;
