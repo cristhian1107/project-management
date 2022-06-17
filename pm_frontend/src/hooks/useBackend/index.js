@@ -1,4 +1,4 @@
-function getUtilsFromBackend ({ method, path, body }) {
+async function getUtilsFromBackend ({ method, path, body }) {
   return fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
     method,
     headers: {
@@ -14,9 +14,9 @@ function getUtilsFromBackend ({ method, path, body }) {
 function useBackend () {
   return {
     events: () => getUtilsFromBackend({ path: 'table/all?table_code=3' }),
-    events: () => getUtilsFromBackend({ path: 'table/all?table_code=4' }),
-    companies: () => getUtilsFromBackend({ path: 'company/all' }),
-    departments: () => getUtilsFromBackend({ path: 'departments/all' })
+    priorities: async () => getUtilsFromBackend({ path: 'table/all?table_code=4' }),
+    companies: async () => getUtilsFromBackend({ path: 'company/all' }),
+    departments: async () => getUtilsFromBackend({ path: 'departments/all' })
   }
 }
 
