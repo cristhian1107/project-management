@@ -1,37 +1,28 @@
+// React core
+import { useState, useEffect } from 'react';
 // @mui
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List'
 import Search from '@mui/icons-material/Search';
-import { useState, useEffect } from 'react';
+// Custom hooks
+import { useBackend } from 'hooks/useBackend'
 
 import TableRoot from 'layouts/solicitudes/components/tableSection/tableRoot';
 import Button from 'components/button';
 import Input from 'components/input';
 
 
+
 export default function TableSection({ css }) {
-
-  const ENDPOINT = 'http://127.0.0.1:5000'
-
+  useBackend({'states'});
   const [states, setStates] = useState([])
 
   useEffect(() => {
-    fetch(`${ENDPOINT}/table/all?table_code=3`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }).then(res => {
-      if (!res.ok) throw new Error('Response is NOT ok');
-      return res.json();
-    }).then(res => {
-      setStates(res) // Set values.
-    });
-  }, [])
+      .then(res => setStates(res));
+  }, []);
 
-  console.log(states);
   return (
     <Box sx={{ ...css }}>
       <Box
@@ -64,7 +55,6 @@ export default function TableSection({ css }) {
           <Button>Todos</Button>
           {
             states.map((state) => {
-              console.log(state);
               return (
                 <Button
                   css={{
