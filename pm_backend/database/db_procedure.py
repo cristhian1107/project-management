@@ -30,9 +30,11 @@ class DBProcedures():
         parameters = []
         parameters.append(user)
         parameters.append(pwd)
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         tables = storage.exec_procedure('users_login', parameters)
+        del storage
 
         if not tables:
             return (None)
@@ -48,7 +50,6 @@ class DBProcedures():
             if x == 2:
                 for opt in tables[x]:
                     new_user.options.append(Option(**opt))
-
         return (new_user)
 
     @staticmethod
@@ -63,9 +64,11 @@ class DBProcedures():
         """
         if item is None:
             return (False)
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         parameters = item.to_list()
+        del storage
         return (storage.exec_save('requests_insert', parameters))
 
     @staticmethod
@@ -80,9 +83,11 @@ class DBProcedures():
         """
         if item is None:
             return (False)
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         parameters = item.to_list()
+        del storage
         return (storage.exec_save('requests_events_insert', parameters))
 
     @staticmethod
@@ -97,9 +102,11 @@ class DBProcedures():
         """
         if item is None:
             return (False)
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         parameters = item.to_list()
+        del storage
         return (storage.exec_save('requests_update', parameters))
 
     @staticmethod
@@ -122,9 +129,11 @@ class DBProcedures():
         parameters.append(date_end)
         parameters.append(company_id)
         parameters.append(department)
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         tables = storage.exec_procedure('requests_all', parameters)
+        del storage
 
         if not tables:
             return (None)
@@ -149,9 +158,11 @@ class DBProcedures():
         items = []
         parameters = []
         parameters.append(id)
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         tables = storage.exec_procedure('requests_one', parameters)
+        del storage
 
         if not tables:
             return (None)
@@ -181,9 +192,11 @@ class DBProcedures():
         parameters = []
         parameters.append(table)
         parameters.append(all_records)
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         tables = storage.exec_procedure('tables_all', parameters)
+        del storage
 
         if not tables:
             return (None)
@@ -203,9 +216,11 @@ class DBProcedures():
         """
         item = Companie()
         items = []
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         tables = storage.exec_procedure('companies_all')
+        del storage
 
         if not tables:
             return (None)
@@ -229,9 +244,11 @@ class DBProcedures():
         items = []
         parameters = []
         parameters.append(company_id)
+        # TODO: Connect to Database.
         storage = DBStorage()
         storage.open_db()
         tables = storage.exec_procedure('departments_all', parameters)
+        del storage
 
         if not tables:
             return (None)

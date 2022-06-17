@@ -31,7 +31,7 @@ class DBStorage:
             self.__cursor = self.__connector.cursor(dictionary=True)
             Libraries.write_log('Connection is open MySQL')
         except mysql.connector.Error as error:
-            print(error)
+            Libraries.write_log(error.msg, traceback.format_exc())
 
     def close_db(self):
         """Close the connection to the MySQL Database.
@@ -51,8 +51,8 @@ class DBStorage:
         Returns:
             list: Return the result of the procedure.
         """
+        records = []
         try:
-            records = []
             self.__cursor.callproc(name, parameters)
             for result in self.__cursor.stored_results():
                 data = result.fetchall()
@@ -63,6 +63,7 @@ class DBStorage:
         except mysql.connector.Error as error:
             self.__connector.rollback()
             Libraries.write_log(error.msg, traceback.format_exc())
+            return (records)
         finally:
             self.close_db()
 
@@ -85,7 +86,7 @@ class DBStorage:
             return (is_correct)
         except mysql.connector.Error as error:
             self.__connector.rollback()
-            print(error)
+            Libraries.write_log(error.msg, traceback.format_exc())
             return (is_correct)
         finally:
             self.close_db()
