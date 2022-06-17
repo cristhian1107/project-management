@@ -4,8 +4,9 @@
 """
 from datetime import datetime
 
-file_name = 'log.txt'
+file_name = 'log'
 format_date = '%Y-%m-%dT%H:%M:%S.%f'
+format_file = '%Y%m%d'
 
 
 class Libraries():
@@ -22,9 +23,10 @@ class Libraries():
             trace_error (str, optional): Messsage traceback.
         """
         date_time = datetime.utcnow()
-        date_time = date_time.strftime(format_date)
-        with open(file_name, mode='a') as file_log:
-            file_log.write(f' DateTime: {date_time} '.center(100, '='))
+        date_one = date_time.strftime(format_date)
+        date_two = date_time.strftime(format_file)
+        with open(f'{file_name}-{date_two}.txt', mode='a') as file_log:
+            file_log.write(f' DateTime: {date_one} '.center(100, '='))
             file_log.write('\n')
             file_log.write(f'Message: {msm_error}\n')
             if trace_error is not None:

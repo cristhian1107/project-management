@@ -2,4 +2,4 @@
 **/__pycache__
 
 # Log file
-log.txt
+log-*
