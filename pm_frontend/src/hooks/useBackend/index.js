@@ -13,10 +13,10 @@ async function getUtilsFromBackend ({ method, path, body }) {
 
 function useBackend () {
   return {
-    events: () => getUtilsFromBackend({ path: 'table/all?table_code=3' }),
-    priorities: async () => getUtilsFromBackend({ path: 'table/all?table_code=4' }),
-    companies: async () => getUtilsFromBackend({ path: 'company/all' }),
-    departments: async () => getUtilsFromBackend({ path: 'departments/all' })
+    getEvents: () => getUtilsFromBackend({ path: 'table/all?table_code=3' }),
+    getPriorities: () => getUtilsFromBackend({ path: 'table/all?table_code=4' }),
+    getCompanies: () => getUtilsFromBackend({ path: 'company/all' }),
+    getDepartments: () => getUtilsFromBackend({ path: 'department/all' })
   }
 }
 
