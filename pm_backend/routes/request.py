@@ -8,7 +8,7 @@ from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
 from datetime import datetime
 
-time = '%Y-%m-%dT%H:%M:%S.%f'
+time = '%Y-%m-%dT%H:%M:%S.%fZ'
 dt_date = '%Y-%m-%d'
 
 
@@ -51,8 +51,10 @@ def insert_request():
     """inserts a new requirement/project"""
     item = Request()
     data = request.get_json()
+    print(data.get('date_issue'))
     item.date_issue = datetime.strptime(
         data.get('date_issue', None), time)
+
     if item.date_issue is None or type(item.date_issue) is not datetime:
         return make_response(jsonify({'request': 'failure'}), 204)
     item.user_id = data.get('user_id', None)
@@ -62,6 +64,7 @@ def insert_request():
     item.code_pri = data.get('code_pri', None)
     item.code = ''
     item.percentage = 0
+    print(item.to_dict())
     # Data is sent to procedures and is returned on success or failure.
     res = DBProcedures.requests_insert(item)
     print(res)

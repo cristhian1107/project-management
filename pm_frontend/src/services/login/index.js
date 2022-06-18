@@ -10,8 +10,9 @@ export default function login ({ username, password }) {
     return res.json();
   }).then(res => {
     console.table(res);
-    const { jwt } = res;
+    const { jwt, ...info } = res;
     window.localStorage.setItem('token', jwt);
-    return jwt;
+    window.localStorage.setItem('session', JSON.stringify(info));
+    return res;
   });
 }

@@ -6,16 +6,18 @@ import UserContext from 'context/UserContext';
 import loginService from 'services/login';
 
 export default function useUser () {
-  const {jwt, setJWT} = useContext(UserContext);
+  const {jwt, setJWT, userInfo, setUserInfo} = useContext(UserContext);
 
   const login = useCallback(({username, password}) => {
     console.log(username, password)
-     loginService({username, password})
-       .then(jwt => {
-         console.log(jwt);
-         setJWT(jwt);
-       })
-       .catch(err => console.error(err));
+    loginService({username, password})
+      .then(({ jwt, ...info }) => {
+        console.log("INFOOOOOOOOOO");
+        console.log(info);
+        setJWT(jwt);
+        setUserInfo(info);
+      })
+      .catch(err => console.error(err));
   }, [setJWT]);
 
   const logout = useCallback(() => {
@@ -25,6 +27,7 @@ export default function useUser () {
   return {
     isLogged: Boolean(jwt),
     login,
-    logout
+    logout,
+    userInfo
   }
 }
