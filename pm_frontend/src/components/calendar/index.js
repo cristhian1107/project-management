@@ -5,19 +5,19 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 
-export default function BasicDatePicker({ label, onChange }) {
-  const [value, setValue] = React.useState(null);
+export default function Calendar({ label, value }) {
+  const [date, setDate] = React.useState(value);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
         label={label}
-        value={value}
+        value={date}
         //onChange={(newValue) => {
           //console.log(newValue);
           //setValue(newValue);
         //}}
-        onChange={onChange}
+        onChange={e => setDate(e)}
         renderInput={(params) => 
           <TextFieldFullWidth
             {...params}

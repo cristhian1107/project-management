@@ -15,7 +15,8 @@ import TextFieldFullWidth from 'components/textFieldFullWidth';
 import Calendar from 'components/calendar';
 
 export default function FiltersSection ({ css }) {
-  const [date, setDate] = useState({start: '', end: ''})
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [company, setCompany] = useState('');
   const [department, setDepartment] = useState('');
   const [companies, setCompanies] = useState([]);
@@ -45,15 +46,13 @@ export default function FiltersSection ({ css }) {
         <Grid item xs={5.8} sm={2.8} xl={2}>
           <Calendar
             label='Fecha inicio'
-            value={date.start}
-            onChange={e => console.log(e)}
+            value={startDate}
           />
         </Grid>
         <Grid item xs={5.8} sm={2.8} xl={2}>
           <Calendar
             label='Fecha fin'
-            value={date.end}
-            onChange={e => setDate(st => {...st, end: e})}
+            value={endDate}
           />
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
