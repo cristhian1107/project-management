@@ -16,11 +16,11 @@ import Input from 'components/input';
 
 
 export default function TableSection({ css }) {
-  const { events } = useBackend();
+  const { getEvents } = useBackend();
   const [states, setStates] = useState([])
 
   useEffect(() => {
-    events().then(setStates);
+    getEvents().then(setStates);
   }, []);
 
   return (

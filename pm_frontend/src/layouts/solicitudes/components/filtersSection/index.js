@@ -6,8 +6,10 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
-
 import SearchIcon from '@mui/icons-material/Search';
+// Custom hooks
+import { useBackend } from 'hooks/useBackend';
+
 
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 import Calendar from 'components/calendar';
@@ -15,17 +17,11 @@ import Calendar from 'components/calendar';
 export default function FiltersSection ({ css }) {
   const [companies, setCompanies] = useState([]);
   const [departments, setDepartments] = useState([]);
+  const { getCompanies, getDepartments } = useBackend();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/company/all`)
-      .then(res => res.json())
-      .then(res => console.log(res))
-
-  }, [])
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/department/all`)
-      .then(res => res.json())
-      .then(res => console.log(res));
+    getCompanies().then(setCompanies);
+    getDepartments().then(setDepartments);
   }, [])
 
   return (
@@ -57,6 +53,9 @@ export default function FiltersSection ({ css }) {
             label="Empresa"
             variant="standard"
           >
+            {companies.map(({ tradename}) =>
+              (<MenuItem key={tradename}>{tradename}</MenuItem>)
+            )}
           </TextFieldFullWidth>
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
@@ -66,6 +65,9 @@ export default function FiltersSection ({ css }) {
             label="Area"
             variant="standard"
           >
+            {departments.map(({ department: name }) =>
+              (<MenuItem key={name}>{name}</MenuItem>)
+            )}
           </TextFieldFullWidth>
         </Grid>
         <Grid
