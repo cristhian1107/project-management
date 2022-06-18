@@ -3,6 +3,7 @@
     (class) Libraries.
 """
 from datetime import datetime
+import jwt
 
 file_name = 'log'
 format_date = '%Y-%m-%dT%H:%M:%S.%f'
@@ -33,3 +34,16 @@ class Libraries():
                 file_log.write('Traceback:\n')
                 file_log.write(trace_error)
             file_log.write('\n')
+
+    @staticmethod
+    def generate_token(payload={}):
+        encoded_jwt = jwt.encode(payload, "MCM", algorithm="HS256").decode('utf-8')
+        return encoded_jwt
+
+    @staticmethod
+    def validate_token(encoded_jwt):
+        try:
+            decode_jwt = jwt.decode(encoded_jwt, "MCM", algorithms=["HS256"])
+            return decode_jwt
+        except jwt.exceptions.InvalidSignatureError:
+            return None

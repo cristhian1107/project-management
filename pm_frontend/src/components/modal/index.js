@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 import { useBackend } from 'hooks/useBackend';
+import { useUser } from 'hooks/useUser';
 import { useState, useEffect } from 'react';
 const style = {
   position: 'absolute',
@@ -34,10 +35,11 @@ export default function ModalFormInsertRequest(props) {
     const subject = data.get('subject');
     const code_pri = data.get('priority');
     const reason = data.get('reason');
+    const { userInfo } = useUser()
     console.log({subject, code_pri, reason})
     //login({username, password});
   };
-  
+
   return (
     <>
       <Box onClick={handleOpen}>{props.children}</Box>

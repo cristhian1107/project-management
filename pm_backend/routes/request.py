@@ -7,6 +7,7 @@ from routes import app_views
 from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
 from datetime import datetime
+from general.library import Libraries
 
 time = '%Y-%m-%dT%H:%M:%S.%fZ'
 dt_date = '%Y-%m-%d'
@@ -51,13 +52,20 @@ def insert_request():
     """inserts a new requirement/project"""
     item = Request()
     data = request.get_json()
-    print(data.get('date_issue'))
+    jwt = request.headers
+    print("VALIDAAAAAAAAAAAAAAAAAAAAAAAAAR")
+    dic_jwt = Libraries.validate_token(jwt.get('jwt', None))
+    print(dic_jwt)
+    if dic_jwt is None:
+        return make_response(jsonify({'request': 'failure'}), 203)
+    print(dic_jwt.get('username'))
+    item.user_id = dic_jwt.get('username')
     item.date_issue = datetime.strptime(
         data.get('date_issue', None), time)
-
+    print(item.date_issue)
     if item.date_issue is None or type(item.date_issue) is not datetime:
         return make_response(jsonify({'request': 'failure'}), 204)
-    item.user_id = data.get('user_id', None)
+
     item.reason = data.get('reason', None)
     item.subject = data.get('subject', None)
     item.table_pri = tables.get('PRI')
