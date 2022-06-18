@@ -22,10 +22,10 @@ export default function ModalFormInsertRequest(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { priorities } = useBackend();
-  const [listPriorities, setListPriorities] = useState([]);
+  const [priorities, setPriorities] = useState([]);
+  const { getPriorities } = useBackend();
   useEffect(() => {
-    priorities().then(setListPriorities);
+    getPriorities().then(setPriorities);
   }, []);
 
   function handleSubmit (e) {
@@ -89,7 +89,7 @@ export default function ModalFormInsertRequest(props) {
                   variant="outlined"
                 >
                   {
-                    listPriorities.map(({ alias, code, name }) => {
+                    priorities.map(({ alias, code, name }) => {
                       return (
                         <MenuItem key={alias} value={code}>{name}</MenuItem>)
                     })
