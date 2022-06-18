@@ -7,6 +7,8 @@ import MenuItem from '@mui/material/MenuItem';
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 import { useBackend } from 'hooks/useBackend';
 import { useState, useEffect } from 'react';
+import useUser from 'hooks/useUser';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -24,19 +26,34 @@ export default function ModalFormInsertRequest(props) {
   const handleClose = () => setOpen(false);
   const { priorities } = useBackend();
   const [listPriorities, setListPriorities] = useState([]);
+  const { userInfo } = useUser();
   useEffect(() => {
     priorities().then(setListPriorities);
   }, []);
-
+  
   function handleSubmit (e) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const subject = data.get('subject');
     const code_pri = data.get('priority');
     const reason = data.get('reason');
-    console.log({subject, code_pri, reason})
-    //login({username, password});
-  };
+    const user_id = userInfo?.id;
+    console.log("AEEEERRRRRE");
+    console.log(userInfo);
+    const date = new Date();
+    const date_issue = date.toISOString()
+
+  fetch(`${process.env.REACT_APP_API_URL}/request`, {
+    method: 'POST',
+     headers: {
+       'Content-Type': 'application/json'
+     },
+    body: JSON.stringify({ date_issue, user_id, reason, subject, code_pri })
+  }).then(res => {
+    if (!res.ok) throw new Error('Response is NOT ok');
+     return res.json();
+  });
+}
   
   return (
     <>
