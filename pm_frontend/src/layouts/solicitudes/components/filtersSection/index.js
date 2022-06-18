@@ -15,6 +15,9 @@ import TextFieldFullWidth from 'components/textFieldFullWidth';
 import Calendar from 'components/calendar';
 
 export default function FiltersSection ({ css }) {
+  const [date, setDate] = useState({start: '', end: ''})
+  const [company, setCompany] = useState('');
+  const [department, setDepartment] = useState('');
   const [companies, setCompanies] = useState([]);
   const [departments, setDepartments] = useState([]);
   const { getCompanies, getDepartments } = useBackend();
@@ -37,24 +40,33 @@ export default function FiltersSection ({ css }) {
           px: { sm: 2 },
           justifyContent: { xs: 'space-between', lg: 'center' },
           gap: { xs: 1, xl: 2 },
-          // '& > div > div': { width: '100%' },
         }}
       >
         <Grid item xs={5.8} sm={2.8} xl={2}>
-          <Calendar label='Fecha inicio' onChange={() => console.log('set start date')} />
+          <Calendar
+            label='Fecha inicio'
+            value={date.start}
+            onChange={e => console.log(e)}
+          />
         </Grid>
         <Grid item xs={5.8} sm={2.8} xl={2}>
-          <Calendar label='Fecha fin' onChange={() => console.log('set end date')} />
+          <Calendar
+            label='Fecha fin'
+            value={date.end}
+            onChange={e => setDate(st => {...st, end: e})}
+          />
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
           <TextFieldFullWidth
             select
             id="filter_empresa"
             label="Empresa"
+            value={company}
             variant="standard"
+            onChange={e => setCompany(e.target.value)}
           >
-            {companies.map(({ tradename}) =>
-              (<MenuItem key={tradename}>{tradename}</MenuItem>)
+            {companies.map(({ tradename }) =>
+              (<MenuItem key={tradename} value={tradename}>{tradename}</MenuItem>)
             )}
           </TextFieldFullWidth>
         </Grid>
@@ -63,10 +75,12 @@ export default function FiltersSection ({ css }) {
             select
             id="filter_area"
             label="Area"
+            value={department}
             variant="standard"
+            onChange={e => setDepartment(e.target.value)}
           >
             {departments.map(({ department: name }) =>
-              (<MenuItem key={name}>{name}</MenuItem>)
+              (<MenuItem key={name} value={name}>{name}</MenuItem>)
             )}
           </TextFieldFullWidth>
         </Grid>
