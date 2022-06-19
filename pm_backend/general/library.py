@@ -2,13 +2,24 @@
 """Contains:
     (class) Libraries.
 """
-from datetime import datetime
+from datetime import datetime, timedelta
+from flask import request, make_response, jsonify
 import jwt
+import traceback
 
 file_name = 'log'
 format_date = '%Y-%m-%dT%H:%M:%S.%f'
 format_file = '%Y%m%d'
-
+options_jwt = {
+    'enc': {
+        'key': 'MCM',
+        'algorithm': 'HS256',
+    },
+    'dec': {
+        'key': 'MCM',
+        'algorithms': ["HS256"]
+    }
+}
 
 class Libraries():
     """Class that contains methods that will
@@ -37,13 +48,38 @@ class Libraries():
 
     @staticmethod
     def generate_token(payload={}):
-        encoded_jwt = jwt.encode(payload, "MCM", algorithm="HS256").decode('utf-8')
+        # Se define el tiempo de expiración para el token
+        # exp -> 24h y se le integra junto al id y al username para ser codificado
+        value_for_exp = datetime.utcnow() + timedelta(days=1)
+        payload.update({'exp': value_for_exp})
+        # ?encoded_jwt = jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
+        encoded_jwt = jwt.encode(payload, **options_jwt['enc'])
         return encoded_jwt
 
     @staticmethod
-    def validate_token(encoded_jwt):
-        try:
-            decode_jwt = jwt.decode(encoded_jwt, "MCM", algorithms=["HS256"])
-            return decode_jwt
-        except jwt.exceptions.InvalidSignatureError:
-            return None
+    def validate_token(func):
+        """ It will behave as a decorator.
+        It will check the header and body of the incoming http request
+
+        Args:
+            func (function): Endpoint view function 
+        """
+        def decorated(*args, **kwargs):
+            # Obteniendo el token
+            token = request.headers.get('Authorization')
+            if not token:
+                return make_response(jsonify({'request': 'failure'}), 203)
+
+            # Validando el token
+            try:
+                payload = jwt.decode(token, **options_jwt['dec'])
+                kwargs.update({'payload': payload})
+            except jwt.exceptions.ExpiredSignatureError as error:
+                Libraries.write_log(error, traceback.format_exc())
+                return make_response(jsonify({'request': 'failure'}), 203)
+            except jwt.exceptions.InvalidSignatureError as error:
+                Libraries.write_log(error, traceback.format_exc())
+                return make_response(jsonify({'request': 'failure'}), 203)
+            return func(*args, **kwargs)
+        decorated.__name__ = func.__name__
+        return decorated

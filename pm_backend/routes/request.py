@@ -15,6 +15,7 @@ dt_date = '%Y-%m-%d'
 
 @app_views.route('/request/all', methods=['GET'],
                  strict_slashes=False)
+@Libraries.validate_token  # Custom decorator to validate the token
 def all_request():
     """returns list of all projects"""
     date_begin = datetime.strptime(
@@ -36,9 +37,12 @@ def all_request():
 
 @app_views.route('/request', methods=['GET'],
                  strict_slashes=False)
-def get_request():
+@Libraries.validate_token  # Custom decorator to validate the token
+def get_request(**kwargs):
     """returns a list of specific projects"""
-    id = request.args.get('id', None)
+
+    payload = kwargs.get('payload')
+    id = payload.get('id')
     # Necesito un diccionario de el proyectos con todos sus datos
     res = DBProcedures.requests_one(id)
     if res is None:
@@ -48,31 +52,33 @@ def get_request():
 
 @app_views.route('/request', methods=['POST'],
                  strict_slashes=False)
-def insert_request():
+@Libraries.validate_token  # Custom decorator to validate the token
+def insert_request(**kwargs):  # kwargs se retorna desde el decorator and contains the payload
     """inserts a new requirement/project"""
+    payload = kwargs.get('payload')
     item = Request()
+    # Si el body no se encuentra en formato json, puede fallar
     data = request.get_json()
-    jwt = request.headers
-    print("VALIDAAAAAAAAAAAAAAAAAAAAAAAAAR")
-    dic_jwt = Libraries.validate_token(jwt.get('jwt', None))
-    print(dic_jwt)
-    if dic_jwt is None:
-        return make_response(jsonify({'request': 'failure'}), 203)
-    print(dic_jwt.get('username'))
-    item.user_id = dic_jwt.get('username')
-    item.date_issue = datetime.strptime(
-        data.get('date_issue', None), time)
-    print(item.date_issue)
+    item.user_id = payload.get('id')
+    # ----- Puede fallar ----
+    # strptime require un string como primer parámetro y que sea un string
+    # Debe validarse la existencia y formato de date_issue
+    item.date_issue = datetime.strptime(data.get('date_issue'), time)
     if item.date_issue is None or type(item.date_issue) is not datetime:
         return make_response(jsonify({'request': 'failure'}), 204)
+    # ------------------------
 
+    # ------ get method --------
+    # Por defecto el segundo parámetro ya es None
     item.reason = data.get('reason', None)
     item.subject = data.get('subject', None)
     item.table_pri = tables.get('PRI')
     item.code_pri = data.get('code_pri', None)
     item.code = ''
     item.percentage = 0
+    # ------------------
     print(item.to_dict())
+
     # Data is sent to procedures and is returned on success or failure.
     res = DBProcedures.requests_insert(item)
     print(res)
@@ -83,6 +89,7 @@ def insert_request():
 
 @app_views.route('/request', methods=['PUT'],
                  strict_slashes=False)
+@Libraries.validate_token  # Custom decorator to validate the token
 def update_request():
     """updates a new requirement/project"""
     data = request.get_json()
@@ -105,7 +112,9 @@ def update_request():
     return make_response(jsonify({'request': 'success'}), 201)
 
 
-@app_views.route('/request/event', methods=['POST'], strict_slashes=False)
+@app_views.route('/request/event', methods=['POST'],
+                 strict_slashes=False)
+@Libraries.validate_token  # Custom decorator to validate the token
 def update_event():
     """API (POST) Route /request/event.
     Change the status of the request.

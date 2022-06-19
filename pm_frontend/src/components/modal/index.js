@@ -24,7 +24,7 @@ export default function ModalFormInsertRequest(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [priorities, setPriorities] = useState([]);
-  const { getPriorities } = useBackend();
+  const { getPriorities, postRequest } = useBackend();
   useEffect(() => {
     getPriorities().then(setPriorities);
   }, []);
@@ -35,10 +35,11 @@ export default function ModalFormInsertRequest(props) {
     const subject = data.get('subject');
     const code_pri = data.get('priority');
     const reason = data.get('reason');
-    const { userInfo } = useUser()
-    console.log({subject, code_pri, reason})
-  };
+    const date_issue = (new Date()).toISOString();
 
+    console.log({subject, code_pri, reason, date_issue});
+    postRequest({subject, code_pri, reason, date_issue});
+  }
   return (
     <>
       <Box onClick={handleOpen}>{props.children}</Box>
