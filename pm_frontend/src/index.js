@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 // Context provider
 import { UserContextProvider } from 'context/UserContext';
 import { HandleDrawerProvider } from 'context/DrawerContext';
+import { FiltersContextProvider } from 'context/FiltersContext';
 // Global Styles
 import 'index.css'
 // Componenet
@@ -17,7 +18,9 @@ root.render(
   <BrowserRouter>
     <UserContextProvider>
       <HandleDrawerProvider>
-        <App />
+        <FiltersContextProvider>
+          <App />
+        </FiltersContextProvider>
       </HandleDrawerProvider>
     </UserContextProvider>
   </BrowserRouter>

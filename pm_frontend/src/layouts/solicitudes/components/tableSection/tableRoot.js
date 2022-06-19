@@ -5,6 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useBackend } from 'hooks/useBackend';
 
 function createData(code, name, priority, bussines, creation) {
   return { code, name, priority, bussines, creation };
@@ -15,16 +16,15 @@ const rows = [
   createData(159, 'Frozen yoghurt', 6.0, 24, 4.0)
 ];
 
-export default function TableRoot () {
-  // fetch(`${process.env.REACT_APP_API_URL}/requestall?date_begin=2022-06-10&date_end=2022-06-15`)
-  //   .then(res => res.json())
-  //   .then(res => console.log(res));
+export default function TableRoot() {
+
+  const { getRequests } = useBackend;
+
   return (
     <TableContainer
       component={Paper}
       sx={{
         background: '#fff',
-        boxShadow: '2px 2px 5px var(--box-secondary)',
         boxShadow: '2px 2px 5px #0005',
         borderRadius: 2,
         px: 2,

@@ -1,5 +1,5 @@
 // React core
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 // @mui
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -9,16 +9,23 @@ import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
 // Custom hooks
 import { useBackend } from 'hooks/useBackend';
-
+// Context
+import FiltersContext from 'context/FiltersContext';
 
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 import Calendar from 'components/calendar';
 
 export default function FiltersSection ({ css }) {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [company, setCompany] = useState('');
-  const [department, setDepartment] = useState('');
+
+  const {filters, setFilters} = useContext(FiltersContext);
+  const {startDate, endDate, idCompany, department} = filters;
+  console.log(filters)
+  // const [startDate, setStartDate] = useState('');
+  // const [endDate, setEndDate] = useState('');
+  // const [company, setCompany] = useState('');
+  // const [department, setDepartment] = useState('');
+
+  // Fill selects.
   const [companies, setCompanies] = useState([]);
   const [departments, setDepartments] = useState([]);
   const { getCompanies, getDepartments } = useBackend();
@@ -60,12 +67,12 @@ export default function FiltersSection ({ css }) {
             select
             id="filter_empresa"
             label="Empresa"
-            value={company}
+            value={idCompany}
             variant="standard"
-            onChange={e => setCompany(e.target.value)}
+            onChange={e => setFilters(obj => ({...obj, ...{idCompany:e.target.value}}))}
           >
-            {companies.map(({ tradename }) =>
-              (<MenuItem key={tradename} value={tradename}>{tradename}</MenuItem>)
+            {companies.map(({ tradename, id}) =>
+              (<MenuItem key={tradename} value={id}>{tradename}</MenuItem>)
             )}
           </TextFieldFullWidth>
         </Grid>
@@ -76,7 +83,7 @@ export default function FiltersSection ({ css }) {
             label="Area"
             value={department}
             variant="standard"
-            onChange={e => setDepartment(e.target.value)}
+            onChange={e => setFilters(obj => ({...obj, ...{deparment:e.target.value}}))}
           >
             {departments.map(({ department: name }) =>
               (<MenuItem key={name} value={name}>{name}</MenuItem>)

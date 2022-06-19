@@ -26,7 +26,7 @@ function App() {
   return (
     <ThemeProvider theme={customTheme}>
       {isLogged ? (
-        <Routes>
+          <Routes>
             <Route path='/' element={<SideNav />} >
               <Route index element={<Navigate to='/dashboard' />} />
               <Route path='dashboard' element={<Dashboard />} />
@@ -35,12 +35,12 @@ function App() {
               <Route path='profile' element={<Profile />} />
               <Route path='*' element={<Navigate to='/' />} />
             </Route>
-        </Routes>
-      ) : (
-          <Routes>
-            <Route path='/sign-in' element={<SignIn />} />
-            <Route path='*' element={<Navigate to='/sign-in' />} />
           </Routes>
+      ) : (
+        <Routes>
+          <Route path='/sign-in' element={<SignIn />} />
+          <Route path='*' element={<Navigate to='/sign-in' />} />
+        </Routes>
       )}
     </ThemeProvider>
   );

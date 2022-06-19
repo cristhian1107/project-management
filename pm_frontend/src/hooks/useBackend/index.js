@@ -20,6 +20,9 @@ function useBackend () {
     getPriorities: () => getUtilsFromBackend({ path: 'table/all?table_code=4' }),
     getCompanies: () => getUtilsFromBackend({ path: 'company/all' }),
     getDepartments: () => getUtilsFromBackend({ path: 'department/all' }),
+    getRequests: (dateStart, dateEnd, idCompany, deparment) => getUtilsFromBackend({
+      path: `request/all?date_begin=${dateStart}&date_end=${dateEnd}&company_id=${idCompany}&department=${deparment}`
+    }),
     postRequest: (body) => getUtilsFromBackend({ method: 'POST', path: 'request', body: body })
   }
 }
