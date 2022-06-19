@@ -431,9 +431,9 @@ CREATE PROCEDURE requests_all
 BEGIN
 
     SELECT
-          r.id , r.table_typ , r.code_typ , r.code
+          r.id , r.table_typ , r.code_typ , IF(r.code = '', 'SOL-00000', r.code) as code
         , r.company_id , r.user_id , r.subject , r.reason
-        , r.name , r.description , r.department , r.campus
+        , IFNULL(r.name, r.subject) as name , r.description , r.department , r.campus
         , r.date_issue , r.date_tentative , r.table_sta , r.code_sta
         , r.table_pri , r.code_pri , r.percentage
         , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri

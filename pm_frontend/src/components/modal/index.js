@@ -35,7 +35,9 @@ export default function ModalFormInsertRequest(props) {
     const subject = data.get('subject');
     const code_pri = data.get('priority');
     const reason = data.get('reason');
-    const date_issue = (new Date()).toISOString();
+    let date_current = new Date();
+    date_current.setDate(date_current.getDate() - 1)
+    const date_issue = date_current.toISOString()
 
 
     console.log({subject, code_pri, reason, date_issue});

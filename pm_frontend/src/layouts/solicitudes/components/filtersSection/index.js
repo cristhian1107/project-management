@@ -17,23 +17,23 @@ import Calendar from 'components/calendar';
 
 export default function FiltersSection ({ css }) {
 
-  const {filters, setFilters} = useContext(FiltersContext);
+  const {filters, setFilters, setListRequests} = useContext(FiltersContext);
   const {startDate, endDate, idCompany, department} = filters;
-  console.log(filters)
-  // const [startDate, setStartDate] = useState('');
-  // const [endDate, setEndDate] = useState('');
-  // const [company, setCompany] = useState('');
-  // const [department, setDepartment] = useState('');
-
   // Fill selects.
   const [companies, setCompanies] = useState([]);
   const [departments, setDepartments] = useState([]);
-  const { getCompanies, getDepartments } = useBackend();
+  const { getCompanies, getDepartments, getRequests } = useBackend();
 
   useEffect(() => {
     getCompanies().then(setCompanies);
     getDepartments().then(setDepartments);
+    getRequests(filters).then(setListRequests);
   }, [])
+
+  const handleSubmit = (e)=> {
+    e.preventDefault()
+    getRequests(filters).then(setListRequests);
+  }
 
   return (
     <Box sx={{ ...css }}>
@@ -43,6 +43,7 @@ export default function FiltersSection ({ css }) {
       <Grid
         container
         component='form'
+        onSubmit={handleSubmit}
         sx={{
           pt: 2,
           px: { sm: 2 },

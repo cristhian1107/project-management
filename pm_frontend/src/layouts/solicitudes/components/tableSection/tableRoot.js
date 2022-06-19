@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -5,20 +6,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useBackend } from 'hooks/useBackend';
+import FiltersContext from 'context/FiltersContext';
+
 
 function createData(code, name, priority, bussines, creation) {
   return { code, name, priority, bussines, creation };
 }
 // Request, method Get, ENPOINT: http://127.0.0.1:5000/requests
 
-const rows = [
-  createData(159, 'Frozen yoghurt', 6.0, 24, 4.0)
-];
+// const rows = [
+//   createData(159, 'Frozen yoghurt', 6.0, 24, 4.0)
+// ];
 
 export default function TableRoot() {
 
-  const { getRequests } = useBackend;
+  const { listRequests } = useContext(FiltersContext)
+  const rows = listRequests
 
   return (
     <TableContainer
@@ -64,9 +67,9 @@ export default function TableRoot() {
                 {row.code}
               </TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.priority}</TableCell>
-              <TableCell>{row.bussines}</TableCell>
-              <TableCell>{row.creation}</TableCell>
+              <TableCell>{row.name_pri}</TableCell>
+              <TableCell>{row.company_tradename}</TableCell>
+              <TableCell>{row.name_sta}</TableCell>
             </TableRow>
           ))}
         </TableBody>
