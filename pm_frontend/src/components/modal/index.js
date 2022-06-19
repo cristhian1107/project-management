@@ -39,7 +39,6 @@ export default function ModalFormInsertRequest(props) {
     date_current.setDate(date_current.getDate() - 1)
     const date_issue = date_current.toISOString()
 
-
     console.log({subject, code_pri, reason, date_issue});
     postRequest({subject, code_pri, reason, date_issue});
   }
