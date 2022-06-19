@@ -57,10 +57,8 @@ def insert_request(**kwargs):  # kwargs se retorna desde el decorator and contai
     """inserts a new requirement/project"""
     payload = kwargs.get('payload')
     item = Request()
-
     # Si el body no se encuentra en formato json, puede fallar
     data = request.get_json()
-    
     item.user_id = payload.get('id')
     # ----- Puede fallar ----
     # strptime require un string como primer parámetro y que sea un string

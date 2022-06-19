@@ -67,7 +67,7 @@ class Libraries():
             # Obteniendo el token
             token = request.headers.get('Authorization')
             if not token:
-                return make_response(jsonify({'request': 'failure'}), 204)
+                return make_response(jsonify({'request': 'failure'}), 203)
 
             # Validando el token
             try:
