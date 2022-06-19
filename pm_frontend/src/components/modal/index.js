@@ -37,7 +37,6 @@ export default function ModalFormInsertRequest(props) {
     const reason = data.get('reason');
     const { userInfo } = useUser()
     console.log({subject, code_pri, reason})
-    //login({username, password});
   };
 
   return (

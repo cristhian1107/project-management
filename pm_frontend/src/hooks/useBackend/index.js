@@ -17,6 +17,7 @@ function useBackend () {
     getPriorities: () => getUtilsFromBackend({ path: 'table/all?table_code=4' }),
     getCompanies: () => getUtilsFromBackend({ path: 'company/all' }),
     getDepartments: () => getUtilsFromBackend({ path: 'department/all' })
+    postRequest: () => postRequest({ path: 'request' })
   }
 }
 
