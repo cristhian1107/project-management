@@ -38,6 +38,11 @@ export default function ModalFormInsertRequest(props) {
     const { userInfo } = useUser()
     console.log({subject, code_pri, reason})
     //login({username, password});
+    fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
+     method,
+     headers: {
+       'Content-Type': 'application/json'
+     },
   };
 
   return (

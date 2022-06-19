@@ -5,6 +5,7 @@
 from datetime import datetime, timedelta
 from flask import request, make_response, jsonify
 import jwt
+import traceback
 
 file_name = 'log'
 format_date = '%Y-%m-%dT%H:%M:%S.%f'
@@ -65,7 +66,6 @@ class Libraries():
         def decorated(*args, **kwargs):
             # Obteniendo el token
             token = request.headers.get('Authorization')
-            print("Holaa")
             if not token:
                 return make_response(jsonify({'request': 'failure'}), 204)
 
@@ -73,9 +73,12 @@ class Libraries():
             try:
                 payload = jwt.decode(token, **options_jwt['dec'])
                 kwargs.update({'payload': payload})
-            except jwt.exceptions.ExpiredSignatureError:
+            except jwt.exceptions.ExpiredSignatureError as error:
+                Libraries.write_log(error, traceback.format_exc())
                 return make_response(jsonify({'request': 'failure'}), 203)
-            except jwt.exceptions.InvalidSignatureError:
+            except jwt.exceptions.InvalidSignatureError as error:
+                Libraries.write_log(error, traceback.format_exc())
                 return make_response(jsonify({'request': 'failure'}), 203)
             return func(*args, **kwargs)
+        decorated.__name__ = func.__name__
         return decorated

@@ -15,6 +15,7 @@ dt_date = '%Y-%m-%d'
 
 @app_views.route('/request/all', methods=['GET'],
                  strict_slashes=False)
+@Libraries.validate_token  # Custom decorator to validate the token
 def all_request():
     """returns list of all projects"""
     date_begin = datetime.strptime(
@@ -36,9 +37,12 @@ def all_request():
 
 @app_views.route('/request', methods=['GET'],
                  strict_slashes=False)
-def get_request():
+@Libraries.validate_token  # Custom decorator to validate the token
+def get_request(**kwargs):
     """returns a list of specific projects"""
-    id = request.args.get('id', None)
+
+    payload = kwargs.get('payload')
+    id = payload.get('id')
     # Necesito un diccionario de el proyectos con todos sus datos
     res = DBProcedures.requests_one(id)
     if res is None:
@@ -87,6 +91,7 @@ def insert_request(**kwargs):  # kwargs se retorna desde el decorator and contai
 
 @app_views.route('/request', methods=['PUT'],
                  strict_slashes=False)
+@Libraries.validate_token  # Custom decorator to validate the token
 def update_request():
     """updates a new requirement/project"""
     data = request.get_json()
@@ -109,7 +114,9 @@ def update_request():
     return make_response(jsonify({'request': 'success'}), 201)
 
 
-@app_views.route('/request/event', methods=['POST'], strict_slashes=False)
+@app_views.route('/request/event', methods=['POST'],
+                 strict_slashes=False)
+@Libraries.validate_token  # Custom decorator to validate the token
 def update_event():
     """API (POST) Route /request/event.
     Change the status of the request.
