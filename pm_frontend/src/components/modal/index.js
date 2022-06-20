@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 import { useBackend } from 'hooks/useBackend';
-import { useUser } from 'hooks/useUser';
 import { useState, useEffect } from 'react';
 const style = {
   position: 'absolute',
@@ -27,7 +26,7 @@ export default function ModalFormInsertRequest(props) {
   const { getPriorities, postRequest } = useBackend();
   useEffect(() => {
     getPriorities().then(setPriorities);
-  }, []);
+  }, [getPriorities]);
 
   function handleSubmit (e) {
     e.preventDefault();

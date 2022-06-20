@@ -8,17 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FiltersContext from 'context/FiltersContext';
 
-
-function createData(code, name, priority, bussines, creation) {
-  return { code, name, priority, bussines, creation };
-}
-// Request, method Get, ENPOINT: http://127.0.0.1:5000/requests
-
-// const rows = [
-//   createData(159, 'Frozen yoghurt', 6.0, 24, 4.0)
-// ];
-
-export default function TableRoot() {
+export default function TableRoot () {
 
   const { listRequests } = useContext(FiltersContext)
   const rows = listRequests

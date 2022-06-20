@@ -28,7 +28,7 @@ export default function FiltersSection ({ css }) {
     getCompanies().then(setCompanies);
     getDepartments().then(setDepartments);
     getRequests(filters).then(setListRequests);
-  }, [])
+  }, [getCompanies, getDepartments, getRequests, setListRequests, filters])
 
   const handleSubmit = (e)=> {
     e.preventDefault()

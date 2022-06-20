@@ -9,18 +9,16 @@ export default function useUser () {
   const {jwt, setJWT, userInfo, setUserInfo} = useContext(UserContext);
 
   const login = useCallback(({username, password}) => {
-    console.log(username, password)
     loginService({username, password})
       .then(({ jwt, ...info }) => {
-        console.log("INFOOOOOOOOOO");
-        console.log(info);
         setJWT(jwt);
         setUserInfo(info);
       })
       .catch(err => console.error(err));
-  }, [setJWT]);
+  }, [setJWT, setUserInfo]);
 
   const logout = useCallback(() => {
+    window.localStorage.removeItem('token');
     setJWT(null);
   }, [setJWT]);
 
