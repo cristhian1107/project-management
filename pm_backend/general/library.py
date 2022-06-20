@@ -52,8 +52,8 @@ class Libraries():
         # exp -> 24h y se le integra junto al id y al username para ser codificado
         value_for_exp = datetime.utcnow() + timedelta(days=1)
         payload.update({'exp': value_for_exp})
-        # ?encoded_jwt = jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
-        encoded_jwt = jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
+        encoded_jwt = jwt.encode(payload, **options_jwt['enc'])
+        #encoded_jwt = jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
         return encoded_jwt
 
     @staticmethod

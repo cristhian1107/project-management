@@ -31,7 +31,7 @@ export default function FiltersSection ({ css }) {
 
   const handleSubmit = (e)=> {
     e.preventDefault()
-    getRequests(filters).then(console.log);
+    getRequests(filters).then(setListRequests);
   }
 
   return (

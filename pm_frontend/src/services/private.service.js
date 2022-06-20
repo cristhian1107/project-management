@@ -21,7 +21,7 @@ const getRequests = ({
   const params = new URLSearchParams({
     date_begin: splitForCharacter(dateBegin),
     date_end: splitForCharacter(dateEnd),
-    idCompany,
+    company_id: idCompany,
     deparment
   }).toString();
 
