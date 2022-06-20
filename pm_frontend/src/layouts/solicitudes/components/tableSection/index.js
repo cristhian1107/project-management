@@ -21,7 +21,7 @@ export default function TableSection({ css }) {
 
   useEffect(() => {
     getEvents().then(setStates);
-  }, []);
+  }, [getEvents]);
 
   return (
     <Box sx={{ ...css }}>
@@ -57,6 +57,7 @@ export default function TableSection({ css }) {
             states.map((state) => {
               return (
                 <Button
+                  key={state.alias}
                   css={{
                     minWidth: 'max-content',
                     background: 'transparent',

@@ -26,7 +26,7 @@ export default function ModalFormInsertRequest(props) {
   const { getPriorities, postRequest } = useBackend();
   useEffect(() => {
     getPriorities().then(setPriorities);
-  }, []);
+  }, [getPriorities]);
 
   function handleSubmit (e) {
     e.preventDefault();

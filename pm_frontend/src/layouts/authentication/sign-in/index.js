@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import BasicLayout from 'layouts/authentication/sign-in/basicLayout';
 import FormLayout from 'layouts/authentication/components/formLayout';
 // Styles @mui
-import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 // Custom hooks
@@ -31,25 +31,54 @@ export default function SignIn () {
   return (
     <BasicLayout>
       <FormLayout titleForm='Sign In'>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Grid
+          container
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ mt: 6, gap: 2, maxWidth: '400px' }}
+        >
           <TextField
-            margin="normal"
             required
             fullWidth
             id="username"
-            label="Username"
             name="username"
             type="text"
             autoFocus
+            label='Username'
+            variant='outlined'
+            sx={{
+              fontWeight: 'bold',
+              '& div': {
+                background: 'rgba(120,120,120, .5)',
+                borderRadius: 50,
+                color: '#fff',
+              },
+              '& label': {
+                color: '#fff8 !important',
+                fontWeight: 'bold',
+              }
+            }}
           />
           <TextField
-            margin="normal"
             required
             fullWidth
             id="password"
-            label="Password"
             name="password"
             type="password"
+            label='Password'
+            variant='outlined'
+            sx={{
+              fontWeight: 'bold',
+              '& div': {
+                background: 'rgba(120,120,120, .5)',
+                borderRadius: 50,
+                color: '#fff',
+              },
+              '& label': {
+                color: '#fff8 !important',
+                fontWeight: 'bold',
+              }
+            }}
           />
           <Button
             type="submit"
@@ -57,13 +86,17 @@ export default function SignIn () {
             variant="contained"
             sx={{
               mt: 3,
-              mb: 2,
               background: 'var(--btn-gradient)',
+              fontWeight: 'bold',
+              textTransform: 'none',
+              borderRadius: 50,
+              letterSpacing: 1,
+              fontSize: '1.1rem',
             }}
           >
-            Sign In
+            Log In
           </Button>
-        </Box>
+        </Grid>
       </FormLayout>
     </BasicLayout>
   );

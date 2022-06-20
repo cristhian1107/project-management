@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,11 +7,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FiltersContext from 'context/FiltersContext';
+// custom hooks
+import { useBackend } from 'hooks/useBackend';
 
 export default function TableRoot () {
-
-  const { listRequests } = useContext(FiltersContext)
+  const { getRequests } = useBackend();
+  const { filters, listRequests, setListRequests } = useContext(FiltersContext);
   const rows = listRequests
+
+  useEffect(() => {
+    getRequests(filters).then(setListRequests);
+  }, [setListRequests, getRequests])
 
   return (
     <TableContainer
@@ -46,7 +52,7 @@ export default function TableRoot () {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{
                 '&:hover': { background: 'rgba(0, 0, 0, .2)' },
                 '& td': { py: 3 },

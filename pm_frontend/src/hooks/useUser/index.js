@@ -3,7 +3,7 @@ import { useContext, useCallback } from 'react';
 // Context
 import UserContext from 'context/UserContext';
 // Service
-import loginService from 'services/login';
+import loginService from 'services/auth.service';
 
 export default function useUser () {
   const {jwt, setJWT, userInfo, setUserInfo} = useContext(UserContext);
