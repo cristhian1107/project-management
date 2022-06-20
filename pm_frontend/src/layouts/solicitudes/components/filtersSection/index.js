@@ -27,12 +27,11 @@ export default function FiltersSection ({ css }) {
   useEffect(() => {
     getCompanies().then(setCompanies);
     getDepartments().then(setDepartments);
-    getRequests(filters).then(setListRequests);
-  }, [getCompanies, getDepartments, getRequests, setListRequests, filters])
+  }, [getCompanies, getDepartments])
 
   const handleSubmit = (e)=> {
     e.preventDefault()
-    getRequests(filters).then(setListRequests);
+    getRequests(filters).then(console.log);
   }
 
   return (
@@ -68,6 +67,7 @@ export default function FiltersSection ({ css }) {
         <Grid item xs={12} sm={2.8} xl={2}>
           <TextFieldFullWidth
             select
+            defaultValue={""}
             id="filter_empresa"
             label="Empresa"
             value={idCompany}
@@ -83,12 +83,13 @@ export default function FiltersSection ({ css }) {
           <TextFieldFullWidth
             select
             id="filter_area"
+            defaultValue={""}
             label="Area"
             value={department}
             variant="standard"
             onChange={e => setFilters(obj => ({...obj, ...{deparment:e.target.value}}))}
           >
-            {departments.map(({ department: name }) =>
+            {departments.map(({department: name}) =>
               (<MenuItem key={name} value={name}>{name}</MenuItem>)
             )}
           </TextFieldFullWidth>

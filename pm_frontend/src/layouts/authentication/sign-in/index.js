@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import BasicLayout from 'layouts/authentication/sign-in/basicLayout';
 import FormLayout from 'layouts/authentication/components/formLayout';
 // Styles @mui
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
