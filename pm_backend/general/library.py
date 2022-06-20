@@ -21,6 +21,7 @@ options_jwt = {
     }
 }
 
+
 class Libraries():
     """Class that contains methods that will
     be used in support.
@@ -48,29 +49,41 @@ class Libraries():
 
     @staticmethod
     def generate_token(payload={}):
-        # Se define el tiempo de expiración para el token
-        # exp -> 24h y se le integra junto al id y al username para ser codificado
+        """Generate a jwt from a payload.
+
+        Args:
+            payload (dict, optional): Contains token keys.
+
+        Returns:
+            str: JWT Token
+        """
+        # The expiration time for the token is defined.
         value_for_exp = datetime.utcnow() + timedelta(days=1)
+        # exp -> 24h and it is integrated together with payload.
         payload.update({'exp': value_for_exp})
-        # ?encoded_jwt = jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
+        # ? jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
         encoded_jwt = jwt.encode(payload, **options_jwt['enc'])
         return encoded_jwt
 
     @staticmethod
     def validate_token(func):
-        """ It will behave as a decorator.
-        It will check the header and body of the incoming http request
+        """It will behave as a decorator.
+        It will check the header and body of the incoming http request.
 
         Args:
-            func (function): Endpoint view function 
+            func (func): Endpoint view function.
         """
         def decorated(*args, **kwargs):
-            # Obteniendo el token
+            """Validate if exists and decode the parameters sent in JWT.
+
+            Returns:
+                func: Return the function whit payload decode.
+            """
+            # Get token.
             token = request.headers.get('Authorization')
             if not token:
                 return make_response(jsonify({'request': 'failure'}), 203)
-
-            # Validando el token
+            # Validate token.
             try:
                 payload = jwt.decode(token, **options_jwt['dec'])
                 kwargs.update({'payload': payload})
