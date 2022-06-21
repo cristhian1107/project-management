@@ -1,38 +1,25 @@
-// Utilities
-import { subtractDays } from 'utilities/dateOperations';
+/**
+ * Execute requests to the application's API and
+ * resolve the response.
+ * @param {string} method - The verb od the request.
+ * @param {string} path - The resource path in the API.
+ * @param {object} body - The payload of the request.
+ * @return {Promise} A promise with the resolved response.
+ */
+export default async function basicFetch ({ method, path, body }) {
+  const jwt = window.localStorage.getItem('token');
 
-const requestsToThePrivateApi = (func, token) => {
-  const obj = {}
-
-  obj.getEvents = () => func({path: 'table/all?table_code=3', token});
-
-  obj.getPriorities = () => func({path: 'table/all?table_code=4', token});
-
-  obj.getCompanies = () => func({path: 'company/all', token});
-
-  obj.getDepartments = () => func({path: 'department/all', token});
-
-  obj.getRequests = ({
-    startDate,
-    endDate,
-    idCompany,
-    deparment
-  }) => {
-    const splitForCharacter = (date) =>  date?.toISOString().split('T')[0];
-    const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 1);
-    const params = new URLSearchParams({
-      date_begin: splitForCharacter(dateBegin),
-      date_end: splitForCharacter(dateEnd),
-      company_id: idCompany,
-      deparment
-    }).toString();
-
-    return func({path: `request/all?${params}`, token})
-  };
-
-  obj.postRequest = (body) => func({method: 'POST', path: 'request', body, token});
-
-  return obj;
+  return fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': jwt
+    },
+    body: JSON.stringify(body),
+  }).then(res => {
+    if (!res.ok) throw new Error('Response is NOT ok');
+    if (res.status === 204)
+      return []
+    return res.json();
+  }).then(res => res);
 }
-
-export default requestsToThePrivateApi;

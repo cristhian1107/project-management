@@ -2,9 +2,11 @@
 import { useEffect } from 'react';
 // React router dom
 import { useNavigate } from 'react-router-dom';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
 // My Components
-import BasicLayout from 'layouts/authentication/sign-in/basicLayout';
-import FormLayout from 'layouts/authentication/components/formLayout';
+import BasicLayout from 'pages/Login/BasicLayout';
+import FormLayout from 'pages/Login/components/FormLayout';
 // Styles @mui
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -12,15 +14,18 @@ import TextField from '@mui/material/TextField';
 // Custom hooks
 import useUser from 'hooks/useUser';
 
-export default function SignIn () {
+export default function Login () {
   const navigate = useNavigate();
   const { isLogged, login } = useUser();
+  const userState = useSelector((store) => store.user);
 
   useEffect(() => {
+    console.log(`${isLogged}`);
+    console.los(userState);
     if (isLogged) navigate('/dashboard', {replace: true});
   }, [isLogged, navigate]);
 
-  function handleSubmit (e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const username = data.get('username');

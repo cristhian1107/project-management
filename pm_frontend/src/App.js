@@ -2,15 +2,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 // @mui
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+// Redux
+import { Provider } from 'react-redux';
+import store from 'redux/store';
 // Custom hooks
 import useUser from 'hooks/useUser';
-// Routes
-import SignIn from 'layouts/authentication/sign-in';
-import Dashboard from 'layouts/dashboard';
-import Profile from 'layouts/profile';
-import Tables from 'layouts/tables';
-import Solicitudes from 'layouts/solicitudes';
+// Common component
 import SideNav from 'components/sideNav';
+// Config
+import { routes } from 'config';
 
 const customTheme = createTheme({
   palette: {
@@ -23,25 +23,28 @@ const customTheme = createTheme({
 function App() {
   const { isLogged } = useUser();
 
+  const getRoute = ({ path, key, component }) => {
+    return <Route path={path} key={key} element={component} />;
+  }
+
   return (
     <ThemeProvider theme={customTheme}>
-      {isLogged ? (
+      <Provider store={store}>
+        {isLogged ? (
           <Routes>
             <Route path='/' element={<SideNav />} >
               <Route index element={<Navigate to='/dashboard' />} />
-              <Route path='dashboard' element={<Dashboard />} />
-              <Route path='Solicitudes' element={<Solicitudes />} />
-              <Route path='tables' element={<Tables />} />
-              <Route path='profile' element={<Profile />} />
-              <Route path='*' element={<Navigate to='/' />} />
+              {routes.privates.map(route => getRoute(route))}
+              <Route path='*' key='other' element={<Navigate to='/' />} />
             </Route>
           </Routes>
-      ) : (
-        <Routes>
-          <Route path='/sign-in' element={<SignIn />} />
-          <Route path='*' element={<Navigate to='/sign-in' />} />
-        </Routes>
-      )}
+        ) : (
+          <Routes>
+            {routes.publics.map(route => getRoute(route))}
+            <Route path='*' key='other'element={<Navigate to='/login' />} />
+          </Routes>
+        )}
+      </Provider>
     </ThemeProvider>
   );
 }

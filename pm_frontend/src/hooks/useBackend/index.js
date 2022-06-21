@@ -1,46 +1,49 @@
 // React core
-import { useContext } from 'react';
+import { useContext, useCallback } from 'react';
 // Context
 import UserContext from 'context/UserContext';
 // Services
-import requestsToThePrivateApi from 'services/private.services';
+import func from 'services/private.services';
+// Utilities
+import { subtractDays } from 'utilities/dateOperations';
 
 /**
- * Execute requests to the application's API and
- * resolve the response.
- * @param {string} method - The verb od the request.
- * @param {string} path - The resource path in the API.
- * @param {object} body - The payload of the request.
- * @return {Promise} A promise with the resolved response.
- */
-export async function basicFetch ({ method, path, body }) {
-  const jwt = window.localStorage.getItem('token');
-
-  return fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': jwt
-    },
-    body: JSON.stringify(body),
-  }).then(res => {
-    if (!res.ok) throw new Error('Response is NOT ok');
-    if (res.status === 204)
-      return []
-    return res.json();
-  }).then(res => res);
-}
-
-/**
- * Provides functions to request different routes.
+ * Provides functions to request different routes of the private API.
  * @return {object} Contains the functions.
  */
 function useBackend () {
-  const { jwt } = useContext(UserContext);
+  const { jwt: token } = useContext(UserContext);
+  const obj = {}
 
-  return {
-    ...requestsToThePrivateApi(basicFetch, jwt)
-  }
+  obj.getEvents = useCallback(() => func({path: 'table/all?table_code=3', token}), [token]);
+
+  obj.getPriorities = useCallback(() => func({path: 'table/all?table_code=4', token}), [token]);
+
+  obj.getCompanies = useCallback(() => func({path: 'company/all', token}), [token]);
+
+  obj.getDepartments = useCallback(() => func({path: 'department/all', token}), [token]);
+
+  obj.getRequests = useCallback(({
+    startDate,
+    endDate,
+    idCompany,
+    deparment
+  }) => {
+    const splitForCharacter = (date) =>  date?.toISOString().split('T')[0];
+    const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 1);
+    const params = new URLSearchParams({
+      date_begin: splitForCharacter(dateBegin),
+      date_end: splitForCharacter(dateEnd),
+      company_id: idCompany,
+      deparment
+    }).toString();
+
+    return func({path: `request/all?${params}`, token})
+  }, [token]);
+
+  obj.postRequest = useCallback((body) => func({method: 'POST', path: 'request', body, token}), [token]);
+
+  return obj;
 }
 
 export { useBackend };
