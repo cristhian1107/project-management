@@ -1,35 +1,41 @@
 // React
-import { useContext, useCallback } from 'react';
-// Context
-import UserContext from 'context/UserContext';
-// Service
-import loginService from 'services/auth.service';
+import { useCallback } from 'react';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
+import { createUser, resetUser } from 'redux/states';
+// Service
+import loginService from 'services/auth.service';
 
+const ls = window.localStorage;
+
+/**
+ * Manage a user's session state
+ */
 export default function useUser () {
-  const {jwt, setJWT, userInfo, setUserInfo} = useContext(UserContext);
-  const userState = useSelector(store => store.user);
   const dispatch = useDispatch();
+  const userState = useSelector(state => state.user);
 
-  const login = useCallback(({username, password}) => {
+  // Validate credentials with a service
+  const login = useCallback(async ({ username, password }) => {
     loginService({username, password})
-      .then(({ jwt, ...info }) => {
-        setJWT(jwt);
-        setUserInfo(info);
+      .then(data => {
+        // Store session token in local memory
+        ls.setItem('token', data.jwt);
+        // Loading data of the user in the global state
+        dispatch(createUser(data));
       })
       .catch(err => console.error(err));
-  }, [setJWT, setUserInfo]);
+  }, [dispatch]);
 
+  // Ends the user session and remove stored data
   const logout = useCallback(() => {
-    window.localStorage.removeItem('token');
-    setJWT(null);
-  }, [setJWT]);
+    ls.removeItem('token');
+    dispatch(resetUser());
+  }, [dispatch]);
 
   return {
-    isLogged: Boolean(jwt),
+    isLogged: Boolean(userState.jwt),
     login,
     logout,
-    userInfo
   }
 }

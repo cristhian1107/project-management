@@ -1,3 +1,5 @@
+// Context
+import { FiltersContextProvider } from 'context/FiltersContext';
 // Parts of the component
 import TableSection from 'pages/Solicitudes/components/TableSection';
 import HeaderSection from 'pages/Solicitudes/components/HeaderSection';
@@ -7,9 +9,11 @@ export default function Solicitudes () {
 
   return (
     <>
-      <HeaderSection />
-      <FiltersSection css={{ my: 10 }}/>
-      <TableSection />
+      <FiltersContextProvider>
+        <HeaderSection />
+        <FiltersSection css={{ my: 10 }}/>
+        <TableSection />
+      </FiltersContextProvider>
     </>
   )
 }

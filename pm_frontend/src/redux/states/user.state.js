@@ -13,7 +13,8 @@ export const UserEmptyState = {
   position: '',
   role: '',
   role_id: 0,
-  user: ''
+  user: '',
+  jwt: window.localStorage.getItem('token')
 };
 
 export const userSlice = createSlice({

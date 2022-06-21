@@ -1,7 +1,5 @@
 // React core
-import { useContext, useCallback } from 'react';
-// Context
-import UserContext from 'context/UserContext';
+import { useCallback } from 'react';
 // Services
 import func from 'services/private.services';
 // Utilities
@@ -12,16 +10,15 @@ import { subtractDays } from 'utilities/dateOperations';
  * @return {object} Contains the functions.
  */
 function useBackend () {
-  const { jwt: token } = useContext(UserContext);
   const obj = {}
 
-  obj.getEvents = useCallback(() => func({path: 'table/all?table_code=3', token}), [token]);
+  obj.getEvents = useCallback(() => func({path: 'table/all?table_code=3'}), []);
 
-  obj.getPriorities = useCallback(() => func({path: 'table/all?table_code=4', token}), [token]);
+  obj.getPriorities = useCallback(() => func({path: 'table/all?table_code=4'}), []);
 
-  obj.getCompanies = useCallback(() => func({path: 'company/all', token}), [token]);
+  obj.getCompanies = useCallback(() => func({path: 'company/all'}), []);
 
-  obj.getDepartments = useCallback(() => func({path: 'department/all', token}), [token]);
+  obj.getDepartments = useCallback(() => func({path: 'department/all'}), []);
 
   obj.getRequests = useCallback(({
     startDate,
@@ -38,10 +35,10 @@ function useBackend () {
       deparment
     }).toString();
 
-    return func({path: `request/all?${params}`, token})
-  }, [token]);
+    return func({path: `request/all?${params}`})
+  }, []);
 
-  obj.postRequest = useCallback((body) => func({method: 'POST', path: 'request', body, token}), [token]);
+  obj.postRequest = useCallback((body) => func({method: 'POST', path: 'request', body}), []);
 
   return obj;
 }

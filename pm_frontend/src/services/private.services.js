@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /**
  * Execute requests to the application's API and
  * resolve the response.
@@ -8,18 +10,21 @@
  */
 export default async function basicFetch ({ method, path, body }) {
   const jwt = window.localStorage.getItem('token');
+  const URL = `${process.env.REACT_APP_API_URL}/${path}`;
 
-  return fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
+  return axios({
     method,
+    url: URL,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': jwt
     },
-    body: JSON.stringify(body),
+    data: body
   }).then(res => {
-    if (!res.ok) throw new Error('Response is NOT ok');
+    if (!res.statusText)
+      throw new Error('Response is NOT ok');
     if (res.status === 204)
       return []
-    return res.json();
-  }).then(res => res);
+    return res.data;
+  }).catch(console.error);
 }

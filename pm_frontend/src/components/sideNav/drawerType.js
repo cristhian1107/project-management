@@ -1,14 +1,14 @@
-// React core
-import { useContext } from 'react';
 // @mui
 import Drawer from '@mui/material/Drawer';
 // Utils and parts of the component
 import { drawerWidth } from 'components/utils';
-// Context
-import HandleDrawer from 'context/DrawerContext';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleDrawer } from 'redux/states';
 
 export default function DrawerType ({ typeOfDrawer, children }) {
-  const {open, setOpen} = useContext(HandleDrawer);
+  const drawerState = useSelector(state => state.drawer);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -16,8 +16,8 @@ export default function DrawerType ({ typeOfDrawer, children }) {
         typeOfDrawer === 'temporary' ? (
           <Drawer
             variant="temporary"
-            open={open}
-            onClose={() => setOpen(!open)}
+            open={drawerState.open}
+            onClose={() => dispatch(toggleDrawer())}
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
             }}

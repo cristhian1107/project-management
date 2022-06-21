@@ -2,12 +2,10 @@
 import { useEffect } from 'react';
 // React router dom
 import { useNavigate } from 'react-router-dom';
-// Redux
-import { useDispatch, useSelector } from 'react-redux';
-// My Components
+// Parts of the component
 import BasicLayout from 'pages/Login/BasicLayout';
 import FormLayout from 'pages/Login/components/FormLayout';
-// Styles @mui
+// @mui
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -17,11 +15,8 @@ import useUser from 'hooks/useUser';
 export default function Login () {
   const navigate = useNavigate();
   const { isLogged, login } = useUser();
-  const userState = useSelector((store) => store.user);
 
   useEffect(() => {
-    console.log(`${isLogged}`);
-    console.los(userState);
     if (isLogged) navigate('/dashboard', {replace: true});
   }, [isLogged, navigate]);
 

@@ -1,5 +1,3 @@
-// React core
-import { useContext } from 'react';
 // @mui
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
@@ -14,18 +12,19 @@ import Typography from '@mui/material/Typography';
 import LogoutIcon from '@mui/icons-material/Logout';
 // Custom Hooks
 import useUser  from 'hooks/useUser';
-// Context
-import HandleDrawer from 'context/DrawerContext';
+// Redux
+import { useDispatch } from 'react-redux';
+import { handleDrawer } from 'redux/states';
 // Image
 import userImage from 'assets/images/back.jpeg';
 
-export default function BasicLayout ({children}) {
-  const { setOpen } = useContext(HandleDrawer);
+export default function BasicLayout ({ children }) {
+  const dispatch = useDispatch()
   const { logout } = useUser();
 
   function handleLogOut () {
     logout();
-    setOpen(false);
+    dispatch(handleDrawer(false));
   }
 
   return (

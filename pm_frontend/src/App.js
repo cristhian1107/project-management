@@ -2,9 +2,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 // @mui
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-// Redux
-import { Provider } from 'react-redux';
-import store from 'redux/store';
 // Custom hooks
 import useUser from 'hooks/useUser';
 // Common component
@@ -29,22 +26,20 @@ function App() {
 
   return (
     <ThemeProvider theme={customTheme}>
-      <Provider store={store}>
-        {isLogged ? (
-          <Routes>
-            <Route path='/' element={<SideNav />} >
-              <Route index element={<Navigate to='/dashboard' />} />
-              {routes.privates.map(route => getRoute(route))}
-              <Route path='*' key='other' element={<Navigate to='/' />} />
-            </Route>
-          </Routes>
-        ) : (
-          <Routes>
-            {routes.publics.map(route => getRoute(route))}
-            <Route path='*' key='other'element={<Navigate to='/login' />} />
-          </Routes>
-        )}
-      </Provider>
+      {isLogged ? (
+        <Routes>
+          <Route path='/' element={<SideNav />} >
+            <Route index element={<Navigate to='/dashboard' />} />
+            {routes.privates.map(route => getRoute(route))}
+            <Route path='*' key='other' element={<Navigate to='/' />} />
+          </Route>
+        </Routes>
+      ) : (
+        <Routes>
+          {routes.publics.map(route => getRoute(route))}
+          <Route path='*' key='other'element={<Navigate to='/login' />} />
+        </Routes>
+      )}
     </ThemeProvider>
   );
 }
