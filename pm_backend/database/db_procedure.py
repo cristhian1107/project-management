@@ -172,7 +172,7 @@ class DBProcedures():
             del storage
 
     @staticmethod
-    def requests_one(id) -> Request:
+    def requests_one(id, details=False) -> Request:
         """Get one record request.
 
         Args:
@@ -187,6 +187,7 @@ class DBProcedures():
             item = Request()
             parameters = []
             parameters.append(id)
+            parameters.append(details)
             storage.open_db()
             tables = storage.exec_procedure('requests_one', parameters)
 
