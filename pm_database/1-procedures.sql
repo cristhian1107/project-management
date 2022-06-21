@@ -431,7 +431,8 @@ CREATE PROCEDURE requests_all
 BEGIN
 
     SELECT
-          r.id , r.table_typ , r.code_typ , IF(r.code = '', 'SOL-00000', r.code) as code
+          r.id , r.table_typ , r.code_typ
+        , IF(r.code = '', CONCAT('SOL', CONVERT(YEAR(r.date_issue), char), '-', LPAD(CONVERT(r.id, char), 7, '0')), r.code) as code
         , r.company_id , r.user_id , r.subject , r.reason
         , IFNULL(r.name, r.subject) as name , r.description , r.department , r.campus
         , r.date_issue , r.date_tentative , r.table_sta , r.code_sta

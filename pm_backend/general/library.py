@@ -62,7 +62,7 @@ class Libraries():
         # exp -> 24h and it is integrated together with payload.
         payload.update({'exp': value_for_exp})
         # PyJWT version 1.7 to 2.4 removes decoding
-        # encoded_jwt = jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
+        # jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
         encoded_jwt = jwt.encode(payload, **options_jwt['enc'])
         return encoded_jwt
 
