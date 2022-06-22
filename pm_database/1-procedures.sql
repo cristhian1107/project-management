@@ -44,6 +44,48 @@ BEGIN
 END $$
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS users_one;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-21
+-- Descripcion         : select a record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE users_one
+( IN pbigid bigint )
+BEGIN
+
+    DECLARE v_role_id bigint;
+    SELECT role_id INTO v_role_id
+    FROM users
+    WHERE
+        id = pbigid;
+
+    -- Info user.
+    SELECT id , company_id , role_id , name
+        , lastname , email , user , password
+        , gender , position , department , campus
+    FROM users
+    WHERE
+        id = pbigid;
+
+    -- Info role.
+    SELECT id , name , description , is_active
+    FROM roles
+    WHERE id = v_role_id;
+
+    -- Info options.
+    SELECT opt.id , opt.name , opt.alias , opt.description, rop.is_active
+    FROM options opt
+    INNER JOIN roles_options rop ON opt.id = rop.option_id
+    WHERE
+        rop.role_id = v_role_id AND
+        rop.is_active = 1;
+
+END $$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS users_all;
 -- =========================================================
 -- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-05
@@ -61,28 +103,6 @@ BEGIN
         , gender , position , department , campus
         , create_at , create_by , update_at , update_by
     FROM users;
-END $$
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS users_one;
--- =========================================================
--- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-05
--- Descripcion         : select a record from the table
--- Autor - Fecha Modif :
--- Descripcion         :
--- =========================================================
-DELIMITER $$
-CREATE PROCEDURE users_one
-( IN pbigid bigint )
-BEGIN
-
-    SELECT id , company_id , role_id , name
-        , lastname , email , user , password
-        , gender , position , department , campus
-        , create_at , create_by , update_at , update_by
-     FROM users
-    WHERE id = pbigid;
-
 END $$
 DELIMITER ;
 
@@ -464,7 +484,8 @@ DROP PROCEDURE IF EXISTS requests_one;
 -- =========================================================
 DELIMITER $$
 CREATE PROCEDURE requests_one
-( IN pbigid bigint )
+( IN pbigid bigint
+, IN pbitdetails bit)
 BEGIN
 
     SELECT
@@ -482,15 +503,18 @@ BEGIN
     WHERE
         r.id = pbigid;
 
-    SELECT
-          re.request_id , re.item , re.table_sta , re.code_sta
-        , re.date_issue , re.user_id , sta.name as name_sta
-        , re.create_at , re.create_by , re.update_at , re.update_by
-    FROM requests_events re
-    LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
-    WHERE
-        re.request_id = pbigid
-    ORDER BY re.request_id desc, re.item desc;
+    IF (pbitdetails)
+    THEN
+        SELECT
+              re.request_id , re.item , re.table_sta , re.code_sta
+            , re.date_issue , re.user_id , sta.name as name_sta
+            , re.create_at , re.create_by , re.update_at , re.update_by
+        FROM requests_events re
+        LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+        WHERE
+            re.request_id = pbigid
+        ORDER BY re.request_id desc, re.item desc;
+    END IF;
 
 END $$
 DELIMITER ;

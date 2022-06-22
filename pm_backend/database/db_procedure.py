@@ -60,6 +60,46 @@ class DBProcedures():
             del storage
 
     @staticmethod
+    def users_one(id) -> User:
+        """Get one user by id.
+
+        Args:
+            user (int): Id user.
+
+        Returns:
+            User: Information of the user who login.
+        """
+        # TODO: Connect to Database.
+        storage = DBStorage()
+        try:
+            new_user = User()
+            parameters = []
+            parameters.append(id)
+            storage.open_db()
+            tables = storage.exec_procedure('users_one', parameters)
+
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                # Info user.
+                if x == 0:
+                    new_user = User(**tables[x][0])
+                # Info role.
+                if x == 1:
+                    new_user.role = Role(**tables[x][0])
+                # Info options.
+                if x == 2:
+                    for opt in tables[x]:
+                        new_user.options.append(Option(**opt))
+            return (new_user)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (None)
+        finally:
+            del storage
+
+    @staticmethod
     def requests_insert(item=Request()) -> Boolean:
         """Insert new requests
 
