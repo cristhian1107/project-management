@@ -7,6 +7,25 @@ from database.db_procedure import DBProcedures
 import hashlib
 from general.library import Libraries
 
+
+@app_views.route('/user', methods=['GET'], strict_slashes=False)
+@Libraries.validate_token
+def get_user(**kwargs):
+    payload = kwargs.get('payload')
+    id = payload.get('id')
+    item = User()
+    item = DBProcedures.users_one(id)
+    if item is None or not item:
+        return make_response(jsonify({'status': 'failure'}), 203)
+    payload = {
+        'id': item.id,
+        'username': item.user
+    }
+    encoded_jwt = Libraries.generate_token(payload)
+    setattr(item, 'jwt', encoded_jwt)
+    return make_response(jsonify(item.to_dict()), 201)
+
+
 @app_views.route('/login', methods=['POST'],
                  strict_slashes=False)
 def login():
