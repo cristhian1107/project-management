@@ -43,7 +43,6 @@ export default function TableRoot () {
                 fontWeight: 'bolder',
                 py: 1.5,
                 fontSize: '1rem',
-                position: 'relative',
               }
             }}
           >
@@ -51,12 +50,8 @@ export default function TableRoot () {
             <TableCell align='right'>Nombre</TableCell>
             <TableCell align='right'>Prioridad</TableCell>
             <TableCell align='right'>Empresa</TableCell>
-            <TableCell align='right'>Creacion</TableCell>
-            <TableCell
-              align='center'
-            >
-              Action
-            </TableCell>
+            <TableCell align='right'>Estado</TableCell>
+            <TableCell align='center'>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -64,7 +59,7 @@ export default function TableRoot () {
             <TableRow
               key={row.id}
               sx={{
-                '&:hover': { background: 'rgba(0, 0, 0, .2)' },
+                '&:hover': { background: 'rgba(0, 0, 0, .1)' },
                 '& td': { py: 3 },
                 '&:last-child td, &:last-child th': { border: 0 },
                 position: 'relative',
@@ -77,14 +72,7 @@ export default function TableRoot () {
               <TableCell align='right'>{row.name_pri}</TableCell>
               <TableCell align='right'>{row.company_tradename}</TableCell>
               <TableCell align='right'>{row.name_sta}</TableCell>
-              <TableCell
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  position: 'sticky',
-                  right: { xs: '-10px', sm: 0 },
-                }}
-              >
+              <TableCell>
                 <ButtonActions />
               </TableCell>
             </TableRow>
