@@ -35,8 +35,8 @@ export default function ModalFormInsertRequest(props) {
     const code_pri = data.get('priority');
     const reason = data.get('reason');
     let date_current = new Date();
-    date_current.setDate(date_current.getDate() - 1)
-    const date_issue = date_current.toISOString()
+    date_current.setDate(date_current.getDate() - 1);
+    const date_issue = date_current.toISOString();
 
     console.log({subject, code_pri, reason, date_issue});
     postRequest({subject, code_pri, reason, date_issue});
@@ -50,7 +50,15 @@ export default function ModalFormInsertRequest(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-          <Box sx={style}>
+        <Box sx={style}>
+          <Button
+            fullWidth
+            onClick={handleClose}
+            sx={{
+              justifyContent: 'end',
+            }}
+          >
+            X</Button>
             <Typography variant='h6' align='center'>
               Nueva Solicitud
             </Typography>

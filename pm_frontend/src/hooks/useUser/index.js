@@ -19,6 +19,7 @@ export default function useUser () {
 
   const logout = useCallback(() => {
     window.localStorage.removeItem('token');
+    window.localStorage.removeItem('session');
     setJWT(null);
   }, [setJWT]);
 
