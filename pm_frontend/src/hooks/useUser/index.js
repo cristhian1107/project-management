@@ -29,6 +29,8 @@ export default function useUser () {
 
   // Ends the user session and remove stored data
   const logout = useCallback(() => {
+
+    window.localStorage.removeItem('session');
     ls.removeItem('token');
     dispatch(resetUser());
   }, [dispatch]);

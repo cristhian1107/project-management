@@ -48,7 +48,7 @@ def get_request(**kwargs):
     payload = kwargs.get('payload')
     id = payload.get('id')
     # Necesito un diccionario de el proyectos con todos sus datos
-    res = DBProcedures.requests_one(id)
+    res = DBProcedures.requests_one(id, True)
     if res is None:
         return make_response(jsonify({'request': 'empty'}), 204)
     return make_response(jsonify(res.to_dict()), 200)
