@@ -12,11 +12,12 @@ export default function BasicLayout({children}) {
       container component="main"
       sx={{
         position: 'relative',
-        height: '100vh',
+        minHeight: '100vh',
         background: `url(${bgImage})`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: '100vw 100vh',
+        backgroundSize: '100vw 100%',
+        backgroundAttachment: 'fixed',
         justifyContent: 'center',
         '&::before': {
           content: '""',
