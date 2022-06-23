@@ -4,8 +4,11 @@
 """
 from datetime import datetime, timedelta
 from flask import request, make_response, jsonify
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import jwt
 import traceback
+import smtplib
 
 file_name = 'log'
 format_date = '%Y-%m-%dT%H:%M:%S.%f'
@@ -46,6 +49,56 @@ class Libraries():
                 file_log.write('Traceback:\n')
                 file_log.write(trace_error)
             file_log.write('\n')
+
+    @staticmethod
+    def send_email(subject, message, to):
+        try:
+            host = 'SMTP.Office365.com'
+            port = 587
+            me = 'repuestos@autrisa.com'
+            password = 'R123456+'
+
+            # The correct MIME type is multipart/alternative.
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = subject
+            msg['From'] = 'No-Reply <{}>'.format(subject)
+            msg['To'] = to
+
+            # The body of the message (a plain-text and an HTML version).
+            text = 'Hi!\nHow are you?\nhttp://www.python.org'
+            html = '''\
+            <html>
+              <head></head>
+              <body>
+                <p>Hi!<br>
+                   How are you?<br>
+                   Here is the <a href="http://www.python.org">link</a>
+                   you wanted.
+                </p>
+              </body>
+            </html>
+            '''
+
+            # Record the MIME types of both parts - text/plain and text/html.
+            part1 = MIMEText(text, 'plain')
+            part2 = MIMEText(html, 'html')
+
+            # Attach parts into message container.
+            # According to RFC 2046, the last part of a multipart message
+            # In this case The HTML message, is best and preferred.
+            msg.attach(part1)
+            msg.attach(part2)
+
+            # Send the message via local SMTP server.
+            s = smtplib.SMTP(host, port)
+            s.starttls()
+            s.login(me, password)
+            s.sendmail(me, to, msg.as_string())
+            s.quit()
+            return(True)
+        except smtplib.SMTPException as error:
+            Libraries.write_log(error, traceback.format_exc())
+            return(False)
 
     @staticmethod
     def generate_token(payload={}):

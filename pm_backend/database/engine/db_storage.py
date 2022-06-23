@@ -79,7 +79,10 @@ class DBStorage:
         """
         is_correct = False
         try:
-            self.__cursor.callproc(name, parameters)
+            outputs = self.__cursor.callproc(name, parameters)
+            if outputs:
+                outs = list(outputs.values())
+                parameters[0] = outs[0]
             self.__connector.commit()
             if self.__cursor.rowcount > 0:
                 is_correct = True

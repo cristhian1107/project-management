@@ -57,7 +57,8 @@ def get_request(**kwargs):
 @app_views.route('/request', methods=['POST'],
                  strict_slashes=False)
 @Libraries.validate_token  # Custom decorator to validate the token
-def insert_request(**kwargs):  # kwargs se retorna desde el decorator and contains the payload
+def insert_request(**kwargs):
+    # kwargs se retorna desde el decorator and contains the payload
     """inserts a new requirement/project"""
     payload = kwargs.get('payload')
     item = Request()
@@ -81,11 +82,8 @@ def insert_request(**kwargs):  # kwargs se retorna desde el decorator and contai
     item.code = ''
     item.percentage = 0
     # ------------------
-    print(item.to_dict())
-
     # Data is sent to procedures and is returned on success or failure.
     res = DBProcedures.requests_insert(item)
-    print(res)
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
     return make_response(jsonify({'request': 'success'}), 201)

@@ -2,6 +2,7 @@
 """Contains:
     (class) DBProcedure.
 """
+from msilib.schema import Error
 from database.engine.db_storage import DBStorage
 from models.user import User
 from models.role import Role
@@ -115,7 +116,12 @@ class DBProcedures():
                 return (False)
             storage.open_db()
             parameters = item.to_list()
-            return (storage.exec_save('requests_insert', parameters))
+            is_correct = storage.exec_save('requests_insert', parameters)
+            # Recovery id.
+            if parameters:
+                item.id = parameters[0]
+                print(item.id)
+            return (is_correct)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())
             return (False)
