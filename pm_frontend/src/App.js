@@ -8,6 +8,13 @@ import useUser from 'hooks/useUser';
 import SideNav from 'components/sideNav';
 // Config
 import { routes } from 'config';
+import axios from 'axios';
+
+((token=window.localStorage.getItem(token)) => {
+  const URL = `${process.env.REACT_APP_URL_API}/`;
+
+  if (token) axios.get(URL).then(res => console.log(res));
+})();
 
 const customTheme = createTheme({
   palette: {
