@@ -18,9 +18,9 @@ class_list = [
 class BaseModel:
     """Base model containing general definition.
     """
-    create_at = datetime.utcnow()
+    create_at = datetime.now()
     create_by = ''
-    update_at = datetime.utcnow()
+    update_at = datetime.now()
     update_by = ''
 
     def __init__(self, **kwargs):
@@ -33,15 +33,15 @@ class BaseModel:
             if kwargs.get('create_at', None) and type(self.create_at) is str:
                 self.create_at = datetime.strptime(kwargs['create_at'], time)
             else:
-                self.create_at = datetime.utcnow()
+                self.create_at = datetime.now()
             if kwargs.get('update_at', None) and type(self.update_at) is str:
                 self.update_at = datetime.strptime(kwargs['update_at'], time)
             else:
-                self.update_at = datetime.utcnow()
+                self.update_at = datetime.now()
         else:
-            self.create_at = datetime.utcnow()
+            self.create_at = datetime.now()
             self.create_by = ''
-            self.update_at = datetime.utcnow()
+            self.update_at = datetime.now()
             self.update_by = ''
 
     def to_dict(self, audit=False):

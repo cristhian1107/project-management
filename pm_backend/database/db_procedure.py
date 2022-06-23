@@ -99,14 +99,14 @@ class DBProcedures():
             del storage
 
     @staticmethod
-    def requests_insert(item=Request()) -> Boolean:
+    def requests_insert(item=Request()) -> bool:
         """Insert new requests
 
         Args:
             item (Request): New object.
 
         Returns:
-            Boolean: True or False.
+            bool: True or False.
         """
         # TODO: Connect to Database.
         storage = DBStorage()
@@ -123,14 +123,14 @@ class DBProcedures():
             del storage
 
     @staticmethod
-    def requests_events_insert(item=RequestEvent()) -> Boolean:
+    def requests_events_insert(item=RequestEvent()) -> bool:
         """Insert new requests events.
 
         Args:
             item (RequestEvent): New object.
 
         Returns:
-            Boolean: True or False.
+            bool: True or False.
         """
         # TODO: Connect to Database.
         storage = DBStorage()
@@ -147,14 +147,14 @@ class DBProcedures():
             del storage
 
     @staticmethod
-    def requests_update(item=Request()) -> Boolean:
+    def requests_update(item=Request()) -> bool:
         """Update new requests
 
         Args:
             item (Request): New object.
 
         Returns:
-            Boolean: True or False.
+            bool: True or False.
         """
         # TODO: Connect to Database.
         storage = DBStorage()

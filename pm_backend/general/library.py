@@ -35,7 +35,7 @@ class Libraries():
             msm_error (str): Message custom write in file.
             trace_error (str, optional): Messsage traceback.
         """
-        date_time = datetime.utcnow()
+        date_time = datetime.now()
         date_one = date_time.strftime(format_date)
         date_two = date_time.strftime(format_file)
         with open(f'{file_name}-{date_two}.txt', mode='a') as file_log:
@@ -58,12 +58,10 @@ class Libraries():
             str: JWT Token
         """
         # The expiration time for the token is defined.
-        value_for_exp = datetime.utcnow() + timedelta(days=1)
+        value_for_exp = datetime.now() + timedelta(days=1)
         # exp -> 24h and it is integrated together with payload.
         payload.update({'exp': value_for_exp})
-
-        # PyJWT version 1.7 to 2.4 removes decoding
-        # jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
+        # PyJWT version 1.7 to 2.4 remove ...decode('utf-8')
         encoded_jwt = jwt.encode(payload, **options_jwt['enc'])
         return encoded_jwt
 
