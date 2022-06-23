@@ -3,7 +3,6 @@
     (class) DBProcedure.
 """
 from database.engine.db_storage import DBStorage
-from xmlrpc.client import Boolean
 from models.user import User
 from models.role import Role
 from models.option import Option

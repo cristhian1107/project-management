@@ -65,7 +65,6 @@ class Libraries():
         # PyJWT version 1.7 to 2.4 removes decoding
         # jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
         encoded_jwt = jwt.encode(payload, **options_jwt['enc'])
-        #encoded_jwt = jwt.encode(payload, **options_jwt['enc']).decode('utf-8')
         return encoded_jwt
 
     @staticmethod
