@@ -2,17 +2,17 @@
 import { useEffect } from 'react';
 // React router dom
 import { useNavigate } from 'react-router-dom';
-// My Components
-import BasicLayout from 'layouts/authentication/sign-in/basicLayout';
-import FormLayout from 'layouts/authentication/components/formLayout';
-// Styles @mui
+// Parts of the component
+import BasicLayout from 'pages/Login/BasicLayout';
+import FormLayout from 'pages/Login/components/FormLayout';
+// @mui
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 // Custom hooks
 import useUser from 'hooks/useUser';
 
-export default function SignIn () {
+export default function Login () {
   const navigate = useNavigate();
   const { isLogged, login } = useUser();
 
@@ -20,7 +20,7 @@ export default function SignIn () {
     if (isLogged) navigate('/dashboard', {replace: true});
   }, [isLogged, navigate]);
 
-  function handleSubmit (e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const username = data.get('username');

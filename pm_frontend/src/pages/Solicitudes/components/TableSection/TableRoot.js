@@ -1,4 +1,6 @@
+// React core
 import { useContext, useEffect } from 'react';
+// @mui
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+// Context
 import FiltersContext from 'context/FiltersContext';
 // custom hooks
 import { useBackend } from 'hooks/useBackend';
@@ -13,11 +16,11 @@ import { useBackend } from 'hooks/useBackend';
 export default function TableRoot () {
   const { getRequests } = useBackend();
   const { filters, listRequests, setListRequests } = useContext(FiltersContext);
-  const rows = listRequests
+  const rows = listRequests;
 
   useEffect(() => {
     getRequests(filters).then(setListRequests);
-  }, [setListRequests, getRequests])
+  }, [])
 
   return (
     <TableContainer

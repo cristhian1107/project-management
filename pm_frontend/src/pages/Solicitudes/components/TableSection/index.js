@@ -8,12 +8,11 @@ import List from '@mui/material/List'
 import Search from '@mui/icons-material/Search';
 // Custom hooks
 import { useBackend } from 'hooks/useBackend'
-
-import TableRoot from 'layouts/solicitudes/components/tableSection/tableRoot';
+// Parts of the components
+import TableRoot from 'pages/Solicitudes/components/TableSection/TableRoot';
+// Global components
 import Button from 'components/button';
 import Input from 'components/input';
-
-
 
 export default function TableSection({ css }) {
   const { getEvents } = useBackend();

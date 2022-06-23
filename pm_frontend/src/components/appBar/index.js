@@ -1,5 +1,3 @@
-// React core
-import { useContext } from 'react';
 // React router dom
 import { useLocation } from 'react-router-dom';
 // @mui
@@ -14,16 +12,18 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import HomeIcon from '@mui/icons-material/Home';
 import WidgetIcon from '@mui/icons-material/Widgets';
 import NotificationIcon from '@mui/icons-material/Notifications'
-// Context
-import HandleDrawer from 'context/DrawerContext';
+// Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleDrawer } from 'redux/states';
 // Utils
 import { drawerWidth } from 'components/utils';
 // Image
 import bgImage from 'assets/images/back.jpeg';
 
 export default function CustomAppBar () {
-  const {open, setOpen} = useContext(HandleDrawer);
-  const {pathname} = useLocation();
+  const drawerState = useSelector(state => state.drawer);
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   const stringAvatar = (name) => {
     return {
@@ -90,10 +90,10 @@ export default function CustomAppBar () {
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={() => setOpen(!open)}
+            onClick={() => dispatch(toggleDrawer())}
             sx={{ display: { lg: 'none' } }}
           >
-            {open ? <MenuOpenIcon />: <MenuIcon />}
+            {drawerState.open ? <MenuIcon /> : <MenuOpenIcon />}
           </IconButton>
           <Avatar
             {...stringAvatar('Product Manager')}

@@ -25,14 +25,18 @@ export default function FiltersSection ({ css }) {
   const { getCompanies, getDepartments, getRequests } = useBackend();
 
   useEffect(() => {
-    getCompanies().then(setCompanies);
     getDepartments().then(setDepartments);
-  }, [getCompanies, getDepartments])
+    getCompanies().then(setCompanies);
+  }, [getCompanies, getDepartments]);
 
   const handleSubmit = (e)=> {
+    console.log("Holaa")
     e.preventDefault()
     getRequests(filters).then(setListRequests);
   }
+
+  const handleChangeCompany = (e) => setFilters(obj => ({...obj, ...{idCompany: e.target.value}}));
+  const handleChangeDepartment = (e) => setFilters(obj => ({...obj, ...{deparment: e.target.value}}));
 
   return (
     <Box sx={{ ...css }}>
@@ -72,11 +76,13 @@ export default function FiltersSection ({ css }) {
             label="Empresa"
             value={idCompany}
             variant="standard"
-            onChange={e => setFilters(obj => ({...obj, ...{idCompany:e.target.value}}))}
+            onChange={handleChangeCompany}
           >
-            {companies.map(({ tradename, id}) =>
-              (<MenuItem key={tradename} value={id}>{tradename}</MenuItem>)
-            )}
+            {
+              companies.map(({ tradename, id }) => (
+                <MenuItem key={tradename} value={id}>{tradename}</MenuItem>
+              ))
+            }
           </TextFieldFullWidth>
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
@@ -87,11 +93,13 @@ export default function FiltersSection ({ css }) {
             label="Area"
             value={department}
             variant="standard"
-            onChange={e => setFilters(obj => ({...obj, ...{deparment:e.target.value}}))}
+            onChange={handleChangeDepartment}
           >
-            {departments.map(({department: name}) =>
-              (<MenuItem key={name} value={name}>{name}</MenuItem>)
-            )}
+            {
+              departments.map(({ department: name }) => (
+                <MenuItem key={name} value={name}>{name}</MenuItem>
+              ))
+            }
           </TextFieldFullWidth>
         </Grid>
         <Grid

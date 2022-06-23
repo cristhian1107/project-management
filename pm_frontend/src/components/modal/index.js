@@ -102,7 +102,7 @@ export default function ModalFormInsertRequest(props) {
                   {
                     priorities.map(({ alias, code, name }) => {
                       return (
-                        <MenuItem key={alias} value={code}>{name}</MenuItem>)
+                        <MenuItem key={alias} value={code}>{name}</MenuItem>);
                     })
                   }
                 </TextFieldFullWidth>

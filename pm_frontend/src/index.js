@@ -2,26 +2,22 @@
 import React from 'react';
 // React dom client
 import ReactDOM from 'react-dom/client';
+// Redux
+import { Provider } from 'react-redux';
+import store from 'redux/store';
 // React router dom
 import { BrowserRouter } from 'react-router-dom';
-// Context provider
-import { UserContextProvider } from 'context/UserContext';
-import { HandleDrawerProvider } from 'context/DrawerContext';
-import { FiltersContextProvider } from 'context/FiltersContext';
 // Global Styles
 import 'index.css'
 // Componenet
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-  <BrowserRouter>
-    <UserContextProvider>
-      <HandleDrawerProvider>
-        <FiltersContextProvider>
-          <App />
-        </FiltersContextProvider>
-      </HandleDrawerProvider>
-    </UserContextProvider>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
