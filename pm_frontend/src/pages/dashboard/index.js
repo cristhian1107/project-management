@@ -1,11 +1,12 @@
-//import HeaderSection from 'pages/dashboard/HeaderSection';
+// import HeaderSection from 'pages/dashboard/HeaderSection';
 
 export default function Dashboard() {
-  return
-  <>
-  <h1>Dashboard</h1>
-    {/* </><HeaderSection /> */}
-  </>
+  return(
+    <>
+      <h1>Dashboard</h1>
+      {/* <HeaderSection /> */}
+    </>
+  )
 }
 
 //import StadisticSection from 'layouts/solicitudes/components/filtersSection';
