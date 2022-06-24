@@ -1,11 +1,11 @@
 // React
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 // React router dom
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 // @mui
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createUser, resetUser } from 'redux/states'; // actions
 // Custom hooks
 import useUser from 'hooks/useUser';
@@ -13,8 +13,9 @@ import useUser from 'hooks/useUser';
 import SideNav from 'components/sideNav';
 // Config
 import { routes } from 'config';
-
+// Help libraries
 import axios from 'axios';
+
 const URL = `${process.env.REACT_APP_API_URL}/user`;
 
 const customTheme = createTheme({
@@ -25,25 +26,49 @@ const customTheme = createTheme({
   }
 })
 
-function App() {
-  const { isLogged } = useUser();
-  
-  /*==== Convertir a un custom hooks ====*/
+function App () {
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-  
-  const validateToken = async () => {
+  const { isLogged } = useUser();
+
+  /**
+   * Request the user associated with the current session
+   * @return {promise}
+   */
+  const validateToken = () => {
+    return axios.get(URL, {
+      headers: {
+        'Authorization': window.localStorage.getItem('token')
+      }
+    })
+  }
+
+  /**
+   * Exceute an asynchronous call and resolve the response
+   * @async
+   * @param {function} asyncCall - Function that returns an asynchronous call
+   * @return {Promise} A pending promise
+   */
+  const executeAsyncCall = async (asyncCall) => {
+    let result = undefined;
     try {
-      setLoading(true);
-      let result = await axios.get(URL, {
-        headers: {
-          'Authorization': window.localStorage.getItem('token')
-        }
-      })
+      result = await asyncCall();
+    } catch (err) {
       setLoading(false);
-      setIsActive(true);
+      window.localStorage.removeItem('token');
+      dispatch(resetUser());
+      navigate('/login');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+    return result;
+  }
+
+  // Validate the current session each time the component is mounted
+  useEffect(() => {
+    executeAsyncCall(validateToken).then(result => {
       if (result.status === 203) {
         window.localStorage.removeItem('token');
         navigate('/login');
@@ -51,19 +76,8 @@ function App() {
       if (result.status === 201) {
         dispatch(createUser(result.data));
       }
-      return result.data;
-    } catch (err) {
-      setIsActive(true);
-      window.localStorage.removeItem('token');
-      dispatch(resetUser());
-      navigate('/login');
-    }
-  }
-
-  useEffect(() => {
-    validateToken();
+    });
   }, [])
-  /*====================================================*/
 
   const getRoute = ({ path, key, component }) => {
     return <Route path={path} key={key} element={component} />;
@@ -71,7 +85,7 @@ function App() {
 
   return (
     <>
-      { isActive ? (
+      { !loading ? (
         <ThemeProvider theme={customTheme}>
           {isLogged ? (
             <Routes>
