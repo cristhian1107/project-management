@@ -601,13 +601,14 @@ DELIMITER $$
 CREATE PROCEDURE requests_email
 ( IN pbigid bigint)
 BEGIN
-    -- * Part 1 * --
 
+    DECLARE v_to_name , v_to_email varchar(100);
+
+    -- * Part 1 * --
     CREATE TEMPORARY TABLE IF NOT EXISTS tmp_requests AS (
     SELECT
           re.id
-        , us.name as `to_name`
-        , us.lastname as `to_lastname`
+        , CONCAT(us.name, ' ', us.lastname) as `to_name`
         , us.email as `to_email`
         , CONCAT('[',
             IF(re.code = '', CONCAT('SOL', CONVERT(YEAR(re.date_issue), char), '-', LPAD(CONVERT(re.id, char), 7, '0')), re.code)
@@ -626,23 +627,48 @@ BEGIN
         re.id = pbigid);
 
     -- * Part 2 * --
-
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_email AS (
     SELECT
           re.*
-        , us.name as `cc_name`
-        , us.lastname as `cc_lastname`
+        , CONCAT(us.name, ' ', us.lastname) as `cc_name`
         , us.email as `cc_email`
-        , CONCAT(re.message, sta.name, ' por ', re.to_name, ' ', re.to_lastname) as `text`
+        , CONCAT(re.message, sta.name, ' por ', re.to_name) as `text`
+        , sta.alias as `alias`
     FROM requests_events rv
     INNER JOIN tmp_requests re ON re.id = rv.request_id
     INNER JOIN tables sta ON rv.table_sta = sta.table AND rv.code_sta = sta.code
     INNER JOIN users us ON rv.user_id = us.id
     ORDER BY
         rv.request_id desc, rv.item desc
-    LIMIT 1;
+    LIMIT 1);
 
     -- * Part 3 * --
-    DROP TEMPORARY TABLE tmp_requests;
+    SELECT `to_name`, `to_email` INTO v_to_name, v_to_email FROM tmp_email;
+    IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'SOL'))
+    THEN
+        UPDATE tmp_email
+        SET
+          `to_name` = `cc_name`
+        , `to_email` = `cc_email`
+        , `cc_name` = v_to_name
+        , `cc_email` = v_to_email
+        , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', v_to_name);
+    END IF;
+    IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'CON'))
+    THEN
+        UPDATE tmp_email
+        SET
+          `to_name` = 'Gerente' -- `cc_name`
+        , `to_email` = 'cristhian.apaza@autrisa.com' -- `cc_email`
+        , `cc_name` = v_to_name
+        , `cc_email` = v_to_email
+        , `text` = CONCAT('Tiene un nueva solicitud por aprobar en el sistema de gestión de proyectos realizada por ', v_to_name);
+    END IF;
+
+    -- * Part 4 * --
+    SELECT * FROM tmp_email;
+    DROP TEMPORARY TABLE IF EXISTS tmp_requests;
+    DROP TEMPORARY TABLE IF EXISTS tmp_email;
 
 END $$
 DELIMITER ;
