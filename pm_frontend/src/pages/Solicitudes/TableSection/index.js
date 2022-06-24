@@ -9,7 +9,7 @@ import Search from '@mui/icons-material/Search';
 // Custom hooks
 import { useBackend } from 'hooks/useBackend'
 // Parts of the components
-import TableRoot from 'pages/Solicitudes/components/TableSection/TableRoot';
+import TableRoot from 'pages/Solicitudes/TableSection/TableRoot';
 // Global components
 import Button from 'components/button';
 import Input from 'components/input';

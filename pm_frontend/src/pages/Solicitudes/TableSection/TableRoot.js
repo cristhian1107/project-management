@@ -8,7 +8,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import ButtonActions from 'pages/Solicitudes/components/TableSection/ButtonActions'
+// Parts of the component
+import ButtonActions from 'pages/Solicitudes/TableSection/ButtonActions'
 // Context
 import FiltersContext from 'context/FiltersContext';
 // custom hooks
@@ -73,7 +74,7 @@ export default function TableRoot () {
               <TableCell align='right'>{row.company_tradename}</TableCell>
               <TableCell align='right'>{row.name_sta}</TableCell>
               <TableCell>
-                <ButtonActions />
+                <ButtonActions idRequest={row.id} />
               </TableCell>
             </TableRow>
           ))}
