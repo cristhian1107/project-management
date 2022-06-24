@@ -49,7 +49,6 @@ def login():
     }
     encoded_jwt = Libraries.generate_token(payload)
     setattr(item, 'jwt', encoded_jwt)
-    Libraries.send_email('Hola Mundo', '<h1>Hola Cristhian<h1>', 'cristhian.cjaa@gmail.com')
     return make_response(jsonify(item.to_dict()), 201)
     # return make_response(jsonify({"jwt":"jwt"}), 201)
     # res = make_response(jsonify(item.to_dict()), 201)

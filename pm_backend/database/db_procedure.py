@@ -349,3 +349,29 @@ class DBProcedures():
             return (None)
         finally:
             del storage
+
+    @staticmethod
+    def requests_email(id) -> dict:
+        # TODO: Connect to Database.
+        storage = DBStorage()
+        try:
+            items = {}
+            parameters = []
+            parameters.append(id)
+            storage.open_db()
+            tables = storage.exec_procedure('requests_email', parameters)
+
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                # Info email.
+                if x == 0:
+                    items = tables[x][0]
+
+            return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (None)
+        finally:
+            del storage

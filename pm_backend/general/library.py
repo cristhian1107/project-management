@@ -51,33 +51,40 @@ class Libraries():
             file_log.write('\n')
 
     @staticmethod
-    def send_email(subject, message, to):
+    def send_email(info):
         try:
-            host = 'SMTP.Office365.com'
-            port = 587
-            me = 'repuestos@autrisa.com'
-            password = 'R123456+'
+            print(info)
+            host = info['host']
+            port = info['port']
+            me = info['email']
+            password = info['password']
+            url = info['url']
 
             # The correct MIME type is multipart/alternative.
             msg = MIMEMultipart('alternative')
-            msg['Subject'] = subject
-            msg['From'] = 'No-Reply <{}>'.format(subject)
-            msg['To'] = to
+            msg['Subject'] = info['subject']
+            msg['From'] = 'No-Reply <{}>'.format(me)
+            msg['To'] = info['to_email']
+            msg['Cc'] = info['cc_email']
 
             # The body of the message (a plain-text and an HTML version).
-            text = 'Hi!\nHow are you?\nhttp://www.python.org'
-            html = '''\
+            text = '''
+            Sr(a) %s\n%s\nEste es correo automático no responder.
+            ''' % (info['to_name'], info['text'])
+            html = '''
             <html>
               <head></head>
               <body>
-                <p>Hi!<br>
-                   How are you?<br>
-                   Here is the <a href="http://www.python.org">link</a>
-                   you wanted.
+                <p><strong>Sr(a) %s</strong></p>
+                <p>%s</p>
+                <p>
+                   Para mayor información ingrese a
+                   <a href="%s"> Sistema de Gestión de Proyectos </a> <br>
+                   Este es correo automático no responder.
                 </p>
               </body>
             </html>
-            '''
+            ''' % (info['to_name'], info['text'], url)
 
             # Record the MIME types of both parts - text/plain and text/html.
             part1 = MIMEText(text, 'plain')
@@ -93,7 +100,7 @@ class Libraries():
             s = smtplib.SMTP(host, port)
             s.starttls()
             s.login(me, password)
-            s.sendmail(me, to, msg.as_string())
+            s.sendmail(me, info['to_email'], msg.as_string())
             s.quit()
             return(True)
         except smtplib.SMTPException as error:

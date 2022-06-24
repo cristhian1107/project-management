@@ -84,6 +84,11 @@ def insert_request(**kwargs):
     # ------------------
     # Data is sent to procedures and is returned on success or failure.
     res = DBProcedures.requests_insert(item)
+    email = DBProcedures.requests_email(item.id)
+
+    if email:
+        Libraries.send_email(email)
+
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
     return make_response(jsonify({'request': 'success'}), 201)
