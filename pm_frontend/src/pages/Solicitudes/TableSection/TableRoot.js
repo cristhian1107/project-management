@@ -8,6 +8,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+// Parts of the component
+import ButtonActions from 'pages/Solicitudes/TableSection/ButtonActions'
 // Context
 import FiltersContext from 'context/FiltersContext';
 // custom hooks
@@ -46,10 +48,11 @@ export default function TableRoot () {
             }}
           >
             <TableCell>Codigo</TableCell>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Prioridad</TableCell>
-            <TableCell>Empresa</TableCell>
-            <TableCell>Creacion</TableCell>
+            <TableCell align='right'>Nombre</TableCell>
+            <TableCell align='right'>Prioridad</TableCell>
+            <TableCell align='right'>Empresa</TableCell>
+            <TableCell align='right'>Estado</TableCell>
+            <TableCell align='center'>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -57,18 +60,22 @@ export default function TableRoot () {
             <TableRow
               key={row.id}
               sx={{
-                '&:hover': { background: 'rgba(0, 0, 0, .2)' },
+                '&:hover': { background: 'rgba(0, 0, 0, .1)' },
                 '& td': { py: 3 },
                 '&:last-child td, &:last-child th': { border: 0 },
+                position: 'relative',
               }}
             >
               <TableCell component="th" scope="row">
                 {row.code}
               </TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.name_pri}</TableCell>
-              <TableCell>{row.company_tradename}</TableCell>
-              <TableCell>{row.name_sta}</TableCell>
+              <TableCell align='right'>{row.name}</TableCell>
+              <TableCell align='right'>{row.name_pri}</TableCell>
+              <TableCell align='right'>{row.company_tradename}</TableCell>
+              <TableCell align='right'>{row.name_sta}</TableCell>
+              <TableCell>
+                <ButtonActions idRequest={row.id} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

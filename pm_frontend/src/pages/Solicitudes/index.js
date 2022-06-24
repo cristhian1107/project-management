@@ -1,9 +1,9 @@
 // Context
 import { FiltersContextProvider } from 'context/FiltersContext';
 // Parts of the component
-import TableSection from 'pages/Solicitudes/components/TableSection';
-import HeaderSection from 'pages/Solicitudes/components/HeaderSection';
-import FiltersSection from 'pages/Solicitudes/components/FiltersSection';
+import TableSection from 'pages/Solicitudes/TableSection';
+import HeaderSection from 'pages/Solicitudes/HeaderSection';
+import FiltersSection from 'pages/Solicitudes/FiltersSection';
 
 export default function Solicitudes () {
 
