@@ -589,3 +589,60 @@ BEGIN
 
 END $$
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS requests_email;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-24
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE requests_email
+( IN pbigid bigint)
+BEGIN
+    -- * Part 1 * --
+
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_requests AS (
+    SELECT
+          re.id
+        , us.name as `to_name`
+        , us.lastname as `to_lastname`
+        , us.email as `to_email`
+        , CONCAT('[',
+            IF(re.code = '', CONCAT('SOL', CONVERT(YEAR(re.date_issue), char), '-', LPAD(CONVERT(re.id, char), 7, '0')), re.code)
+            , ']', ' - Sistema de gestion de proyectos') as `subject`
+        , CONCAT('Su ',
+            IF(re.code = '', CONCAT('SOL', CONVERT(YEAR(re.date_issue), char), '-', LPAD(CONVERT(re.id, char), 7, '0')), re.code)
+            , ' paso a estado de ') as `message`
+        , 'www.localhost.com' as `url`
+        , 'SMTP.Office365.com' as `host`
+        , 587 as `port`
+        , 'repuestos@autrisa.com' as `email`
+        , 'R123456+' as `password`
+    FROM requests re
+    INNER JOIN users us ON re.user_id = us.id
+    WHERE
+        re.id = pbigid);
+
+    -- * Part 2 * --
+
+    SELECT
+          re.*
+        , us.name as `cc_name`
+        , us.lastname as `cc_lastname`
+        , us.email as `cc_email`
+        , CONCAT(re.message, sta.name, ' por ', re.to_name, ' ', re.to_lastname) as `text`
+    FROM requests_events rv
+    INNER JOIN tmp_requests re ON re.id = rv.request_id
+    INNER JOIN tables sta ON rv.table_sta = sta.table AND rv.code_sta = sta.code
+    INNER JOIN users us ON rv.user_id = us.id
+    ORDER BY
+        rv.request_id desc, rv.item desc
+    LIMIT 1;
+
+    -- * Part 3 * --
+    DROP TEMPORARY TABLE tmp_requests;
+
+END $$
+DELIMITER ;
