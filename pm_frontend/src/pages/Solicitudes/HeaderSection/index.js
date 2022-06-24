@@ -23,6 +23,7 @@ export default function HeaderSection() {
     getPriorities().then(setPriorities);
   }, [getPriorities]);
 
+  //===== Custom styles
   const FormGridContainer = styled(Grid)({
     '& > *:not(style)': { margin: 8 },
     justifyContent: 'space-between',
@@ -38,6 +39,7 @@ export default function HeaderSection() {
       minHeight: 200,
     }
   })
+  //=====
 
   const handleSubmit = (e) => {
     e.preventDefault();

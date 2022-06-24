@@ -74,7 +74,7 @@ export default function TableRoot () {
               <TableCell align='right'>{row.company_tradename}</TableCell>
               <TableCell align='right'>{row.name_sta}</TableCell>
               <TableCell>
-                <ButtonActions idRequest={row.id} />
+                <ButtonActions dataRequest={row} />
               </TableCell>
             </TableRow>
           ))}
