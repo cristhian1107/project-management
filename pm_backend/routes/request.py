@@ -8,6 +8,7 @@ from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
 from datetime import datetime
 from general.library import Libraries
+import asyncio
 
 time = '%Y-%m-%dT%H:%M:%S.%fZ'
 dt_date = '%Y-%m-%d'
@@ -28,8 +29,6 @@ def all_request(**kwargs):
     department = request.args.get('department', None)
     company_id = None if company_id == '' else company_id
     department = None if department == '' else department
-    print(company_id)
-    print(department)
     # Necesito una lista de diccionarios de todos los proyectos con
     # todos sus datos en ese rango de fecha
     res = DBProcedures.requests_all(
@@ -87,7 +86,7 @@ def insert_request(**kwargs):
     email = DBProcedures.requests_email(item.id)
 
     if email:
-        Libraries.send_email(email)
+        asyncio.run(Libraries.send_email(email))
 
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)

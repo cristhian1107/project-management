@@ -51,9 +51,8 @@ class Libraries():
             file_log.write('\n')
 
     @staticmethod
-    def send_email(info):
+    async def send_email(info):
         try:
-            print(info)
             host = info['host']
             port = info['port']
             me = info['email']
