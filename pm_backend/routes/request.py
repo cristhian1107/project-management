@@ -121,7 +121,7 @@ def update_request():
 @app_views.route('/request/event', methods=['POST'],
                  strict_slashes=False)
 @Libraries.validate_token  # Custom decorator to validate the token
-def update_event():
+def update_event(**kwargs):
     """API (POST) Route /request/event.
     Change the status of the request.
 

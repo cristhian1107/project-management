@@ -2,7 +2,6 @@
 """Contains:
     (class) DBProcedure.
 """
-from msilib.schema import Error
 from database.engine.db_storage import DBStorage
 from models.user import User
 from models.role import Role
