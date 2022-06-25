@@ -672,3 +672,45 @@ BEGIN
 
 END $$
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS dashboard_all;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-24
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE dashboard_all
+( IN pintyear bigint
+, IN pintmonth bigint)
+BEGIN
+
+    DECLARE v_total_request bigint;
+
+    -- * Total * --
+    SELECT COUNT(re.id) INTO v_total_request
+    FROM requests re
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth;
+
+    -- * Status * --
+    SELECT
+          re.table_sta
+        , re.code_sta
+        , sta.name as name_sta
+        , COUNT(re.code_sta) as number_sta
+        , v_total_request as total
+    FROM requests re
+    INNER JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
+    GROUP BY
+          re.table_sta
+        , re.code_sta
+        , sta.name;
+
+END $$
+DELIMITER ;

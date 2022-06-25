@@ -120,7 +120,6 @@ class DBProcedures():
             # Recovery id.
             if parameters:
                 item.id = parameters[0]
-                print(item.id)
             return (is_correct)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())
@@ -352,6 +351,14 @@ class DBProcedures():
 
     @staticmethod
     def requests_email(id) -> dict:
+        """Get info to send email.
+
+        Args:
+            id (int): Request id.
+
+        Returns:
+            dict: List of contain info to email.
+        """
         # TODO: Connect to Database.
         storage = DBStorage()
         try:
@@ -370,6 +377,36 @@ class DBProcedures():
                     items = tables[x][0]
 
             return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (None)
+        finally:
+            del storage
+
+    @staticmethod
+    def dashboard_all(year, month) -> list:
+        """Get all info for the dashboard.
+
+        Args:
+            year (int): Filter year.
+            month (int): Filter month.
+
+        Returns:
+            list: List containing all the info.
+        """
+        # TODO: Connect to Database.
+        storage = DBStorage()
+        try:
+            parameters = []
+            parameters.append(year)
+            parameters.append(month)
+            storage.open_db()
+            tables = storage.exec_procedure('dashboard_all', parameters)
+
+            if not tables:
+                return (None)
+
+            return (tables)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())
             return (None)
