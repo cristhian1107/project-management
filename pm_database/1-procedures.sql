@@ -701,6 +701,7 @@ BEGIN
         , re.code_sta
         , sta.name as name_sta
         , COUNT(re.code_sta) as number_sta
+        , sta.description as color_sta
         , v_total_request as total
     FROM requests re
     INNER JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
