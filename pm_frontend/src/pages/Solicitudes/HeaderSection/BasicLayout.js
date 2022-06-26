@@ -4,9 +4,28 @@ import Box from '@mui/material/Box';
 import IconButton from "@mui/material/IconButton";
 import AddIcon from '@mui/icons-material/Add';
 // Global components
-import ModalForm from 'components/ModalForm';
+import CustomModal from 'components/CustomModal';
 
-export default function BasicLayout({ handleOpen, handleClose, open, children }) {
+export default function BasicLayout({ children }) {
+
+  const ButtonToHandleModal = () => {
+    return (
+      <IconButton
+        sx={{
+          display: 'flex',
+          borderRadius: 2,
+          color: 'var(--btn-primary)',
+          border: '1px solid var(--btn-primary)',
+          '&:hover': { background: 'var(--btn-gradient)', color: '#fff' },
+        }}
+      >
+        <AddIcon />
+        <Typography sx={{ fontWeight: 'inherit', fontSize: { lg: '1.15rem' } }}>
+          Nueva solicitud
+        </Typography>
+      </IconButton>
+    )
+  }
 
   return (
     <Box
@@ -20,25 +39,12 @@ export default function BasicLayout({ handleOpen, handleClose, open, children })
       <Typography variant='h4'>
         Solicitudes
       </Typography>
-      <IconButton
-        sx={{
-          display: 'flex',
-          borderRadius: 2,
-          color: 'var(--btn-primary)',
-          border: '1px solid var(--btn-primary)',
-          '&:hover': { background: 'var(--btn-gradient)', color: '#fff' },
-        }}
-        onClick={handleOpen}
+      <CustomModal
+        title='Nueva solicitud'
+        renderButton={<ButtonToHandleModal />}
       >
-        <AddIcon />
-        <Typography sx={{ fontWeight: 'inherit', fontSize: { lg: '1.15rem' } }}>
-          Nueva solicitud
-        </Typography>
-      </IconButton>
-      <ModalForm mode={open} handle={handleClose} title='Nueva Solicitud'>
         {children}
-      </ModalForm>
+      </CustomModal>
     </Box>
   )
 }
-

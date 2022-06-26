@@ -1,45 +1,24 @@
 // React core
 import { useState, useEffect } from 'react';
 // @mui
-import { styled } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+import Send from '@mui/icons-material/Send';
 // Global components
-import TextFieldFullWidth from 'components/textFieldFullWidth';
+import ButtonForm from 'components/ButtonForm';
 // Custom hooks
 import { useBackend } from 'hooks/useBackend';
-// Parts of the component
+// Local components
 import BasicLayout from 'pages/Solicitudes/HeaderSection/BasicLayout';
+import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
 
 export default function HeaderSection() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [priorities, setPriorities] = useState([]);
   const { getPriorities, postRequest } = useBackend();
 
   useEffect(() => {
     getPriorities().then(setPriorities);
   }, [getPriorities]);
-
-  //===== Custom styles
-  const FormGridContainer = styled(Grid)({
-    '& > *:not(style)': { margin: 8 },
-    justifyContent: 'space-between',
-  })
-
-  const ButtonModal = styled(Button)({
-    margin: '8px 0',
-    background: 'var(--btn-gradient)',
-  })
-
-  const TextFieldTextarea = styled(TextFieldFullWidth)({
-    "& textarea" : {
-      minHeight: 200,
-    }
-  })
-  //=====
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,72 +34,57 @@ export default function HeaderSection() {
   }
 
   return (
-    <BasicLayout {...{open, handleOpen, handleClose}}>
-      <FormGridContainer
+    <BasicLayout>
+      <Grid
         container
         component="form"
         onSubmit= {handleSubmit}
+        sx={{
+          gap: 2,
+          justifyContent: 'space-between',
+        }}
         noValidate
         autoComplete="off"
       >
-        <Grid
-          item
-          xs={12}
-          sm={8}
+        <FormFieldItem
+          bp={{ xs: 12, md: 8 }}
+          required
+          label='Asunto'
+          name='Subject'
+        />
+        <FormFieldItem
+          bp={{ xs: 12, md: 3.5 }}
+          required
+          select
+          label='Prioridad'
+          name='priority'
+          defaultValue=''
         >
-          <TextFieldFullWidth
-            required
-            id="outlined-basic"
-            label="Asunto"
-            name="subject"
-            variant="outlined"
-          />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={3}
-        >
-          <TextFieldFullWidth
-            required
-            select
-            id="outlined-basic"
-            label="Prioridad"
-            name="priority"
-            variant="outlined"
-          >
-            {
-              priorities.map(({ alias, code, name }) => {
-                return (
-                  <MenuItem key={alias} value={code}>{name}</MenuItem>)
-              })
-            }
-          </TextFieldFullWidth>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-        >
-          <TextFieldTextarea
-            required
-            id="outlined-basic"
-            label="Razon"
-            name="reason"
-            variant="outlined"
-            multiline={true}
-            inputProps={{ maxLength: 500 }}
-          />
-        </Grid>
-        <Grid item>
-          <ButtonModal
+          {
+            priorities.map(({ alias, code, name }) => (
+                <MenuItem key={alias} value={code}>{name}</MenuItem>
+            ))
+          }
+        </FormFieldItem>
+        <FormFieldItem
+          bp={{ xs: 12 }}
+          required
+          label='Razon'
+          name='reason'
+          lines={{ multiline: true, maxLength: 500 }}
+          renderIcon={<p>Max length 500</p>}
+        />
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <ButtonForm
             type="submit"
-            fullWidth
-            variant="contained"
+            variant="btn"
+            sx={{ px: 2 }}
+            startIcon={<Send />}
           >
             Enviar
-          </ButtonModal>
+          </ButtonForm>
         </Grid>
-      </FormGridContainer>
+      </Grid>
     </BasicLayout>
   )
 }
