@@ -10,14 +10,14 @@ export default function ButtonModal ({ children, ...props }) {
 
         background: (
           props.variant === 'success'
-            ? 'var(--btn-gradient)'
-            : 'var(--box-gradient)'
+            ? 'var(--success-gradient)'
+            : 'var(--error-gradient)'
         ),
         '&:hover': {
           boxShadow: () => (
             props.variant === 'success'
-              ? '0 3px 10px var(--btn-secondary)'
-              : '0 3px 10px var(--box-secondary)'
+              ? '0 3px 10px var(--success-primary)'
+              : '0 3px 10px var(--error-primary)'
           ),
         },
       }}

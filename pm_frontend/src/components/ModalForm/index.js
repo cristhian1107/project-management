@@ -4,17 +4,15 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  minWidth: 400,
+  height: 'fit-content',
+  width: { sm: '90%' },
+  maxWidth: 950,
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: 4,
+  p: { xs: 2, sm: 4 },
 };
 
-export default function ModalForm({ title, children, mode, handle }) {
+export default function ModalForm({ title, children, mode, handle, css }) {
 
   return (
     <>
@@ -23,9 +21,18 @@ export default function ModalForm({ title, children, mode, handle }) {
         onClose={handle}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{
+          ...css,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          backdropFilter: 'blur(5px)',
+          overflowY: 'auto',
+          display: 'flex',
+          justifyContent: 'center',
+          p: 2,
+        }}
       >
           <Box sx={style}>
-            <Typography variant='h6' align='center'>
+            <Typography variant='h6' align='center' sx={{ mb: 2 }}>
               {title}
             </Typography>
             {children}
