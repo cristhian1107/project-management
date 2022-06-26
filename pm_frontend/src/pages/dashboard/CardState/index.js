@@ -35,7 +35,7 @@ export default function CardState({ name_sta, number_sta, total, color_sta: clr 
             display: "flex",
             justifyContent: "space-between",
             padding: "1rem",
-            height: "150px",
+            height: "120px",
             width: "100%",
             alignSelf: "center",
             marginTop: "50px",
@@ -63,10 +63,19 @@ export default function CardState({ name_sta, number_sta, total, color_sta: clr 
                 </Icon>
             </Box>
             <Box>
-            <Typography>{name_sta}</Typography>
-            <Typography>{number_sta} / {total}</Typography>
+            <Typography
+                sx={{
+                    color: "gray",
+                    fontSize: "1.5em",
+                }}
+            >{name_sta}</Typography>
+            <Typography
+                sx={{
+                    fontSize: "2em",
+                }}
+            >{number_sta} / {total}</Typography>
             </Box>
         </Card>
         </Grid>
     );
-  }
+}
