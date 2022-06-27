@@ -716,8 +716,8 @@ BEGIN
     WHERE
         sta.table = 3
     GROUP BY
-          re.table_sta
-        , re.code_sta
+          sta.table
+        , sta.code
         , sta.name;
 
     -- * Requests * --
