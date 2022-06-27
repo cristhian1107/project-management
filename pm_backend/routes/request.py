@@ -90,7 +90,7 @@ def insert_request(**kwargs):
 
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
-    return make_response(jsonify({'request': 'success'}), 201)
+    return make_response(jsonify({'request': 'success', 'data': item}), 201)
 
 
 @app_views.route('/request', methods=['PUT'],
