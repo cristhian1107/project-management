@@ -34,7 +34,7 @@ export default function FormModal ({ dataRequest }) {
     const payload = {
       id: dataRequest.id,
       date_issue,
-      date_tentative: date_issue,
+      date_tentative: dateTentative.toISOString(),
       name: data.get('name'),
       description: data.get('description'),
       code_typ: data.get('code_typ'),
