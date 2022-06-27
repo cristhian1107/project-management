@@ -10,10 +10,6 @@ export default function Calendar({ label, value, handleDate }) {
       <DatePicker
         label={label}
         value={value}
-        //onChange={(newValue) => {
-        //console.log(newValue);
-        //setValue(newValue);
-        //}}
         onChange={(e) => handleDate(e)}
         renderInput={(params) =>
           <TextFieldFullWidth
