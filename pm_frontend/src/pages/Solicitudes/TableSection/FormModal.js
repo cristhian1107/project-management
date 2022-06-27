@@ -33,9 +33,8 @@ export default function FormModal ({ dataRequest }) {
       id: dataRequest.id,
       date_issue,
       date_tentative: date_issue,
+      name: data.get('name'),
       description: data.get('description'),
-      TYP: dataRequest.table_typ,
-      PRI: dataRequest.table_pri,
       code_typ: data.get('code_typ'),
       code_pri: data.get('code_pri')
     };
@@ -119,6 +118,12 @@ export default function FormModal ({ dataRequest }) {
         name='reason'
         value={dataRequest.reason}
         lines={{ multiline: true, maxLength: 500 }}
+      />
+      <FormFieldItem
+        disabled
+        bp={{ xs: 12 }}
+        label='title'
+        name='name'
       />
       <FormFieldItem
         css={{ background: '#fff' }}
