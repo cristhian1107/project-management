@@ -73,7 +73,6 @@ export default function RadarStatus ( { dashboard } ) {
         "Solicitado",
         "Confirmado",
         "Aprobado",
-        "Definido",
         "En Proceso",
         "Culminado",
         "Rechazado",

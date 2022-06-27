@@ -90,14 +90,15 @@ def insert_request(**kwargs):
 
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
-    return make_response(jsonify({'request': 'success'}), 201)
+    return make_response(jsonify({'request': 'success', 'data': item.to_dict()}), 201)
 
 
 @app_views.route('/request', methods=['PUT'],
                  strict_slashes=False)
 @Libraries.validate_token  # Custom decorator to validate the token
-def update_request():
+def update_request(**kwargs):
     """updates a new requirement/project"""
+    payload = kwargs.get('payload')
     data = request.get_json()
     item = Request()
     item.id = data.get('id', None)
@@ -105,7 +106,7 @@ def update_request():
         data.get('date_tentative', None), time)
     item.date_issue = datetime.strptime(data.get(
         'date_issue', None), time)
-    item.user_id = data.get('user_id', None)
+    item.user_id = payload.get('id', None)
     item.name = data.get('name', None)
     item.description = data.get('description', None)
     item.table_typ = tables.get('TYP')
