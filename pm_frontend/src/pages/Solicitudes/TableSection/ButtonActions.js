@@ -26,17 +26,13 @@ export default function ButtonActions ({ dataRequest }) {
 
   const handleConfirmation = (e) => {
     e.preventDefault();
-    console.log('Open confirmation box');
   }
   const handleRejected = (e) => {
     e.preventDefault();
-    console.log('Open confirmation box');
-    console.log(dataRequest);
   }
 
   const handleReportView = (e) => {
     e.preventDefault();
-    console.log('Open new view');
   }
 
   const ContainsTooltip = ({ children, titleOfTooltip, handleClick }) => {
