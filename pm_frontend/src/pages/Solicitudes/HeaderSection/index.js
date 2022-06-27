@@ -30,7 +30,7 @@ export default function HeaderSection() {
     date_current.setDate(date_current.getDate() - 1)
     const date_issue = date_current.toISOString()
 
-    postRequest({subject, code_pri, reason, date_issue});
+    postRequest({subject, code_pri, reason, date_issue}).then(console.log);
   }
 
   return (
