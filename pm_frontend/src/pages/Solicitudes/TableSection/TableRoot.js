@@ -22,7 +22,7 @@ export default function TableRoot () {
 
   useEffect(() => {
     getRequests(filters).then(setListRequests);
-  }, [])
+  }, [getRequests, setListRequests, filters])
 
   return (
     <TableContainer

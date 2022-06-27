@@ -20,6 +20,12 @@
   --box-primary: rgba(31, 31, 31, 1);
   --box-secondary: rgba(70, 70, 70, 1);
   --box-gradient: linear-gradient(195deg, rgba(70, 70, 70 , 1), rgba(31, 31, 31, 1));
+  --success-primary: #66bb6a;
+  --success-secondary: #43a047;
+  --success-gradient: linear-gradient(195deg, #66bb6a, #43a047);
+  --error-primary: #ef5350;
+  --error-secondary: #e53935;
+  --error-gradient: linear-gradient(60deg, #ef5350, #e53935);
 }
 body {
   overflow-x: hidden;

@@ -15,6 +15,8 @@ function useBackend () {
   obj.getEvents = useCallback(() => func({path: 'table/all?table_code=3'}), []);
 
   obj.getPriorities = useCallback(() => func({path: 'table/all?table_code=4'}), []);
+  
+  obj.getTypes = useCallback(() => func({path: 'table/all?table_code=2'}), []);
 
   obj.getCompanies = useCallback(() => func({path: 'company/all'}), []);
 
@@ -29,7 +31,9 @@ function useBackend () {
     deparment
   }) => {
     const splitForCharacter = (date) =>  date?.toISOString().split('T')[0];
-    const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 1);
+    console.log(startDate)
+    const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 0);
+    console.log(dateBegin)
     const params = new URLSearchParams({
       date_begin: splitForCharacter(dateBegin),
       date_end: splitForCharacter(dateEnd),
@@ -41,6 +45,8 @@ function useBackend () {
   }, []);
 
   obj.postRequest = useCallback((body) => func({method: 'POST', path: 'request', body}), []);
+  
+  obj.putRequest = useCallback((body) => func({method: 'PUT', path: 'request', body}), []);
 
   return obj;
 }

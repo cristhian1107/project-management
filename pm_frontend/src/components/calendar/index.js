@@ -4,7 +4,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 
-export default function Calendar({ label, value, handleDate }) {
+export default function Calendar({ label, value, handleDate, variant, required }) {
+
+>>>>>>> dev-Miguel_Barrera
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
@@ -17,7 +19,8 @@ export default function Calendar({ label, value, handleDate }) {
             css={{
               '& > div > input ~ div': { pr: 1 },
             }}
-            variant='standard'
+            required={required}
+            variant={variant || 'standard'}
           />
         }
       />
