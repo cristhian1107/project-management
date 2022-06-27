@@ -713,5 +713,21 @@ BEGIN
         , re.code_sta
         , sta.name;
 
+    -- * Requests * --
+    SELECT
+          cp.id as `company_id`
+        , cp.tradename as `company`
+        , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ IS NULL AND sre.company_id = re.company_id ) as `number_sol`
+        , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 1 AND sre.company_id = re.company_id ) as `number_req`
+        , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 2 AND sre.company_id = re.company_id ) as `number_pro`
+    FROM companies cp
+    LEFT JOIN requests re ON re.company_id = cp.id
+    WHERE
+       IFNULL(YEAR(re.date_issue), pintyear) = pintyear AND
+       IFNULL(MONTH(re.date_issue), pintmonth) = pintmonth
+    GROUP BY
+          cp.id
+        , cp.tradename;
+
 END $$
 DELIMITER ;
