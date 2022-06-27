@@ -27,7 +27,7 @@ export default function FiltersSection ({ css }) {
   useEffect(() => {
     getDepartments().then(setDepartments);
     getCompanies().then(setCompanies);
-  }, [getCompanies, getDepartments]);
+  }, []);
 
   const handleSubmit = (e)=> {
     e.preventDefault()
