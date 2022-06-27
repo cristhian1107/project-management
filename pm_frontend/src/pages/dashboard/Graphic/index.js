@@ -26,7 +26,8 @@ import {
     Tooltip,
     SubTitle
   } from 'chart.js';
-  import { Bar, Line } from 'react-chartjs-2';
+  import { Bar } from 'react-chartjs-2';
+  import Grid from "@mui/material/Grid";
   ChartJS.register(
     ArcElement,
     LineElement,
@@ -53,8 +54,74 @@ import {
     Tooltip,
     SubTitle
   );
+  
+
+export default function Graphic ( { dashboard } ) {
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Gráfica'
+            },
+        }
+    }
+    const types = ['Cantidad de Solicitudes', 'Cantidad de Requerimientos', 'Cantidad de Proyectos'];
+    const company = [];
+    const sol = [];
+    const req = [];
+    const pro = [];
+    
+    dashboard.map((obj) => (
+        company.push(obj.company),
+        sol.push(obj.number_sol),
+        req.push(obj.number_req),
+        pro.push(obj.number_pro)
+    ));    
+    const data = useMemo(function () {
+        return {
+            datasets: [
+                {
+                    label: types[0],
+                    backgroundColor: "#f96332",
+                    data: sol,
+                },
+                {
+                    label: types[1],
+                    backgroundColor: "#ffb236",
+                    data: req,
+                },
+                {
+                    label: types[2],
+                    backgroundColor: "#2ca8ff",
+                    data: pro,
+                },
+                
+            ],
+            labels: company
+        };
+    }, []);
+    return (
+        <Grid item xs={12} sm={12} lg={6} md={6}
+            sx={{
+                marginTop: "50px",
+                background: "#FFF",
+                borderRadius: "20px",
+            }}
+        >
+            <Bar data={data} options={options}/>
+        </Grid>
+    )
+};
 
 /*
+#f96332
+#ffb236
+#2ca8ff
+
 Filtros -> {
     empresa
     MES 
@@ -62,21 +129,21 @@ Filtros -> {
 }
 dasboard[1] = [
     {
-        bussines: Autrisa,
+        company: Autrisa,
         number_sol: 10,
         number_req: 15,
         number_pro: 20,  
         color: "red",
     },
     {
-        bussines: NovaAutos,
+        company: NovaAutos,
         number_sol: 10,
         number_req: 15,
         number_pro: 20,  
         color: "blue",
     },
     {
-        bussines: IncaMotors,
+        company: IncaMotors,
         number_sol: 10,
         number_req: 15,
         number_pro: 20,  
@@ -140,55 +207,3 @@ dasboard[1] = [
     },
 ]
 */
-export default function Graphic ( { dashboard } ) {
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              text: 'Gráfica'
-            },
-        }
-    }
-    const types = ['Cantidad de Solicitudes', 'Cantidad de Requerimientos', 'Cantidad de Proyectos'];
-    const bussines = [];
-    const color = [];
-    const sol = [];
-    const req = [];
-    const pro = [];
- 
-    dashboard.map((obj) => (
-        bussines.push(obj.bussines),
-        color.push(obj.color),
-        sol.push(obj.number_sol),
-        req.push(obj.number_req),
-        pro.push(obj.number_pro)
-    ));    
-    const data = useMemo(function () {
-        return {
-            datasets: [
-                {
-                    label: types[0],
-                    backgroundColor: color[0],
-                    data: sol,
-                },
-                {
-                    label: types[1],
-                    backgroundColor: color[1],
-                    data: req,
-                },
-                {
-                    label: types[2],
-                    backgroundColor: color[2],
-                    data: pro,
-                },
-                
-            ],
-            labels: bussines
-        };
-    }, []);
-    return <Bar data={data} options={options}/>
-};
