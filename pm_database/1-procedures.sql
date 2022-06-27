@@ -695,19 +695,26 @@ BEGIN
         YEAR(re.date_issue) = pintyear AND
         MONTH(re.date_issue) = pintmonth;
 
+    -- * Filter Requests * --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_requests AS (
+        SELECT *
+        FROM requests re
+        WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
+    );
     -- * Status * --
     SELECT
-          re.table_sta
-        , re.code_sta
+          sta.table as table_sta
+        , sta.code as code_sta
         , sta.name as name_sta
         , COUNT(re.code_sta) as number_sta
         , sta.description as color_sta
         , v_total_request as total
-    FROM requests re
-    INNER JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+    FROM tables sta
+    LEFT JOIN tmp_requests re ON re.table_sta = sta.table AND re.code_sta = sta.code
     WHERE
-        YEAR(re.date_issue) = pintyear AND
-        MONTH(re.date_issue) = pintmonth
+        sta.table = 3
     GROUP BY
           re.table_sta
         , re.code_sta
@@ -721,13 +728,13 @@ BEGIN
         , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 1 AND sre.company_id = re.company_id ) as `number_req`
         , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 2 AND sre.company_id = re.company_id ) as `number_pro`
     FROM companies cp
-    LEFT JOIN requests re ON re.company_id = cp.id
-    WHERE
-       IFNULL(YEAR(re.date_issue), pintyear) = pintyear AND
-       IFNULL(MONTH(re.date_issue), pintmonth) = pintmonth
+    LEFT JOIN tmp_requests re ON re.company_id = cp.id
     GROUP BY
           cp.id
         , cp.tradename;
+
+    -- * Finally * --
+    DROP TEMPORARY TABLE IF EXISTS tmp_requests;
 
 END $$
 DELIMITER ;
