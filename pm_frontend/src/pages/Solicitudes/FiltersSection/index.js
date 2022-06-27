@@ -30,7 +30,6 @@ export default function FiltersSection ({ css }) {
   }, [getCompanies, getDepartments]);
 
   const handleSubmit = (e)=> {
-    console.log("Holaa")
     e.preventDefault()
     getRequests(filters).then(setListRequests);
   }
