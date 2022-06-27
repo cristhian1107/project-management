@@ -695,46 +695,58 @@ BEGIN
         YEAR(re.date_issue) = pintyear AND
         MONTH(re.date_issue) = pintmonth;
 
-    -- * Filter Requests * --
-    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_requests AS (
-        SELECT *
-        FROM requests re
-        WHERE
-        YEAR(re.date_issue) = pintyear AND
-        MONTH(re.date_issue) = pintmonth
-    );
-    -- * Status * --
+    -- * Dashoard 1 * --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_1 AS (
     SELECT
-          sta.table as table_sta
-        , sta.code as code_sta
-        , sta.name as name_sta
-        , COUNT(re.code_sta) as number_sta
-        , sta.description as color_sta
+          re.table_sta
+        , re.code_sta
+        , COUNT(re.table_sta) as number_sta
         , v_total_request as total
-    FROM tables sta
-    LEFT JOIN tmp_requests re ON re.table_sta = sta.table AND re.code_sta = sta.code
-    WHERE
-        sta.table = 3
+    FROM requests re
     GROUP BY
-          sta.table
-        , sta.code
-        , sta.name;
+          re.table_sta
+        , re.code_sta
+    );
 
-    -- * Requests * --
     SELECT
-          cp.id as `company_id`
-        , cp.tradename as `company`
-        , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ IS NULL AND sre.company_id = re.company_id ) as `number_sol`
-        , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 1 AND sre.company_id = re.company_id ) as `number_req`
-        , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 2 AND sre.company_id = re.company_id ) as `number_pro`
-    FROM companies cp
-    LEFT JOIN tmp_requests re ON re.company_id = cp.id
-    GROUP BY
-          cp.id
-        , cp.tradename;
+          sta.table as `table_sta`
+        , sta.code as `code_sta`
+        , sta.name as `name_sta`
+        , sta.description as `color_sta`
+        , IFNULL()
+    FROM tables sta
+    LEFT JOIN tmp_dashboard_1 da ON da.table_sta = sta.table AND da.code_sta = sta.code
+
+
+    -- -- * Requests * --
+    -- SELECT
+    --       cp.id as `company_id`
+    --     , cp.tradename as `company`
+    --     , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ IS NULL AND sre.company_id = re.company_id ) as `number_sol`
+    --     , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 1 AND sre.company_id = re.company_id ) as `number_req`
+    --     , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 2 AND sre.company_id = re.company_id ) as `number_pro`
+    -- FROM companies cp
+    -- LEFT JOIN tmp_requests re ON re.company_id = cp.id
+    -- GROUP BY
+    --       cp.id
+    --     , cp.tradename;
+
+    -- -- * Status by company * --
+    -- SELECT
+    --       cp.id as `company_id`
+    --     , cp.tradename as `company_name`
+    --     , sta.name as `name_sta`
+    --     , COUNT(sta.name) as `number_sta`
+    -- FROM companies cp
+    -- LEFT JOIN tmp_requests re ON re.company_id = cp.id
+    -- LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+    -- GROUP BY
+    --       cp.id
+    --     , cp.tradename
+    --     , sta.name;
 
     -- * Finally * --
-    DROP TEMPORARY TABLE IF EXISTS tmp_requests;
+    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
 
 END $$
 DELIMITER ;
