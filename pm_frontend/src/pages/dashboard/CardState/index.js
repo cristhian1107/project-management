@@ -2,7 +2,6 @@ import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Warning from "@mui/icons-material/Warning";
 import Typography from "@mui/material/Typography";
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
