@@ -1,3 +1,5 @@
+// React core
+import { useState, useEffect } from 'react';
 // @mui 
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,11 +9,39 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
 // Local components
 import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
+// Custom hooks
+import { useBackend } from 'hooks/useBackend';
 
 export default function FormModal ({ dataRequest }) {
+  const [priorities, setPriorities] = useState([]);
+  const [types, setTypes] = useState([]);
+  const { getPriorities, getTypes, putRequest } = useBackend();
+
+  useEffect(() => {
+    getPriorities().then(setPriorities);
+    getTypes().then(setTypes);
+  }, [getPriorities]);
+
   const handleConfirmation = (e) => {
     e.preventDefault();
-    console.log('Open confirmation box');
+    const data = new FormData(e.currentTarget);
+    let date_current = new Date();
+    date_current.setDate(date_current.getDate() - 1)
+    const date_issue = date_current.toISOString()
+
+    const payload = {
+      id: dataRequest.id,
+      date_issue,
+      date_tentative: date_issue,
+      description: data.get('description'),
+      TYP: dataRequest.table_typ,
+      PRI: dataRequest.table_pri,
+      code_typ: data.get('code_typ'),
+      code_pri: data.get('code_pri')
+    };
+    
+    console.log(payload);
+    putRequest(payload);
   }
 
   return (
@@ -34,8 +64,11 @@ export default function FormModal ({ dataRequest }) {
         name='code_typ'
         defaultValue=''
       >
-        <MenuItem key='requirement' value='requiremt'>Requerimiento</MenuItem>
-        <MenuItem key='project' value='project'>Proyecto</MenuItem>
+        {
+          types.map(({ alias, code, name }) => (
+            <MenuItem key={alias} value={code}>{name}</MenuItem>
+          ))
+        }
       </FormFieldItem>
       <FormFieldItem
         required
@@ -45,9 +78,11 @@ export default function FormModal ({ dataRequest }) {
         name='code_pri'
         defaultValue={dataRequest.code_pri}
       >
-        <MenuItem key='Alta' value='1'>Baja</MenuItem>
-        <MenuItem key='Normal' value='2'>Normal</MenuItem>
-        <MenuItem key='Baja' value='3'>Alta</MenuItem>
+        {
+          priorities.map(({ alias, code, name }) => (
+            <MenuItem key={alias} value={code}>{name}</MenuItem>
+          ))
+        }
       </FormFieldItem>
       <FormFieldItem
         disabled
