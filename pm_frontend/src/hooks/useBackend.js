@@ -31,7 +31,9 @@ function useBackend () {
     deparment
   }) => {
     const splitForCharacter = (date) =>  date?.toISOString().split('T')[0];
-    const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 1);
+    console.log(startDate)
+    const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 0);
+    console.log(dateBegin)
     const params = new URLSearchParams({
       date_begin: splitForCharacter(dateBegin),
       date_end: splitForCharacter(dateEnd),

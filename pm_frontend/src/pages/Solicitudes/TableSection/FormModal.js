@@ -7,12 +7,14 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 // Global components
 import ButtonForm from 'components/ButtonForm';
+import Calendar from 'components/calendar';
 // Local components
 import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
 // Custom hooks
 import { useBackend } from 'hooks/useBackend';
 
 export default function FormModal ({ dataRequest }) {
+  const [dateTentative, setDateTentative] = useState(null);
   const [priorities, setPriorities] = useState([]);
   const [types, setTypes] = useState([]);
   const { getPriorities, getTypes, putRequest } = useBackend();
@@ -20,7 +22,7 @@ export default function FormModal ({ dataRequest }) {
   useEffect(() => {
     getPriorities().then(setPriorities);
     getTypes().then(setTypes);
-  }, [getPriorities]);
+  }, [getPriorities, getTypes]);
 
   const handleConfirmation = (e) => {
     e.preventDefault();
@@ -58,7 +60,7 @@ export default function FormModal ({ dataRequest }) {
       <FormFieldItem
         required
         select
-        bp={{ xs: 5.5, sm: 3.5 }}
+        bp={{ xs: 5.5, sm: 3.8 }}
         label='Tipo'
         name='code_typ'
         defaultValue=''
@@ -72,7 +74,7 @@ export default function FormModal ({ dataRequest }) {
       <FormFieldItem
         required
         select
-        bp={{ xs: 5.5, sm: 3.5 }}
+        bp={{ xs: 5.5, sm: 3.8 }}
         label='Prioridad'
         name='code_pri'
         defaultValue={dataRequest.code_pri}
@@ -83,23 +85,32 @@ export default function FormModal ({ dataRequest }) {
           ))
         }
       </FormFieldItem>
+      <Grid item xs={12} sm={3.8}>
+        <Calendar
+          required
+          label='Fecha tentativa'
+          value={dateTentative}
+          handleDate={setDateTentative}
+          variant='outlined'
+        />
+      </Grid>
       <FormFieldItem
         disabled
-        bp={{ xs: 12, sm: 3.5 }}
+        bp={{ xs: 12, md: 3.8 }}
         label='Empresa'
         name='company_id'
         value={dataRequest.company_tradename}
       />
       <FormFieldItem
         disabled
-        bp={{ xs: 12, md: 5.5 }}
+        bp={{ xs: 12, md: 3.8 }}
         label='Area'
         name='department'
         value={dataRequest.department}
       />
       <FormFieldItem
         disabled
-        bp={{ xs: 12, md: 5.5 }}
+        bp={{ xs: 12, md: 3.8 }}
         label='Solicitante'
         name='solicitante'
         value={dataRequest.user_id}
@@ -120,8 +131,8 @@ export default function FormModal ({ dataRequest }) {
         lines={{ multiline: true, maxLength: 500 }}
       />
       <FormFieldItem
-        disabled
         bp={{ xs: 12 }}
+        required
         label='title'
         name='name'
       />

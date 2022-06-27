@@ -50,7 +50,7 @@ export default function HeaderSection() {
           bp={{ xs: 12, md: 8 }}
           required
           label='Asunto'
-          name='Subject'
+          name='subject'
         />
         <FormFieldItem
           bp={{ xs: 12, md: 3.5 }}
