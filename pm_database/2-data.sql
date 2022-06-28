@@ -35,7 +35,7 @@ VALUES
 (3, 1, 'Solicitado', 'SOL', '#13ADCF', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (3, 2, 'Confirmado', 'CON', '#2980B9', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (3, 3, 'Aprobado', 'APR', '#16A085', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
-(3, 4, 'Definido', 'DEF', '#8E44AD', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(3, 4, 'Definido', 'DEF', '#8E44AD', 0, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (3, 5, 'En Proceso', 'EPR', '#F10FCB', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (3, 6, 'Culminado', 'CUL', '#34495E', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (3, 7, 'Rechazado', 'REC', '#E74C3C', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),

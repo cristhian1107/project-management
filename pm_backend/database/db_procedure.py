@@ -106,7 +106,7 @@ class DBProcedures():
             item (Request): New object.
 
         Returns:
-            bool: True or False.
+            Request: object request.
         """
         # TODO: Connect to Database.
         storage = DBStorage()

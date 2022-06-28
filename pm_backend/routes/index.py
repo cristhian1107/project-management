@@ -28,7 +28,9 @@ def all_dashboard(**kwargs):
     if year is None or month is None:
         return make_response(jsonify({'request': 'empty'}), 204)
 
+    print('{} {}'.format(year, month))
     info = DBProcedures.dashboard_all(year, month)
+    print(info)
     if info is None:
         return make_response(jsonify({'request': 'empty'}), 204)
     return make_response(jsonify(info), 201)

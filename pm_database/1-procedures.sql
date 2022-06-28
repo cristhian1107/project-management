@@ -331,10 +331,10 @@ BEGIN
         , NULL
         , NULL);
 
-    -- * Recovery Item * --
+    -- * Recovery requets * --
     call requests_one
-    	 ( pbigid
-	 , 0);
+        ( pbigid
+        , 0);
 
 END $$
 DELIMITER ;
@@ -464,8 +464,8 @@ BEGIN
         , r.table_pri , r.code_pri , r.percentage
         , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
         , com.name as company_name, com.tradename as company_tradename
-	, usr.name as user_name, usr.lastname as user_lastname
-	, CONCAT(usr.name, ' ', usr.lastname) as user_fullname
+	    , usr.name as user_name, usr.lastname as user_lastname
+	    , CONCAT(usr.name, ' ', usr.lastname) as user_fullname
         , r.create_at, r.create_by , r.update_at , r.update_by
     FROM requests r
     LEFT JOIN tables typ ON r.table_typ = typ.table AND r.code_typ = typ.code
@@ -498,15 +498,15 @@ BEGIN
 
     SELECT
           r.id , r.table_typ , r.code_typ
-	, IF(r.code = '', CONCAT('SOL', CONVERT(YEAR(r.date_issue), char), '-', LPAD(CONVERT(r.id, char), 7, '0')), r.code) as code
+	    , IF(r.code = '', CONCAT('SOL', CONVERT(YEAR(r.date_issue), char), '-', LPAD(CONVERT(r.id, char), 7, '0')), r.code) as code
         , r.company_id , r.user_id , r.subject , r.reason
         , IFNULL(r.name, r.subject) as name , r.description , r.department , r.campus
         , r.date_issue , r.date_tentative , r.table_sta , r.code_sta
         , r.table_pri , r.code_pri , r.percentage
         , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
-	, com.name as company_name, com.tradename as company_tradename
-	, usr.name as user_name, usr.lastname as user_lastname
-	, CONCAT(usr.name, ' ', usr.lastname) as user_fullname
+	    , com.name as company_name, com.tradename as company_tradename
+	    , usr.name as user_name, usr.lastname as user_lastname
+	    , CONCAT(usr.name, ' ', usr.lastname) as user_fullname
         , r.create_at, r.create_by , r.update_at , r.update_by
     FROM requests r
     LEFT JOIN tables typ ON r.table_typ = typ.table AND r.code_typ = typ.code
@@ -715,52 +715,75 @@ BEGIN
           re.table_sta
         , re.code_sta
         , COUNT(re.table_sta) as number_sta
-        , v_total_request as total
     FROM requests re
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
     GROUP BY
           re.table_sta
         , re.code_sta
     );
 
---    SELECT
- --         sta.table as `table_sta`
-  --      , sta.code as `code_sta`
-   --     , sta.name as `name_sta`
-    --    , sta.description as `color_sta`
-    --    , IFNULL()
-   -- FROM tables sta
-   -- LEFT JOIN tmp_dashboard_1 da ON da.table_sta = sta.table AND da.code_sta = sta.code
+    SELECT
+          sta.table as `table_sta`
+        , sta.code as `code_sta`
+        , sta.name as `name_sta`
+        , sta.description as `color_sta`
+        , IFNULL(number_sta, 0) as `number_sta`
+        , v_total_request as `total`
+    FROM tables sta
+    LEFT JOIN tmp_dashboard_1 da ON da.table_sta = sta.table AND da.code_sta = sta.code
+    WHERE
+        sta.table = 3 AND
+        sta.is_active = 1;
 
 
-    -- -- * Requests * --
-    -- SELECT
-    --       cp.id as `company_id`
-    --     , cp.tradename as `company`
-    --     , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ IS NULL AND sre.company_id = re.company_id ) as `number_sol`
-    --     , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 1 AND sre.company_id = re.company_id ) as `number_req`
-    --     , (SELECT COUNT(id) FROM requests sre WHERE sre.code_typ = 2 AND sre.company_id = re.company_id ) as `number_pro`
-    -- FROM companies cp
-    -- LEFT JOIN tmp_requests re ON re.company_id = cp.id
-    -- GROUP BY
-    --       cp.id
-    --     , cp.tradename;
+    -- * Dashoard 2 * --
+    SELECT
+          cp.id as `company_id`
+        , cp.tradename as `company`
+        , (
+            SELECT COUNT(re.company_id) FROM requests re
+            WHERE
+                YEAR(re.date_issue) = pintyear AND
+                MONTH(re.date_issue) = pintmonth AND
+                re.code_typ IS NULL AND
+                re.company_id = cp.id
+        ) as `number_sol`
+        , (
+            SELECT COUNT(re.company_id) FROM requests re
+            WHERE
+                YEAR(re.date_issue) = pintyear AND
+                MONTH(re.date_issue) = pintmonth AND
+                re.code_typ = 1 AND
+                re.company_id = cp.id
+        ) as `number_req`
+        , (
+            SELECT COUNT(re.company_id) FROM requests re
+            WHERE
+                YEAR(re.date_issue) = pintyear AND
+                MONTH(re.date_issue) = pintmonth AND
+                re.code_typ = 2 AND
+                re.company_id = cp.id
+        ) as `number_pro`
+    FROM companies cp;
 
-    -- -- * Status by company * --
-    -- SELECT
-    --       cp.id as `company_id`
-    --     , cp.tradename as `company_name`
-    --     , sta.name as `name_sta`
-    --     , COUNT(sta.name) as `number_sta`
-    -- FROM companies cp
-    -- LEFT JOIN tmp_requests re ON re.company_id = cp.id
-    -- LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
-    -- GROUP BY
-    --       cp.id
-    --     , cp.tradename
-    --     , sta.name;
+    -- * Dashoard 3 * --
+    SELECT
+          cp.id as `company_id`
+        , cp.tradename as `company_name`
+        , sta.name as `name_sta`
+        , COUNT(sta.name) as `number_sta`
+    FROM companies cp
+    LEFT JOIN requests re ON re.company_id = cp.id AND YEAR(re.date_issue) = pintyear AND MONTH(re.date_issue) = pintmonth
+    LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+    GROUP BY
+          cp.id
+        , cp.tradename
+        , sta.name;
 
     -- * Finally * --
-    -- DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
+    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
 
 END $$
 DELIMITER ;
