@@ -1,16 +1,11 @@
-// React core
 import { useState, useEffect } from 'react';
-// @mui 
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-// Global components
 import ButtonForm from 'components/ButtonForm';
 import Calendar from 'components/calendar';
-// Local components
 import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
-// Custom hooks
 import { useBackend } from 'hooks/useBackend';
 
 export default function FormModal ({ dataRequest, setOpen }) {
@@ -46,7 +41,7 @@ export default function FormModal ({ dataRequest, setOpen }) {
       setOpen(false);
     });
   }
-
+  console.log(dataRequest);
   return (
     <Grid
       container
@@ -56,7 +51,6 @@ export default function FormModal ({ dataRequest, setOpen }) {
         gap: 2,
         justifyContent: 'space-between',
       }}
-      // noValidate
       autoComplete="off"
     >
       <FormFieldItem
