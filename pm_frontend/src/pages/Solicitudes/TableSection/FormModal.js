@@ -12,7 +12,7 @@ export default function FormModal ({ dataRequest, setOpen }) {
   const [dateTentative, setDateTentative] = useState(null);
   const [priorities, setPriorities] = useState([]);
   const [types, setTypes] = useState([]);
-  const { getPriorities, getTypes, putRequest } = useBackend();
+  const { getPriorities, getTypes, putRequest, postEvent } = useBackend();
 
   useEffect(() => {
     getPriorities().then(setPriorities);
@@ -39,6 +39,22 @@ export default function FormModal ({ dataRequest, setOpen }) {
     putRequest(payload).then(() => {
       setOpen(false);
     });
+  }
+
+  const handleReject = () => {
+    let date_current = new Date();
+    date_current.setDate(date_current.getDate() - 1)
+    const date_issue = date_current.toISOString()
+
+    const payload = {
+      request_id: dataRequest.id,
+      date_issue,
+      code_sta: 7
+    }
+    console.log(payload);
+    postEvent(payload).then(() => {
+      setOpen(false);
+    })
   }
 
   return (
@@ -145,14 +161,14 @@ export default function FormModal ({ dataRequest, setOpen }) {
           variant="success"
           startIcon={<ThumbUpIcon />}
         >
-          Confirmar
+          CONFIRMAR
         </ButtonForm>
         <ButtonForm
-          type="submit"
           variant='error'
           startIcon={<ThumbDownIcon />}
+          onClick={handleReject}
         >
-          Rechazar
+          RECHAZAR
         </ButtonForm>
       </Grid>
     </Grid>
