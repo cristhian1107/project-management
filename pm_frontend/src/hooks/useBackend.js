@@ -1,9 +1,5 @@
-// React core
 import { useCallback } from 'react';
-// Services
 import func from 'services/private.services';
-// Utilities
-import { subtractDays } from 'utilities/dateOperations';
 
 /**
  * Provides functions to request different routes of the private API.
