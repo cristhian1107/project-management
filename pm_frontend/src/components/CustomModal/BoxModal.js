@@ -16,7 +16,6 @@ const style = {
 };
 
 export default function BoxModal ({ title, children, mode, handle, css }) {
-
   return (
     <>
       <Modal
