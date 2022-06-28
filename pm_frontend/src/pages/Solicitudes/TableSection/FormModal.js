@@ -36,12 +36,11 @@ export default function FormModal ({ dataRequest, setOpen }) {
       code_pri: data.get('code_pri')
     };
 
-    console.log(payload);
     putRequest(payload).then(() => {
       setOpen(false);
     });
   }
-  console.log(dataRequest);
+
   return (
     <Grid
       container
