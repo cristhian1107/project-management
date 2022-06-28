@@ -22,7 +22,7 @@ function useBackend () {
 
   obj.getDepartments = useCallback(() => func({path: 'department/all'}), []);
 
-  obj.getDashBoard = useCallback(() => func({path: 'dashboard/all'}), []);
+  obj.getDashboard = useCallback(({year, month}) => func({path: `dashboard/all?year=${year}&month=${month}`}), []);
 
   obj.getRequests = useCallback(({
     startDate,
@@ -32,11 +32,11 @@ function useBackend () {
   }) => {
     const splitForCharacter = (date) =>  date?.toISOString().split('T')[0];
     console.log(startDate)
-    const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 0);
-    console.log(dateBegin)
+    //const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 0);
+    //console.log(dateBegin)
     const params = new URLSearchParams({
-      date_begin: splitForCharacter(dateBegin),
-      date_end: splitForCharacter(dateEnd),
+      date_begin: splitForCharacter(startDate),
+      date_end: splitForCharacter(endDate),
       company_id: idCompany,
       deparment
     }).toString();

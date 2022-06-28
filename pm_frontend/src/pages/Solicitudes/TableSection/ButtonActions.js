@@ -13,13 +13,10 @@ export default function ButtonActions ({ dataRequest }) {
 
   const handleRejected = (e) => {
     e.preventDefault();
-    console.log('Open confirmation box');
-    console.log(dataRequest);
   }
 
   const handleReportView = (e) => {
     e.preventDefault();
-    console.log('Open new view');
   }
 
 

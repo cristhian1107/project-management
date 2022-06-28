@@ -113,7 +113,7 @@ export default function FormModal ({ dataRequest }) {
         bp={{ xs: 12, md: 3.8 }}
         label='Solicitante'
         name='solicitante'
-        value={dataRequest.user_id}
+        value={dataRequest.user_fullname}
       />
       <FormFieldItem
         disabled

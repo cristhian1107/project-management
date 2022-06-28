@@ -99,26 +99,38 @@ class DBProcedures():
             del storage
 
     @staticmethod
-    def requests_insert(item=Request()) -> bool:
+    def requests_insert(item=Request()) -> Request:
         """Insert new requests
 
         Args:
             item (Request): New object.
 
         Returns:
-            Boolean: True or False.
+            Request: object request.
         """
         # TODO: Connect to Database.
         storage = DBStorage()
         try:
             if item is None:
-                return (False)
-            storage.open_db()
+                return (None)
+
             parameters = item.to_list()
-            return (storage.exec_save('requests_insert', parameters))
+            storage.open_db()
+            tables = storage.exec_procedure('requests_insert', parameters)
+            item = Request()
+
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                # Info request.
+                if x == 0:
+                    item = Request(**tables[x][0])
+
+            return (item)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())
-            return (False)
+            return (None)
         finally:
             del storage
 
@@ -130,7 +142,7 @@ class DBProcedures():
             item (RequestEvent): New object.
 
         Returns:
-            Boolean: True or False.
+            bool: True or False.
         """
         # TODO: Connect to Database.
         storage = DBStorage()
@@ -154,7 +166,7 @@ class DBProcedures():
             item (Request): New object.
 
         Returns:
-            Boolean: True or False.
+            bool: True or False.
         """
         # TODO: Connect to Database.
         storage = DBStorage()
@@ -338,6 +350,70 @@ class DBProcedures():
                 for opt in tables[x]:
                     items.append(opt)
             return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (None)
+        finally:
+            del storage
+
+    @staticmethod
+    def requests_email(id) -> dict:
+        """Get info to send email.
+
+        Args:
+            id (int): Request id.
+
+        Returns:
+            dict: List of contain info to email.
+        """
+        # TODO: Connect to Database.
+        storage = DBStorage()
+        try:
+            items = {}
+            parameters = []
+            parameters.append(id)
+            storage.open_db()
+            tables = storage.exec_procedure('requests_email', parameters)
+
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                # Info email.
+                if x == 0:
+                    items = tables[x][0]
+
+            return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (None)
+        finally:
+            del storage
+
+    @staticmethod
+    def dashboard_all(year, month) -> list:
+        """Get all info for the dashboard.
+
+        Args:
+            year (int): Filter year.
+            month (int): Filter month.
+
+        Returns:
+            list: List containing all the info.
+        """
+        # TODO: Connect to Database.
+        storage = DBStorage()
+        try:
+            parameters = []
+            parameters.append(year)
+            parameters.append(month)
+            storage.open_db()
+            tables = storage.exec_procedure('dashboard_all', parameters)
+
+            if not tables:
+                return (None)
+
+            return (tables)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())
             return (None)

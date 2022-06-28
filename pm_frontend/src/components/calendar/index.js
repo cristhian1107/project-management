@@ -5,12 +5,12 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 
 export default function Calendar({ label, value, handleDate, variant, required }) {
-
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
         label={label}
         value={value}
+        inputFormat="dd/MM/yyyy"
         onChange={(e) => handleDate(e)}
         renderInput={(params) =>
           <TextFieldFullWidth

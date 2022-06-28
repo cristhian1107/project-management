@@ -2,29 +2,31 @@ import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Warning from "@mui/icons-material/Warning";
-import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import Typography from "@mui/material/Typography";
+import AccessibilityIcon from '@mui/icons-material/Accessibility';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import PendingIcon from '@mui/icons-material/Pending';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 const iconDict = {
-    "Solicitado": <AccessibilityIcon
-    sx={{
-      fontSize: "2.5rem",
-    }}
-    />,
-    "Confirmado": "URL",
-    "Aprobado": "URL",
-    "Definido": "URL",
-    "En Proceso": "URL",
-    "Culminado": "URL",
-    "Rechazado": "URL",
-    "Cancelado": "URL",
-    "Pausado": "URL",
+    "Solicitado": <AccessibilityIcon/>,
+    "Confirmado": <CheckCircleIcon/>,
+    "Aprobado": <ThumbUpIcon/>,
+    "Definido": <HandshakeIcon/>,
+    "En Proceso": <PendingIcon/>,
+    "Culminado": <FactCheckIcon/>,
+    "Rechazado": <ThumbDownIcon/>,
+    "Cancelado": <CancelIcon/>,
+    "Pausado": <StopCircleIcon/>,
   }
 
-export default function CardState({ state, number, total }) {
-    console.log(state)
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
+export default function CardState({ name_sta, number_sta, total, color_sta: clr }) {
+    const newColor = clr.slice(0,2) + clr[3] + clr[5];
     return (
         <Grid item xs={12} sm={5.7} lg={2.7} md={3.7}>
         <Card
@@ -32,7 +34,7 @@ export default function CardState({ state, number, total }) {
             display: "flex",
             justifyContent: "space-between",
             padding: "1rem",
-            height: "150px",
+            height: "120px",
             width: "100%",
             alignSelf: "center",
             marginTop: "50px",
@@ -42,7 +44,7 @@ export default function CardState({ state, number, total }) {
             <Box>
                 <Icon
                 sx={{
-                    background: "linear-gradient(60deg, #ffa726, #fb8c00)",
+                    background: newColor,/*`linear-gradient(60deg, #ffa726, ${newColor})`,*/
                     width: "100px",
                     height: "100px",
                     display: "flex",
@@ -51,16 +53,28 @@ export default function CardState({ state, number, total }) {
                     boxShadow: "5px 5px 5px black",
                     position: "relative",
                     top: "-50px",
+                    "& svg": {
+                        fontSize: "5rem",
+                    },
                 }}
                 >
-                {iconDict[state]}
+                {iconDict[name_sta]}
                 </Icon>
             </Box>
             <Box>
-            <Typography>{state}</Typography>
-            <Typography>{number} / {total}</Typography>
+            <Typography
+                sx={{
+                    color: "gray",
+                    fontSize: "1.5em",
+                }}
+            >{name_sta}</Typography>
+            <Typography
+                sx={{
+                    fontSize: "2em",
+                }}
+            >{number_sta} / {total}</Typography>
             </Box>
         </Card>
         </Grid>
     );
-  }
+}

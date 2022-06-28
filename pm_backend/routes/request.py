@@ -8,6 +8,7 @@ from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
 from datetime import datetime
 from general.library import Libraries
+import asyncio
 
 time = '%Y-%m-%dT%H:%M:%S.%fZ'
 dt_date = '%Y-%m-%d'
@@ -28,8 +29,6 @@ def all_request(**kwargs):
     department = request.args.get('department', None)
     company_id = None if company_id == '' else company_id
     department = None if department == '' else department
-    print(company_id)
-    print(department)
     # Necesito una lista de diccionarios de todos los proyectos con
     # todos sus datos en ese rango de fecha
     res = DBProcedures.requests_all(
@@ -57,7 +56,8 @@ def get_request(**kwargs):
 @app_views.route('/request', methods=['POST'],
                  strict_slashes=False)
 @Libraries.validate_token  # Custom decorator to validate the token
-def insert_request(**kwargs):  # kwargs se retorna desde el decorator and contains the payload
+def insert_request(**kwargs):
+    # kwargs se retorna desde el decorator and contains the payload
     """inserts a new requirement/project"""
     payload = kwargs.get('payload')
     item = Request()
@@ -81,14 +81,17 @@ def insert_request(**kwargs):  # kwargs se retorna desde el decorator and contai
     item.code = ''
     item.percentage = 0
     # ------------------
-    print(item.to_dict())
-
     # Data is sent to procedures and is returned on success or failure.
     res = DBProcedures.requests_insert(item)
-    print(res)
+    print(res.to_dict())
+    email = DBProcedures.requests_email(item.id)
+
+#    if email:
+#        asyncio.run(Libraries.send_email(email))
+
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
-    return make_response(jsonify({'request': 'success'}), 201)
+    return make_response(jsonify({'request': 'success', 'data': res.to_dict()}), 201)
 
 
 @app_views.route('/request', methods=['PUT'],
@@ -120,7 +123,7 @@ def update_request(**kwargs):
 @app_views.route('/request/event', methods=['POST'],
                  strict_slashes=False)
 @Libraries.validate_token  # Custom decorator to validate the token
-def update_event():
+def update_event(**kwargs):
     """API (POST) Route /request/event.
     Change the status of the request.
 

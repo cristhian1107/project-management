@@ -1,5 +1,5 @@
 // React core
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 // @mui
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
@@ -11,10 +11,12 @@ import { useBackend } from 'hooks/useBackend';
 // Local components
 import BasicLayout from 'pages/Solicitudes/HeaderSection/BasicLayout';
 import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
+import FiltersContext from 'context/FiltersContext';
 
 export default function HeaderSection() {
   const [priorities, setPriorities] = useState([]);
   const { getPriorities, postRequest } = useBackend();
+  const { setListRequests } = useContext(FiltersContext);
 
   useEffect(() => {
     getPriorities().then(setPriorities);
@@ -29,8 +31,9 @@ export default function HeaderSection() {
     let date_current = new Date();
     date_current.setDate(date_current.getDate() - 1)
     const date_issue = date_current.toISOString()
-
-    postRequest({subject, code_pri, reason, date_issue});
+    postRequest({subject, code_pri, reason, date_issue}).then(({ data }) => setListRequests((currentState) => {
+      return [data, ...currentState];
+    }));
   }
 
   return (

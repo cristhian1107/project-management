@@ -331,6 +331,11 @@ BEGIN
         , NULL
         , NULL);
 
+    -- * Recovery requets * --
+    call requests_one
+        ( pbigid
+        , 0);
+
 END $$
 DELIMITER ;
 
@@ -459,12 +464,15 @@ BEGIN
         , r.table_pri , r.code_pri , r.percentage
         , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
         , com.name as company_name, com.tradename as company_tradename
+	    , usr.name as user_name, usr.lastname as user_lastname
+	    , CONCAT(usr.name, ' ', usr.lastname) as user_fullname
         , r.create_at, r.create_by , r.update_at , r.update_by
     FROM requests r
     LEFT JOIN tables typ ON r.table_typ = typ.table AND r.code_typ = typ.code
     LEFT JOIN tables sta ON r.table_sta = sta.table AND r.code_sta = sta.code
     LEFT JOIN tables pri ON r.table_pri = pri.table AND r.code_pri = pri.code
     LEFT JOIN companies com ON r.company_id = com.id
+    LEFT JOIN users usr ON r.user_id = usr.id
     WHERE
         CONVERT(r.date_issue, date) BETWEEN CONVERT(pdtmdate_begin, date) AND CONVERT(pdtmdate_end, date) AND
         r.company_id = IFNULL(pbigcompany_id, r.company_id) AND
@@ -489,17 +497,23 @@ CREATE PROCEDURE requests_one
 BEGIN
 
     SELECT
-          r.id , r.table_typ , r.code_typ , r.code
+          r.id , r.table_typ , r.code_typ
+	    , IF(r.code = '', CONCAT('SOL', CONVERT(YEAR(r.date_issue), char), '-', LPAD(CONVERT(r.id, char), 7, '0')), r.code) as code
         , r.company_id , r.user_id , r.subject , r.reason
-        , r.name , r.description , r.department , r.campus
+        , IFNULL(r.name, r.subject) as name , r.description , r.department , r.campus
         , r.date_issue , r.date_tentative , r.table_sta , r.code_sta
         , r.table_pri , r.code_pri , r.percentage
         , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
+	    , com.name as company_name, com.tradename as company_tradename
+	    , usr.name as user_name, usr.lastname as user_lastname
+	    , CONCAT(usr.name, ' ', usr.lastname) as user_fullname
         , r.create_at, r.create_by , r.update_at , r.update_by
     FROM requests r
     LEFT JOIN tables typ ON r.table_typ = typ.table AND r.code_typ = typ.code
     LEFT JOIN tables sta ON r.table_sta = sta.table AND r.code_sta = sta.code
     LEFT JOIN tables pri ON r.table_pri = pri.table AND r.code_pri = pri.code
+    LEFT JOIN companies com ON r.company_id = com.id
+    LEFT JOIN users usr ON r.user_id = usr.id
     WHERE
         r.id = pbigid;
 
@@ -586,6 +600,190 @@ BEGIN
     INNER JOIN companies c ON u.company_id = c.id
     WHERE
         u.company_id = IFNULL(pbigcompany_id, u.company_id);
+
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS requests_email;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-24
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE requests_email
+( IN pbigid bigint)
+BEGIN
+
+    DECLARE v_to_name , v_to_email varchar(100);
+
+    -- * Part 1 * --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_requests AS (
+    SELECT
+          re.id
+        , CONCAT(us.name, ' ', us.lastname) as `to_name`
+        , us.email as `to_email`
+        , CONCAT('[',
+            IF(re.code = '', CONCAT('SOL', CONVERT(YEAR(re.date_issue), char), '-', LPAD(CONVERT(re.id, char), 7, '0')), re.code)
+            , ']', ' - Sistema de gestion de proyectos') as `subject`
+        , CONCAT('Su ',
+            IF(re.code = '', CONCAT('SOL', CONVERT(YEAR(re.date_issue), char), '-', LPAD(CONVERT(re.id, char), 7, '0')), re.code)
+            , ' paso a estado de ') as `message`
+        , 'www.localhost.com' as `url`
+        , 'SMTP.Office365.com' as `host`
+        , 587 as `port`
+        , 'repuestos@autrisa.com' as `email`
+        , 'R123456+' as `password`
+    FROM requests re
+    INNER JOIN users us ON re.user_id = us.id
+    WHERE
+        re.id = pbigid);
+
+    -- * Part 2 * --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_email AS (
+    SELECT
+          re.*
+        , CONCAT(us.name, ' ', us.lastname) as `cc_name`
+        , us.email as `cc_email`
+        , CONCAT(re.message, sta.name, ' por ', re.to_name) as `text`
+        , sta.alias as `alias`
+    FROM requests_events rv
+    INNER JOIN tmp_requests re ON re.id = rv.request_id
+    INNER JOIN tables sta ON rv.table_sta = sta.table AND rv.code_sta = sta.code
+    INNER JOIN users us ON rv.user_id = us.id
+    ORDER BY
+        rv.request_id desc, rv.item desc
+    LIMIT 1);
+
+    -- * Part 3 * --
+    SELECT `to_name`, `to_email` INTO v_to_name, v_to_email FROM tmp_email;
+    IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'SOL'))
+    THEN
+        UPDATE tmp_email
+        SET
+          `to_name` = `cc_name`
+        , `to_email` = `cc_email`
+        , `cc_name` = v_to_name
+        , `cc_email` = v_to_email
+        , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', v_to_name);
+    END IF;
+    IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'CON'))
+    THEN
+        UPDATE tmp_email
+        SET
+          `to_name` = 'Gerente' -- `cc_name`
+        , `to_email` = 'cristhian.apaza@autrisa.com' -- `cc_email`
+        , `cc_name` = v_to_name
+        , `cc_email` = v_to_email
+        , `text` = CONCAT('Tiene un nueva solicitud por aprobar en el sistema de gestión de proyectos realizada por ', v_to_name);
+    END IF;
+
+    -- * Part 4 * --
+    SELECT * FROM tmp_email;
+    DROP TEMPORARY TABLE IF EXISTS tmp_requests;
+    DROP TEMPORARY TABLE IF EXISTS tmp_email;
+
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS dashboard_all;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-24
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE dashboard_all
+( IN pintyear bigint
+, IN pintmonth bigint)
+BEGIN
+
+    DECLARE v_total_request bigint;
+
+    -- * Total * --
+    SELECT COUNT(re.id) INTO v_total_request
+    FROM requests re
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth;
+
+    -- * Dashoard 1 * --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_1 AS (
+    SELECT
+          re.table_sta
+        , re.code_sta
+        , COUNT(re.table_sta) as number_sta
+    FROM requests re
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
+    GROUP BY
+          re.table_sta
+        , re.code_sta
+    );
+
+    SELECT
+          sta.table as `table_sta`
+        , sta.code as `code_sta`
+        , sta.name as `name_sta`
+        , sta.description as `color_sta`
+        , IFNULL(number_sta, 0) as `number_sta`
+        , v_total_request as `total`
+    FROM tables sta
+    LEFT JOIN tmp_dashboard_1 da ON da.table_sta = sta.table AND da.code_sta = sta.code
+    WHERE
+        sta.table = 3 AND
+        sta.is_active = 1;
+
+
+    -- * Dashoard 2 * --
+    SELECT
+          cp.id as `company_id`
+        , cp.tradename as `company`
+        , (
+            SELECT COUNT(re.company_id) FROM requests re
+            WHERE
+                YEAR(re.date_issue) = pintyear AND
+                MONTH(re.date_issue) = pintmonth AND
+                re.code_typ IS NULL AND
+                re.company_id = cp.id
+        ) as `number_sol`
+        , (
+            SELECT COUNT(re.company_id) FROM requests re
+            WHERE
+                YEAR(re.date_issue) = pintyear AND
+                MONTH(re.date_issue) = pintmonth AND
+                re.code_typ = 1 AND
+                re.company_id = cp.id
+        ) as `number_req`
+        , (
+            SELECT COUNT(re.company_id) FROM requests re
+            WHERE
+                YEAR(re.date_issue) = pintyear AND
+                MONTH(re.date_issue) = pintmonth AND
+                re.code_typ = 2 AND
+                re.company_id = cp.id
+        ) as `number_pro`
+    FROM companies cp;
+
+    -- * Dashoard 3 * --
+    SELECT
+          cp.id as `company_id`
+        , cp.tradename as `company_name`
+        , sta.name as `name_sta`
+        , COUNT(sta.name) as `number_sta`
+    FROM companies cp
+    LEFT JOIN requests re ON re.company_id = cp.id AND YEAR(re.date_issue) = pintyear AND MONTH(re.date_issue) = pintmonth
+    LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+    GROUP BY
+          cp.id
+        , cp.tradename
+        , sta.name;
+
+    -- * Finally * --
+    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
 
 END $$
 DELIMITER ;
