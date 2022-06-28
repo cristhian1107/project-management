@@ -331,6 +331,11 @@ BEGIN
         , NULL
         , NULL);
 
+    -- * Recovery Item * --
+    call requests_one
+    	 ( pbigid
+	 , 0);
+
 END $$
 DELIMITER ;
 
@@ -489,17 +494,23 @@ CREATE PROCEDURE requests_one
 BEGIN
 
     SELECT
-          r.id , r.table_typ , r.code_typ , r.code
+          r.id , r.table_typ , r.code_typ
+	, IF(r.code = '', CONCAT('SOL', CONVERT(YEAR(r.date_issue), char), '-', LPAD(CONVERT(r.id, char), 7, '0')), r.code) as code
         , r.company_id , r.user_id , r.subject , r.reason
         , r.name , r.description , r.department , r.campus
         , r.date_issue , r.date_tentative , r.table_sta , r.code_sta
         , r.table_pri , r.code_pri , r.percentage
         , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
+	, com.name as company_name, com.tradename as company_tradename
+	, usr.name as user_name, usr.lastname as user_lastname
+	, CONCAT(usr.name, ' ', usr.lastname) as user_fullname
         , r.create_at, r.create_by , r.update_at , r.update_by
     FROM requests r
     LEFT JOIN tables typ ON r.table_typ = typ.table AND r.code_typ = typ.code
     LEFT JOIN tables sta ON r.table_sta = sta.table AND r.code_sta = sta.code
     LEFT JOIN tables pri ON r.table_pri = pri.table AND r.code_pri = pri.code
+    LEFT JOIN companies com ON r.company_id = com.id
+    LEFT JOIN users usr ON r.user_id = usr.id
     WHERE
         r.id = pbigid;
 
@@ -708,14 +719,14 @@ BEGIN
         , re.code_sta
     );
 
-    SELECT
-          sta.table as `table_sta`
-        , sta.code as `code_sta`
-        , sta.name as `name_sta`
-        , sta.description as `color_sta`
-        , IFNULL()
-    FROM tables sta
-    LEFT JOIN tmp_dashboard_1 da ON da.table_sta = sta.table AND da.code_sta = sta.code
+--    SELECT
+ --         sta.table as `table_sta`
+  --      , sta.code as `code_sta`
+   --     , sta.name as `name_sta`
+    --    , sta.description as `color_sta`
+    --    , IFNULL()
+   -- FROM tables sta
+   -- LEFT JOIN tmp_dashboard_1 da ON da.table_sta = sta.table AND da.code_sta = sta.code
 
 
     -- -- * Requests * --
@@ -746,7 +757,7 @@ BEGIN
     --     , sta.name;
 
     -- * Finally * --
-    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
+    -- DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
 
 END $$
 DELIMITER ;
