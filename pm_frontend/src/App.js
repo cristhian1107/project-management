@@ -1,19 +1,11 @@
-// React
 import { useState, useEffect } from 'react';
-// React router dom
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-// @mui
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-// Redux
 import { useDispatch } from 'react-redux';
-import { createUser, resetUser } from 'redux/states'; // actions
-// Custom hooks
-import useUser from 'hooks/useUser';
-// Common component in the app
-import SideNav from 'components/sideNav';
-// Config
+import { createUser, resetUser } from 'redux/states'; // Actions of the global state
+import useUser from 'hooks/useUser'; // Custom hook
+import SideNav from 'components/common/SideNav'; // Global common component
 import { routes } from 'config';
-// Help libraries
 import axios from 'axios';
 
 const URL = `${process.env.REACT_APP_API_URL}/user`;

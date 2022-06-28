@@ -1,7 +1,7 @@
 // @mui
 import Drawer from '@mui/material/Drawer';
 // Utils and parts of the component
-import { drawerWidth } from 'components/utils';
+import { drawerWidth } from 'components/common/utils';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleDrawer } from 'redux/states';

@@ -1,6 +1,4 @@
-// React router dom
-import { useLocation } from 'react-router-dom';
-// @mui
+import { useLocation, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -12,15 +10,13 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import HomeIcon from '@mui/icons-material/Home';
 import WidgetIcon from '@mui/icons-material/Widgets';
 import NotificationIcon from '@mui/icons-material/Notifications'
-// Redux
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleDrawer } from 'redux/states';
-// Utils
-import { drawerWidth } from 'components/utils';
-// Image
+import { toggleDrawer } from 'redux/states'; // Actions of the global state
+import { drawerWidth } from 'components/common/utils';
 import bgImage from 'assets/images/back.jpeg';
 
 export default function CustomAppBar () {
+  const navigate = useNavigate();
   const drawerState = useSelector(state => state.drawer);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -54,7 +50,11 @@ export default function CustomAppBar () {
           color: 'rgb(66, 66, 74)',
         }}
         >
-          <IconButton edge="start" sx={{color: 'inherit'}}>
+          <IconButton
+            onClick={() => navigate('/dashboard')}
+            edge="start"
+            sx={{color: 'inherit'}}
+          >
             <HomeIcon />
           </IconButton>
           <Typography
