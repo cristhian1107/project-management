@@ -41,6 +41,8 @@ function useBackend () {
   
   obj.putRequest = useCallback((body) => func({method: 'PUT', path: 'request', body}), []);
 
+  obj.postEvent = useCallback((body) => func({method: 'POST', path: 'request/event', body }), []);
+
   return obj;
 }
 
