@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 // Global components
 import CustomModal from 'components/CustomModal';
 
-export default function BasicLayout({ children }) {
+export default function BasicLayout({ children, open, setOpen }) {
   const ButtonToHandleModal = () => {
     return (
       <IconButton
@@ -41,6 +41,8 @@ export default function BasicLayout({ children }) {
       <CustomModal
         title='Nueva solicitud'
         renderButton={<ButtonToHandleModal />}
+        open={open}
+        setOpen={setOpen}
       >
         {children}
       </CustomModal>
