@@ -7,7 +7,6 @@ import AddIcon from '@mui/icons-material/Add';
 import CustomModal from 'components/CustomModal';
 
 export default function BasicLayout({ children }) {
-
   const ButtonToHandleModal = () => {
     return (
       <IconButton
