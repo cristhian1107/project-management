@@ -13,7 +13,7 @@ import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
 // Custom hooks
 import { useBackend } from 'hooks/useBackend';
 
-export default function FormModal ({ dataRequest }) {
+export default function FormModal ({ dataRequest, setOpen }) {
   const [dateTentative, setDateTentative] = useState(null);
   const [priorities, setPriorities] = useState([]);
   const [types, setTypes] = useState([]);
@@ -40,9 +40,11 @@ export default function FormModal ({ dataRequest }) {
       code_typ: data.get('code_typ'),
       code_pri: data.get('code_pri')
     };
-    
+
     console.log(payload);
-    putRequest(payload);
+    putRequest(payload).then(() => {
+      setOpen(false);
+    });
   }
 
   return (
