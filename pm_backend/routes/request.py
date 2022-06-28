@@ -83,14 +83,15 @@ def insert_request(**kwargs):
     # ------------------
     # Data is sent to procedures and is returned on success or failure.
     res = DBProcedures.requests_insert(item)
+    print(res.to_dict())
     email = DBProcedures.requests_email(item.id)
 
-    if email:
-        asyncio.run(Libraries.send_email(email))
+#    if email:
+#        asyncio.run(Libraries.send_email(email))
 
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
-    return make_response(jsonify({'request': 'success', 'data': item.to_dict()}), 201)
+    return make_response(jsonify({'request': 'success', 'data': res.to_dict()}), 201)
 
 
 @app_views.route('/request', methods=['PUT'],

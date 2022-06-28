@@ -99,7 +99,7 @@ class DBProcedures():
             del storage
 
     @staticmethod
-    def requests_insert(item=Request()) -> bool:
+    def requests_insert(item=Request()) -> Request:
         """Insert new requests
 
         Args:
@@ -112,17 +112,25 @@ class DBProcedures():
         storage = DBStorage()
         try:
             if item is None:
-                return (False)
-            storage.open_db()
+                return (None)
+
             parameters = item.to_list()
-            is_correct = storage.exec_save('requests_insert', parameters)
-            # Recovery id.
-            if parameters:
-                item.id = parameters[0]
-            return (is_correct)
+            storage.open_db()
+            tables = storage.exec_procedure('requests_insert', parameters)
+            item = Request()
+
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                # Info request.
+                if x == 0:
+                    item = Request(**tables[x][0])
+
+            return (item)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())
-            return (False)
+            return (None)
         finally:
             del storage
 
