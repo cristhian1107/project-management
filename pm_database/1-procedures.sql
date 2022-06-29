@@ -452,8 +452,21 @@ CREATE PROCEDURE requests_all
 , IN pdtmdate_end datetime
 , IN pbigcompany_id bigint
 , IN pvchdepartment varchar(50)
+, IN pbiguser_id bigint
 )
 BEGIN
+
+    DECLARE v_role_id bigint;
+    SELECT role_id INTO v_role_id
+    FROM users
+    WHERE
+        id = pbiguser_id;
+
+    -- * If general manager or TI * --
+    IF (v_role_id IN (3, 2))
+    THEN
+        SET pbiguser_id = NULL;
+    END IF;
 
     SELECT
           r.id , r.table_typ , r.code_typ
@@ -476,7 +489,8 @@ BEGIN
     WHERE
         CONVERT(r.date_issue, date) BETWEEN CONVERT(pdtmdate_begin, date) AND CONVERT(pdtmdate_end, date) AND
         r.company_id = IFNULL(pbigcompany_id, r.company_id) AND
-        r.department = IFNULL(pvchdepartment, r.department)
+        r.department = IFNULL(pvchdepartment, r.department) AND
+        r.user_id = IFNULL(pbiguser_id, r.user_id)
     ORDER BY r.id desc;
 
 END $$
@@ -709,7 +723,9 @@ BEGIN
         YEAR(re.date_issue) = pintyear AND
         MONTH(re.date_issue) = pintmonth;
 
+    -- ************** --
     -- * Dashoard 1 * --
+    -- ************** --
     CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_1 AS (
     SELECT
           re.table_sta
@@ -738,52 +754,129 @@ BEGIN
         sta.is_active = 1;
 
 
+    -- ************** --
     -- * Dashoard 2 * --
+    -- ************** --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_2 AS (
     SELECT
-          cp.id as `company_id`
-        , cp.tradename as `company`
-        , (
-            SELECT COUNT(re.company_id) FROM requests re
-            WHERE
-                YEAR(re.date_issue) = pintyear AND
-                MONTH(re.date_issue) = pintmonth AND
-                re.code_typ IS NULL AND
-                re.company_id = cp.id
-        ) as `number_sol`
-        , (
-            SELECT COUNT(re.company_id) FROM requests re
-            WHERE
-                YEAR(re.date_issue) = pintyear AND
-                MONTH(re.date_issue) = pintmonth AND
-                re.code_typ = 1 AND
-                re.company_id = cp.id
-        ) as `number_req`
-        , (
-            SELECT COUNT(re.company_id) FROM requests re
-            WHERE
-                YEAR(re.date_issue) = pintyear AND
-                MONTH(re.date_issue) = pintmonth AND
-                re.code_typ = 2 AND
-                re.company_id = cp.id
-        ) as `number_pro`
-    FROM companies cp;
+          re.company_id
+        , IFNULL(re.table_typ, 2) as table_typ
+        , IFNULL(re.code_typ, 0) as code_typ
+        , COUNT(IFNULL(re.code_typ, 0)) as number_typ
+    FROM requests re
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
+    GROUP BY
+          re.company_id
+        , IFNULL(re.table_typ, 2)
+        , IFNULL(re.code_typ, 0)
+    );
 
-    -- * Dashoard 3 * --
     SELECT
           cp.id as `company_id`
         , cp.tradename as `company_name`
-        , sta.name as `name_sta`
-        , COUNT(sta.name) as `number_sta`
+        , CAST(SUM(CASE WHEN re.code_typ = 0 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_sol`
+        , CAST(SUM(CASE WHEN re.code_typ = 1 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_req`
+        , CAST(SUM(CASE WHEN re.code_typ = 2 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_pro`
     FROM companies cp
-    LEFT JOIN requests re ON re.company_id = cp.id AND YEAR(re.date_issue) = pintyear AND MONTH(re.date_issue) = pintmonth
-    LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+    LEFT JOIN tmp_dashboard_2 re ON re.company_id = cp.id
     GROUP BY
           cp.id
-        , cp.tradename
-        , sta.name;
+        , cp.tradename;
 
+    -- ************** --
+    -- * Dashoard 3 * --
+    -- ************** --
+    -- CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_3 AS (
+    -- SELECT
+    --       com.id as `company_id`
+    --     , com.tradename as `company_name`
+    --     , sta.table as `table_sta`
+    --     , sta.code as `code_sta`
+    --     , REPLACE(LOWER(sta.name), ' ', '_') as `name_sta`
+    -- FROM companies com
+    -- CROSS JOIN tables sta
+    -- WHERE
+    --     sta.table = 3 AND
+    --     sta.is_active = 1
+    -- );
+
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_3 AS (
+    SELECT
+          re.company_id
+        , re.table_sta as table_sta
+        , re.code_sta as code_sta
+        , COUNT(re.code_sta) as number_sta
+    FROM requests re
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
+    GROUP BY
+          re.company_id
+        , re.table_sta
+        , re.code_sta
+    );
+
+    SELECT
+        --  cp.id as `company_id`
+          cp.tradename as `company_name`
+        , CAST(SUM(CASE WHEN re.code_sta = 1 THEN number_sta ELSE 0 END) AS UNSIGNED) as 'solicitado'
+        , CAST(SUM(CASE WHEN re.code_sta = 2 THEN number_sta ELSE 0 END) AS UNSIGNED) as `confirmado`
+        , CAST(SUM(CASE WHEN re.code_sta = 3 THEN number_sta ELSE 0 END) AS UNSIGNED) as `aprobado`
+        -- , CAST(SUM(CASE WHEN re.code_sta = 4 THEN number_sta ELSE 0 END) AS UNSIGNED) as `definido`
+        , CAST(SUM(CASE WHEN re.code_sta = 5 THEN number_sta ELSE 0 END) AS UNSIGNED) as `proceso`
+        , CAST(SUM(CASE WHEN re.code_sta = 6 THEN number_sta ELSE 0 END) AS UNSIGNED) as `culminado`
+        , CAST(SUM(CASE WHEN re.code_sta = 7 THEN number_sta ELSE 0 END) AS UNSIGNED) as `rechazado`
+        , CAST(SUM(CASE WHEN re.code_sta = 8 THEN number_sta ELSE 0 END) AS UNSIGNED) as `cancelado`
+        , CAST(SUM(CASE WHEN re.code_sta = 9 THEN number_sta ELSE 0 END) AS UNSIGNED) as `pausado`
+    FROM companies cp
+    LEFT JOIN tmp_dashboard_3 re ON re.company_id = cp.id
+    GROUP BY
+          -- cp.id
+          cp.tradename;
+
+    -- ************** --
+    -- * Dashoard 4 * --
+    -- ************** --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_4 AS (
+    SELECT
+          us.company_id
+        , us.department as `department_name`
+        , IFNULL(re.table_typ, 2) as table_typ
+        , IFNULL(re.code_typ, 0) as code_typ
+        , COUNT(IFNULL(re.code_typ, 0)) as number_typ
+    FROM requests re
+    INNER JOIN users us ON re.user_id = us.id
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
+    GROUP BY
+          us.company_id
+        , us.department
+        , IFNULL(re.table_typ, 2)
+        , IFNULL(re.code_typ, 0)
+    );
+
+    SELECT
+          cp.tradename as `company_name`
+        , IFNULL(re.department_name, 'Vacio') as `department_name`
+        , CAST(SUM(CASE WHEN re.code_typ = 0 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_sol`
+        , CAST(SUM(CASE WHEN re.code_typ = 1 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_req`
+        , CAST(SUM(CASE WHEN re.code_typ = 2 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_pro`
+    FROM companies cp
+    LEFT JOIN tmp_dashboard_4 re ON re.company_id = cp.id
+    GROUP BY
+          cp.tradename
+        , IFNULL(re.department_name, 'Vacio');
+
+    -- *********** --
     -- * Finally * --
+    -- *********** --
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
+    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_2;
+    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_3;
+    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_4;
 
 END $$
 DELIMITER ;

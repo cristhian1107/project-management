@@ -25,7 +25,7 @@ import {
     Tooltip,
     SubTitle
   } from 'chart.js';
-  import { Radar } from 'react-chartjs-2';
+  import { Line } from 'react-chartjs-2';
   import Grid from "@mui/material/Grid";
   ChartJS.register(
     ArcElement,
@@ -55,11 +55,13 @@ import {
   );
   
 
-export default function RadarStatus ( { dashboard } ) {
+export default function ProgressiveLine ( { dashboard } ) {
     let delayed;
     const options = {
         responsive: true,
-        maintainAspectRatio: false,
+        interaction: {
+            intersect: false
+        },
         plugins: {
             legend: {
               position: 'top',
@@ -68,6 +70,11 @@ export default function RadarStatus ( { dashboard } ) {
               display: true,
               text: 'Estados por empresa'
             },
+        },
+        scales: {
+            x: {
+              type: 'linear'
+            }
         },
         animation: {
             onComplete: () => {
@@ -97,50 +104,25 @@ export default function RadarStatus ( { dashboard } ) {
     const companies = [];
     const stateList = [];
  
-<<<<<<< HEAD
-    dashboard.map(({ company, ...status }) => (
-        companies.push(company),
-=======
     dashboard.map(({ company_name, ...status }) => (
         companies.push(company_name),
->>>>>>> master
         stateList.push(Object.values(status))
         ));
-/*
-autrisa azul
-inka amarillo
-nova plomo
-*/
     const data = {
             datasets: [
                 {
                     label: companies[0],
-                    backgroundColor: "rgb(44, 168, 255, 0.4)",
                     borderColor: "rgb(44, 168, 255)",
-                    data: stateList[0],
-                },
-                {
-                    label: companies[1],
-                    backgroundColor: "rgb(255, 178, 54, 0.4)",
-                    borderColor: "#ffb236",
-                    data: stateList[1],
-                },
-                {
-                    label: companies[2],
-                    backgroundColor: "rgb(159,162,167, 0.4)",
-                    borderColor: "rgb(159,162,167)",
-                    data: stateList[2],
-                },
+                    data: [1,2],
+                    borderWidth: 1,
+                    radius: 0,
+                }
             ],
             labels: states
-        };
+    };
 
     return (
-<<<<<<< HEAD
-        <Grid item xs={12} sm={12} lg={5.7} md={5.9}
-=======
         <Grid item xs={12} sm={12} lg={5.9} md={5.9}
->>>>>>> master
             sx={{
                 marginTop: "50px",
                 background: "#FFF",
@@ -148,48 +130,7 @@ nova plomo
                 height: "400px",
             }}
         >
-            <Radar data={data} options={options}/>
+            <Line data={data} options={options}/>
         </Grid>
     )
 };
-
-/*
-dashboard = [
-        {
-            company: "AUTRISA",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        },
-        {
-            company: "INKAMOTORS",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        },
-        {
-            company: "NOVAAUTOS",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        }
-    ]
-     */

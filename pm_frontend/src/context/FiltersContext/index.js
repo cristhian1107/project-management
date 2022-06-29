@@ -11,7 +11,7 @@ export function FiltersContextProvider({ children }) {
     startDate: dateTimeBegin,
     endDate: dateTimeEnd,
     idCompany: '',
-    deparment: ''
+    department: ''
   });
   return (
     <FiltersContext.Provider value={{ filters, setFilters, listRequests, setListRequests }}>

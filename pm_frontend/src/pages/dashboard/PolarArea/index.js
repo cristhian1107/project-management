@@ -25,7 +25,7 @@ import {
     Tooltip,
     SubTitle
   } from 'chart.js';
-  import { Radar } from 'react-chartjs-2';
+  import { PolarArea } from 'react-chartjs-2';
   import Grid from "@mui/material/Grid";
   ChartJS.register(
     ArcElement,
@@ -55,19 +55,26 @@ import {
   );
   
 
-export default function RadarStatus ( { dashboard } ) {
+export default function PolarAreas ( { dashboard } ) {
     let delayed;
     const options = {
         responsive: true,
-        maintainAspectRatio: false,
         plugins: {
             legend: {
               position: 'top',
             },
             title: {
               display: true,
-              text: 'Estados por empresa'
+              text: 'Tipo de solicitudes'
             },
+        },
+        scales: {
+            x: {
+              stacked: true,
+            },
+            y: {
+              stacked: true
+            }
         },
         animation: {
             onComplete: () => {
@@ -83,34 +90,25 @@ export default function RadarStatus ( { dashboard } ) {
         }
     }
     const states = [
-        "Aprobado",
-        "Cancelado",
-        "Confirmado",
-        "Culminado",
-        "Pausado",
-        "En Proceso",
-        "Rechazado",
-        "Solicitado"
-    ];
+      "Aprobado",
+      "Cancelado",
+      "Confirmado",
+      "Culminado",
+      "Pausado",
+      "En Proceso",
+      "Rechazado",
+      "Solicitado"
+  ];
     
     
     const companies = [];
     const stateList = [];
  
-<<<<<<< HEAD
-    dashboard.map(({ company, ...status }) => (
-        companies.push(company),
-=======
     dashboard.map(({ company_name, ...status }) => (
         companies.push(company_name),
->>>>>>> master
         stateList.push(Object.values(status))
         ));
-/*
-autrisa azul
-inka amarillo
-nova plomo
-*/
+
     const data = {
             datasets: [
                 {
@@ -131,65 +129,20 @@ nova plomo
                     borderColor: "rgb(159,162,167)",
                     data: stateList[2],
                 },
+                
             ],
             labels: states
         };
 
     return (
-<<<<<<< HEAD
         <Grid item xs={12} sm={12} lg={5.7} md={5.9}
-=======
-        <Grid item xs={12} sm={12} lg={5.9} md={5.9}
->>>>>>> master
             sx={{
                 marginTop: "50px",
                 background: "#FFF",
                 borderRadius: "20px",
-                height: "400px",
             }}
         >
-            <Radar data={data} options={options}/>
+            <PolarArea data={data} options={options}/>
         </Grid>
     )
 };
-
-/*
-dashboard = [
-        {
-            company: "AUTRISA",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        },
-        {
-            company: "INKAMOTORS",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        },
-        {
-            company: "NOVAAUTOS",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        }
-    ]
-     */

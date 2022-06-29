@@ -11,6 +11,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Stack from '@mui/material/Stack';
 import Graphic from 'pages/dashboard/Graphic';
 import RadarStatus from 'pages/dashboard/RadarStatus';
+import Area from 'pages/dashboard/Area';
+import PolarArea from 'pages/dashboard/PolarArea';
+import ProgressiveLine from 'pages/dashboard/ProgressiveLine';
 
 export default function Dashboard() {
   const [dashboard, setDashboard] = useState([]);
@@ -30,7 +33,7 @@ export default function Dashboard() {
     filters.month = newDate.getMonth() + 1;
     getDashboard(filters).then(setDashboard);
   };
-  
+
   return (
     <Box>
       <h1> Dashboard
@@ -80,7 +83,17 @@ export default function Dashboard() {
           dashboard[1] && <Graphic dashboard={dashboard[1]}/>
         }
         {
-          dashboard[2] && <RadarStatus dashboard={dashboard[2]}/>
+         dashboard[2] && <RadarStatus dashboard={dashboard[2]}/>
+        }
+      </Grid>
+      <Grid container>
+        {
+          dashboard[3] && <Area dashboard={dashboard[3]}/>
+        }
+      </Grid>
+      <Grid container>
+        {
+          dashboard[2] && <ProgressiveLine dashboard={dashboard[2]}/>
         }
       </Grid>
     </Box>

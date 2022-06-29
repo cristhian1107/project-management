@@ -31,11 +31,12 @@ export default function FiltersSection ({ css }) {
 
   const handleSubmit = (e)=> {
     e.preventDefault()
+    console.log(filters)
     getRequests(filters).then(setListRequests);
   }
 
   const handleChangeCompany = (e) => setFilters(obj => ({...obj, ...{idCompany: e.target.value}}));
-  const handleChangeDepartment = (e) => setFilters(obj => ({...obj, ...{deparment: e.target.value}}));
+  const handleChangeDepartment = (e) => setFilters(obj => ({...obj, ...{department: e.target.value}}));
 
   return (
     <Box sx={{ ...css }}>

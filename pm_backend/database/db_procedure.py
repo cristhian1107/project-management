@@ -183,7 +183,7 @@ class DBProcedures():
             del storage
 
     @staticmethod
-    def requests_all(date_begin, date_end, company_id, department) -> list:
+    def requests_all(date_begin, date_end, company_id, department, user_id) -> list:
         """All requests.
 
         Args:
@@ -205,6 +205,7 @@ class DBProcedures():
             parameters.append(date_end)
             parameters.append(company_id)
             parameters.append(department)
+            parameters.append(user_id)
             storage.open_db()
             tables = storage.exec_procedure('requests_all', parameters)
 

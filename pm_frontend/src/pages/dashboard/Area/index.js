@@ -69,6 +69,14 @@ export default function Graphic ( { dashboard } ) {
               text: 'Tipo de solicitudes'
             },
         },
+        scales: {
+            x: {
+              stacked: true,
+            },
+            y: {
+              stacked: true
+            }
+        },
         animation: {
             onComplete: () => {
               delayed = true;
@@ -83,17 +91,17 @@ export default function Graphic ( { dashboard } ) {
         }
     }
     const types = ['Cantidad de Solicitudes', 'Cantidad de Requerimientos', 'Cantidad de Proyectos'];
-    const company = [];
+    const name = [];
     const sol = [];
     const req = [];
     const pro = [];
     
     dashboard.map((obj) => (
-        company.push(obj.company_name),
+        name.push([obj.department_name, obj.company_name]),
         sol.push(obj.number_sol),
         req.push(obj.number_req),
         pro.push(obj.number_pro)
-    ));    
+    ));
 
     const data = {
         datasets: [
@@ -114,13 +122,12 @@ export default function Graphic ( { dashboard } ) {
             },
             
         ],
-        labels: company
+        labels: name
     };
     return (
-        <Grid item xs={12} sm={12} lg={5.9} md={5.9}
+        <Grid item xs={12} sm={12} lg={12} md={12}
             sx={{
                 marginTop: "50px",
-                marginRight: "10px",
                 background: "#FFF",
                 borderRadius: "20px",
                 height: "400px",
@@ -130,94 +137,3 @@ export default function Graphic ( { dashboard } ) {
         </Grid>
     )
 };
-
-/*
-#f96332
-#ffb236
-#2ca8ff
-
-Filtros -> {
-    empresa
-    MES 
-    AÑO
-}
-dasboard[1] = [
-    {
-        company: Autrisa,
-        number_sol: 10,
-        number_req: 15,
-        number_pro: 20,  
-        color: "red",
-    },
-    {
-        company: NovaAutos,
-        number_sol: 10,
-        number_req: 15,
-        number_pro: 20,  
-        color: "blue",
-    },
-    {
-        company: IncaMotors,
-        number_sol: 10,
-        number_req: 15,
-        number_pro: 20,  
-        color: "black",
-    },
-]
-dasboard[1] = [
-    {
-        Type: Solicitud,
-        color: "red",
-        info: [
-            {
-                empresa: AUTRISA
-                number_sol: 10,
-            },
-            {
-                empresa: INKA
-                number_sol: 10,
-            },
-            {
-                empresa: NOVA
-                number_sol: 10,
-            }
-        ]
-    },
-    {
-        Type: Requerimiento,
-        color: "blue",
-        info: [
-            {
-                empresa: AUTRISA
-                number_sol: 10,
-            },
-            {
-                empresa: INKA
-                number_sol: 10,
-            },
-            {
-                empresa: NOVA
-                number_sol: 10,
-            }
-        ]
-    },
-    {
-        Type: Proyectos,
-        color: "black",
-        info: [
-            {
-                empresa: AUTRISA
-                number_sol: 10,
-            },
-            {
-                empresa: INKA
-                number_sol: 10,
-            },
-            {
-                empresa: NOVA
-                number_sol: 10,
-            }
-        ]
-    },
-]
-*/
