@@ -56,6 +56,7 @@ import {
   
 
 export default function ProgressiveLine ( { dashboard, company } ) {
+    console.log(dashboard)
     let delayed;
     const options = {
         responsive: true,
@@ -76,7 +77,7 @@ export default function ProgressiveLine ( { dashboard, company } ) {
             delay: (context) => {
               let delay = 0;
               if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                delay = context.dataIndex * 600 + context.datasetIndex * 100;
+                delay = context.dataIndex * 300 + context.datasetIndex * 100;
               }
               return delay;
             },
@@ -102,27 +103,29 @@ export default function ProgressiveLine ( { dashboard, company } ) {
     const rechazado = [];
     const solicitado = [];
     const days = [];
-    dashboard.map((data) => (
-        days.push(data.day),
-        aprobado.push(data.Aprobado),
-        cancelado.push(data.Cancelado),
-        confirmado.push(data.Confirmado),
-        culminado.push(data.Culminado),
-        pausado.push(data.Pausado),
-        proceso.push(data.Proceso),
-        rechazado.push(data.Rechazado),
-        solicitado.push(data.Solicitado)
+
+    dashboard.map(({day, ...data}) => (
+        days.push(day),
+        aprobado.push(data.aprobado),
+        cancelado.push(data.cancelado),
+        confirmado.push(data.confirmado),
+        culminado.push(data.culminado),
+        pausado.push(data.pausado),
+        proceso.push(data.proceso),
+        rechazado.push(data.rechazado),
+        solicitado.push(data.solicitado)
     ));
     let content = [];
+    console.log(solicitado)
     content.push(
-        {"color": "red", "name": "Aprobado", "state": aprobado},
-        {"color": "red", "name": "Cancelado", "state": cancelado},
-        {"color": "red", "name": "Confirmado", "state": confirmado},
-        {"color": "red", "name": "Culminado", "state": culminado},
-        {"color": "red", "name": "Pausado", "state": pausado},
-        {"color": "red", "name": "En Proceso", "state": proceso},
-        {"color": "red", "name": "Rechazado", "state": rechazado},
-        {"color": "red", "name": "Solicitado", "state": solicitado}
+        {"color": "#9ee09e", "name": "Aprobado", "state": aprobado},
+        {"color": "#feb144", "name": "Cancelado", "state": cancelado},
+        {"color": "#bbdcad", "name": "Confirmado", "state": confirmado},
+        {"color": "#9ec1cf", "name": "Culminado", "state": culminado},
+        {"color": "#f9a586", "name": "Pausado", "state": pausado},
+        {"color": "#cc99c9", "name": "En Proceso", "state": proceso},
+        {"color": "#ff6663", "name": "Rechazado", "state": rechazado},
+        {"color": "#a6c7ea", "name": "Solicitado", "state": solicitado}
     )
     const dataset = [];
     content.map(({state, color, name}) => (
