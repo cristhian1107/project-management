@@ -2,8 +2,7 @@ import { useState } from 'react';
 import ModalForm from './BoxModal';
 import Box from '@mui/material/Box';
 
-export default function CustomModal ({ renderButton, children, title }) {
-  const [open, setOpen] = useState(false);
+export default function CustomModal ({ renderButton, children, title, open, setOpen }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 

@@ -1,3 +1,5 @@
+// React core
+import { useState } from 'react';
 // @mui
 import Grid from '@mui/material/Grid'
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,6 +12,7 @@ import FormModal from 'pages/Solicitudes/TableSection/FormModal';
 import ContainsTooltip from 'pages/Solicitudes/components/ContainsTooltip';
 
 export default function ButtonActions ({ dataRequest }) {
+  const [open, setOpen] = useState(false);
 
   const handleRejected = (e) => {
     e.preventDefault();
@@ -23,10 +26,12 @@ export default function ButtonActions ({ dataRequest }) {
   return (
     <Grid container sx={{ justifyContent: 'center', flexWrap: 'nowrap' }}>
       <CustomModal
+        open={open}
+        setOpen={setOpen}
         renderButton={<ContainsTooltip label='Revisar' render={<EditIcon />} />}
         title='Revisar Solicitud'
       >
-        <FormModal dataRequest={dataRequest}/>  
+        <FormModal setOpen={setOpen} dataRequest={dataRequest}/>  
       </CustomModal>
       <ContainsTooltip label='Rechazar' handleClick={handleRejected}>
         <DeleteIcon />

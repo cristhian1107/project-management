@@ -14,6 +14,7 @@ import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
 import FiltersContext from 'context/FiltersContext';
 
 export default function HeaderSection() {
+  const [open, setOpen] = useState(false);
   const [priorities, setPriorities] = useState([]);
   const { getPriorities, postRequest } = useBackend();
   const { setListRequests } = useContext(FiltersContext);
@@ -31,13 +32,18 @@ export default function HeaderSection() {
     let date_current = new Date();
     date_current.setDate(date_current.getDate() - 1)
     const date_issue = date_current.toISOString()
-    postRequest({subject, code_pri, reason, date_issue}).then(({ data }) => setListRequests((currentState) => {
-      return [data, ...currentState];
-    }));
+
+    postRequest({subject, code_pri, reason, date_issue})
+      .then(({ data }) => {
+        setListRequests((currentState) => {
+          setOpen(false);
+          return [data, ...currentState];
+        })
+      })
   }
 
   return (
-    <BasicLayout>
+    <BasicLayout open={open} setOpen={setOpen}>
       <Grid
         container
         component="form"
@@ -46,7 +52,7 @@ export default function HeaderSection() {
           gap: 2,
           justifyContent: 'space-between',
         }}
-        noValidate
+        // noValidate
         autoComplete="off"
       >
         <FormFieldItem
@@ -65,7 +71,7 @@ export default function HeaderSection() {
         >
           {
             priorities.map(({ alias, code, name }) => (
-                <MenuItem key={alias} value={code}>{name}</MenuItem>
+              <MenuItem key={alias} value={code}>{name}</MenuItem>
             ))
           }
         </FormFieldItem>
