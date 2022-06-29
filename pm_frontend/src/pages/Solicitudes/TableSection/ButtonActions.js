@@ -16,6 +16,7 @@ import ContainsTooltip from 'pages/Solicitudes/components/ContainsTooltip';
 import FormReview from 'pages/Solicitudes/TableSection/FormReview';
 import FormApprove from 'pages/Solicitudes/TableSection/FormApprove';
 import FormReject from 'pages/Solicitudes/TableSection/FormReject';
+import FormCancel from 'pages/Solicitudes/TableSection/FormCancel';
 
 export default function ButtonActions ({ dataRequest }) {
   const [openReview, setOpenReview] = useState(false);
@@ -67,7 +68,7 @@ export default function ButtonActions ({ dataRequest }) {
         renderButton={<ContainsTooltip label='Cancelar' render={<DeleteIcon />} />}
         title={`Cancelar ${typeOf}`}
       >
-        <FormReview title='Cancelar' mode={dataRequest.name_sta} setOpen={setOpenCancel} dataRequest={dataRequest}/>
+        <FormCancel title='Cancelar' mode={dataRequest.name_sta} setOpen={setOpenCancel} dataRequest={dataRequest}/>
       </CustomModal>
       <CustomModal
         open={openReject}

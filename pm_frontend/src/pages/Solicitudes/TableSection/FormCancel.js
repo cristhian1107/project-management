@@ -1,5 +1,5 @@
 import Grid from '@mui/material/Grid';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks/useBackend';
 import {
@@ -8,10 +8,11 @@ import {
   CompanyField,
   DateTentativeField,
   DepartmentField,
-  UserField
+  UserField,
+  ReasonRejecteField
 } from 'pages/Solicitudes/TableSection/FormFields';
 
-export default function FormResume ({ dataRequest, setOpen, mode, title }) {
+export default function FormCancel ({ dataRequest, setOpen, mode, title }) {
   const { postEvent } = useBackend();
 
   const handleReject = (e) => {
@@ -23,7 +24,7 @@ export default function FormResume ({ dataRequest, setOpen, mode, title }) {
     const payload = {
       request_id: dataRequest.id,
       date_issue,
-      code_sta: 5
+      code_sta: 8
     }
 
     postEvent(payload).then(() => {
@@ -63,12 +64,15 @@ export default function FormResume ({ dataRequest, setOpen, mode, title }) {
       <UserField
         value={dataRequest.user_fullname}
       />
+      <ReasonRejecteField
+        label='Motivo de cancelación'
+      />
 
       <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
         <ButtonForm
           type='submit'
-          variant='success'
-          startIcon={<ThumbUpIcon />}
+          variant='error'
+          startIcon={<ThumbDownIcon />}
         >
           {title}
         </ButtonForm>

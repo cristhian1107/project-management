@@ -9,6 +9,8 @@ import {
   CompanyField,
   DepartmentField,
   UserField,
+  SubjectField,
+  ReasonField,
   TitleField,
   DescriptionField,
   CodeField
@@ -63,8 +65,6 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
         <DateTentativeField
           mode={mode}
           value={dataRequest.date_tentative}
-          date={dateTentative}
-          handleDate={setDateTentative}
         />
         <CompanyField
           value={dataRequest.company_tradename}
@@ -74,6 +74,12 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
         />
         <UserField
           value={dataRequest.user_fullname}
+        />
+        <SubjectField
+          value={dataRequest.subject}
+        />
+        <ReasonField
+          value={dataRequest.reason}
         />
         <TitleField
           mode={mode}
