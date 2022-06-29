@@ -15,7 +15,7 @@ import {
   CodeField
 } from 'pages/Solicitudes/TableSection/FormFields';
 
-export default function FormReview ({ dataRequest, setOpen, mode, title }) {
+export default function FormApprove ({ dataRequest, setOpen, mode, title }) {
   const { handleState }= useHandleState();
 
   return (

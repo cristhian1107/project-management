@@ -26,11 +26,6 @@ export default function FormReject ({ dataRequest, setOpen, mode, title }) {
       }}
       autoComplete="off"
     >
-      <PriorityField
-        mode={mode}
-        name={dataRequest.name_pri}
-        code={dataRequest.code_pri}
-      />
       <CompanyField
         value={dataRequest.company_tradename}
       />

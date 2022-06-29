@@ -4,9 +4,9 @@ import FiltersContext from 'context/FiltersContext';
 
 export function useHandleState () {
   const { postEvent, getRequests } = useBackend();
-  const { filters, setListRequest } = useContext(FiltersContext);
+  const { filters, setListRequests } = useContext(FiltersContext);
 
-  const hanldeState = (e, request_id, code_sta, setOpen) => {
+  const handleState = (e, request_id, code_sta, setOpen) => {
     e.preventDefault();
     let date_current = new Date();
     date_current.setDate(date_current.getDate() - 1)
@@ -19,12 +19,12 @@ export function useHandleState () {
     }
 
     postEvent(payload).then(() => {
-      getRequests(filters).then(setListRequest);
+      getRequests(filters).then(setListRequests);
       setOpen(false);
     })
   }
 
   return {
-    hanldeState
+    handleState
   }
 }
