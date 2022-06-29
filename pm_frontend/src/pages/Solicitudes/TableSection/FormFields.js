@@ -154,7 +154,7 @@ function TitleField ({ mode, value }) {
       bp={{ xs: 12 }}
       required
       defaultValue={mode !== 'Solicitado' ? value : ''}
-      label='title'
+      label='Titulo'
       name='name'
     />
   )

@@ -26,7 +26,6 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
     let date_current = new Date();
     date_current.setDate(date_current.getDate() - 1)
     const date_issue = date_current.toISOString()
-    console.log(new Date(data.get('date_tentative')));
     const payload = {
       id: dataRequest.id,
       date_issue,
