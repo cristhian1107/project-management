@@ -805,8 +805,8 @@ BEGIN
     );
 
     SELECT
-          cp.id as `company_id`
-        , cp.tradename as `company_name`
+        --  cp.id as `company_id`
+          cp.tradename as `company_name`
         , SUM(CASE WHEN re.code_sta = 1 THEN number_sta ELSE 0 END) as 'solicitado'
         , SUM(CASE WHEN re.code_sta = 2 THEN number_sta ELSE 0 END) as `confirmado`
         , SUM(CASE WHEN re.code_sta = 3 THEN number_sta ELSE 0 END) as `aprobado`
@@ -819,8 +819,8 @@ BEGIN
     FROM companies cp
     LEFT JOIN tmp_dashboard_3 re ON re.company_id = cp.id
     GROUP BY
-          cp.id
-        , cp.tradename;
+          -- cp.id
+          cp.tradename;
 
     -- * Finally * --
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
