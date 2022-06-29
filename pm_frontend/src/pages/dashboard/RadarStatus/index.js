@@ -56,6 +56,7 @@ import {
   
 
 export default function RadarStatus ( { dashboard } ) {
+
     console.log(dashboard)
     const options = {
         responsive: true,
@@ -66,27 +67,27 @@ export default function RadarStatus ( { dashboard } ) {
             },
             title: {
               display: true,
-              text: 'Radar'
+              text: 'Estados por empresa'
             },
         }
     }
     const states = [
-        "Solicitado",
-        "Confirmado",
         "Aprobado",
-        "En Proceso",
-        "Culminado",
-        "Rechazado",
         "Cancelado",
-        "Pausado"
+        "Confirmado",
+        "Culminado",
+        "Pausado",
+        "En Proceso",
+        "Rechazado",
+        "Solicitado"
     ];
     
     
     const companies = [];
     const stateList = [];
  
-    dashboard.map(({ company, ...status }) => (
-        companies.push(company),
+    dashboard.map(({ company_name, ...status }) => (
+        companies.push(company_name),
         stateList.push(Object.values(status))
         ));
 /*

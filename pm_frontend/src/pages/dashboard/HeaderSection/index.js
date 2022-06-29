@@ -34,7 +34,7 @@ export default function Dashboard() {
 
   const sashboard = [
     {
-        company: "AUTRISA",
+      company_name: "AUTRISA",
         "Solicitado": 1,
         "Confirmado": 2,
         "Aprobado": 3,
@@ -46,7 +46,7 @@ export default function Dashboard() {
         "Pausado": 4
     },
     {
-        company: "INKAMOTORS",
+      company_name: "INKAMOTORS",
         "Solicitado": 5,
         "Confirmado": 6,
         "Aprobado": 6,
@@ -58,7 +58,7 @@ export default function Dashboard() {
         "Pausado": 4
     },
     {
-        company: "NOVAAUTOS",
+      company_name: "NOVAAUTOS",
         "Solicitado": 3,
         "Confirmado": 2,
         "Aprobado": 2,
@@ -120,7 +120,7 @@ export default function Dashboard() {
           dashboard[1] && <Graphic dashboard={dashboard[1]}/>
         }
         {
-         sashboard && <RadarStatus dashboard={sashboard}/>
+         dashboard[2] && <RadarStatus dashboard={dashboard[2]}/>
         }
       </Grid>
     </Box>
