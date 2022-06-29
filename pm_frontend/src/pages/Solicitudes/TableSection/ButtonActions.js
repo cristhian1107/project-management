@@ -2,25 +2,30 @@
 import { useState } from 'react';
 // @mui
 import Grid from '@mui/material/Grid'
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import FindInPageIcon from '@mui/icons-material/FindInPage';
-import StopCircleIcon from '@mui/icons-material/StopCircle';
+import CheckIcon from '@mui/icons-material/Check'; // Confirmar
+import CloseIcon from '@mui/icons-material/Close'; // Rechazar
+import DeleteIcon from '@mui/icons-material/Delete'; // Cancelar
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'; // Reanudar
+import FindInPageIcon from '@mui/icons-material/FindInPage'; // Ver informe
+import StopCircleIcon from '@mui/icons-material/StopCircle'; // Pausar
+import DoneAllIcon from '@mui/icons-material/DoneAll'; // Aprobar
 // Global components
 import CustomModal from 'components/CustomModal';
 // Local components
-import FormReview from 'pages/Solicitudes/TableSection/FormReview';
-import FormReject from 'pages/Solicitudes/TableSection/FormReject';
 import ContainsTooltip from 'pages/Solicitudes/components/ContainsTooltip';
+import FormReview from 'pages/Solicitudes/TableSection/FormReview';
+import FormApprove from 'pages/Solicitudes/TableSection/FormApprove';
+import FormReject from 'pages/Solicitudes/TableSection/FormReject';
 
 export default function ButtonActions ({ dataRequest }) {
   const [openReview, setOpenReview] = useState(false);
+  const [openApprove, setOpenApprove] = useState(false);
   const [openReject, setOpenReject] = useState(false);
   const [openCancel, setOpenCancel] = useState(false);
   const [openPlay, setOpenPlay] = useState(false);
   const [openStop, setOpenStop] = useState(false);
+
+  const typeOf = dataRequest.name_typ ?? 'Solicitud';
 
   return (
     <Grid container sx={{ justifyContent: 'center', flexWrap: 'nowrap' }}>
@@ -28,15 +33,23 @@ export default function ButtonActions ({ dataRequest }) {
         open={openReview}
         setOpen={setOpenReview}
         renderButton={<ContainsTooltip label='Confirmar' render={<CheckIcon />} />}
-        title='Confirmar Solicitud'
+        title={`Confirmar ${typeOf}`}
       >
         <FormReview title='Confirmar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
+      </CustomModal>
+      <CustomModal
+        open={openApprove}
+        setOpen={setOpenApprove}
+        renderButton={<ContainsTooltip label='Confirmar' render={<DoneAllIcon />} />}
+        title={`Aprobar ${typeOf}`}
+      >
+        <FormApprove title='Aprobar' mode={dataRequest.name_sta} setOpen={setOpenApprove} dataRequest={dataRequest}/>  
       </CustomModal>
       <CustomModal
         open={openStop}
         setOpen={setOpenStop}
         renderButton={<ContainsTooltip label='Pausar' render={<StopCircleIcon />} />}
-        title='Pausar'
+        title={`Pausar ${typeOf}`}
       >
         <FormReview title='Pausar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
       </CustomModal>
@@ -44,7 +57,7 @@ export default function ButtonActions ({ dataRequest }) {
         open={openPlay}
         setOpen={setOpenPlay}
         renderButton={<ContainsTooltip label='Reaundar' render={<PlayCircleOutlineIcon />} />}
-        title='Reanudar'
+        title={`Reanudar ${typeOf}`}
       >
         <FormReview title='Reanudar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
       </CustomModal>
@@ -52,7 +65,7 @@ export default function ButtonActions ({ dataRequest }) {
         open={openCancel}
         setOpen={setOpenCancel}
         renderButton={<ContainsTooltip label='Cancelar' render={<DeleteIcon />} />}
-        title='Cancelar'
+        title={`Cancelar ${typeOf}`}
       >
         <FormReview title='Cancelar' mode={dataRequest.name_sta} setOpen={setOpenCancel} dataRequest={dataRequest}/>
       </CustomModal>

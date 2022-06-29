@@ -64,7 +64,7 @@ function PriorityField ({ mode, name, code }) {
 }
 
 function DateTentativeField ({ mode, value, date, handleDate }) {
-
+  
   return (
     <Grid item xs={12} sm={3.8}>
       <Calendar
@@ -72,8 +72,8 @@ function DateTentativeField ({ mode, value, date, handleDate }) {
         required
         label='Fecha tentativa'
         name='date_tentative'
-        value={mode !== 'Solicitado' ? value : date}
-        handleDate={handleDate}
+        value={mode !== 'Solicitado' ? value : (date ?? '')}
+        handleDate={handleDate ?? (() => {})}
         variant='outlined'
       />
     </Grid>
@@ -187,6 +187,19 @@ function ReasonRejecteField () {
   )
 }
 
+function CodeField ({ value }) {
+
+  return (
+    <FormFieldItem
+      disabled
+      bp={{ xs: 5.5, sm: 3.8 }}
+      label='Code'
+      name='code'
+      value={value}
+    />
+  )
+}
+
 export {
   TypeField,
   PriorityField,
@@ -198,5 +211,6 @@ export {
   ReasonField,
   TitleField,
   DescriptionField,
-  ReasonRejecteField
+  ReasonRejecteField,
+  CodeField
 };
