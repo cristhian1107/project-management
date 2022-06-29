@@ -1,10 +1,18 @@
 import Grid from '@mui/material/Grid';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks/useBackend';
+import {
+  PriorityField,
+  CompanyField,
+  DepartmentField,
+  UserField,
+  SubjectField,
+  ReasonField,
+  ReasonRejecteField
+} from 'pages/Solicitudes/TableSection/FormFields';
 
-export default function FormReview ({ dataRequest, setOpen, mode, title }) {
+export default function FormReject ({ dataRequest, setOpen, mode, title }) {
   const { postEvent } = useBackend();
 
   const handleReject = (e) => {
@@ -18,7 +26,7 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
       date_issue,
       code_sta: 7
     }
-    console.log(payload);
+
     postEvent(payload).then(() => {
       setOpen(false);
     })
@@ -35,59 +43,28 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
       }}
       autoComplete="off"
     >
-      <FormFieldItem
-        disabled
-        bp={{ xs: 5.5, sm: 3.8 }}
-        label='Prioridad'
-        name='code_pri'
-        defaultValue={dataRequest.name_pri}
-      >
-      </FormFieldItem>
-      <FormFieldItem
-        disabled
-        bp={{ xs: 5.5, md: 3.8 }}
-        label='Empresa'
-        name='company_id'
+      <PriorityField
+        mode={mode}
+        name={dataRequest.name_pri}
+        code={dataRequest.code_pri}
+      />
+      <CompanyField
         value={dataRequest.company_tradename}
       />
-      <FormFieldItem
-        disabled
-        bp={{ xs: 5.5, md: 3.8 }}
-        label='Area'
-        name='department'
+      <DepartmentField
         value={dataRequest.department}
       />
-      <FormFieldItem
-        disabled
-        bp={{ xs: 12, md: 3.8 }}
-        label='Solicitante'
-        name='solicitante'
+      <UserField
         value={dataRequest.user_fullname}
       />
-      <FormFieldItem
-        disabled
-        bp={{ xs: 12, md: 7.9  }}
-        label='Asunto'
-        name='subjects'
+      <SubjectField
         value={dataRequest.subject}
       />
-      <FormFieldItem
-        disabled
-        bp={{ xs: 12 }}
-        label='Razon'
-        name='reason'
+      <ReasonField
         value={dataRequest.reason}
-        lines={{ multiline: true, maxLength: 500 }}
       />
-      <FormFieldItem
-        required
-        css={{ background: '#fff' }}
-        bp={{ xs: 12 }}
-        label='Motivo'
-        name='motivo'
-        lines={{ multiline: true, maxLength: 500 }}
-        renderIcon={<p>Max length 500</p>}
-      />
+      <ReasonRejecteField />
+
       <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
         <ButtonForm
           type='submit'
