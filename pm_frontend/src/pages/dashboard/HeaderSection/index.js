@@ -228,17 +228,17 @@ export default function Dashboard() {
       </Grid>
       <Grid container>
         {
-          sashboard && <ProgressiveLine dashboard={sashboard} company="Autrisa"/>
+          dashboard[4] && <ProgressiveLine dashboard={dashboard[4]} company="Autrisa"/>
         }
       </Grid>
       <Grid container>
         {
-          sashboard && <ProgressiveLine dashboard={sashboard} company="Inka Motors"/>
+          dashboard[5] && <ProgressiveLine dashboard={dashboard[5]} company="Inka Motors"/>
         }
       </Grid>
       <Grid container>
         {
-          sashboard && <ProgressiveLine dashboard={sashboard} company="Nova Autos"/>
+          dashboard[6] && <ProgressiveLine dashboard={dashboard[6]} company="Nova Autos"/>
         }
       </Grid>
     </Box>
