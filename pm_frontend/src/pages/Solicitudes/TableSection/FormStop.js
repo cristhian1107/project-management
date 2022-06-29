@@ -2,6 +2,7 @@ import Grid from '@mui/material/Grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks/useBackend';
+import { useHandleState } from 'pages/Solicitudes/TableSection/hooks';
 import {
   CodeField,
   PriorityField,
@@ -13,30 +14,13 @@ import {
 } from 'pages/Solicitudes/TableSection/FormFields';
 
 export default function FormStop ({ dataRequest, setOpen, mode, title }) {
-  const { postEvent } = useBackend();
-
-  const handleReject = (e) => {
-    e.preventDefault();
-    let date_current = new Date();
-    date_current.setDate(date_current.getDate() - 1)
-    const date_issue = date_current.toISOString()
-
-    const payload = {
-      request_id: dataRequest.id,
-      date_issue,
-      code_sta: 9
-    }
-
-    postEvent(payload).then(() => {
-      setOpen(false);
-    })
-  }
+  const { handleState }= useHandleState();
 
   return (
     <Grid
       container
       component="form"
-      onSubmit= {handleReject}
+      onSubmit={e => handleState(e, dataRequest.id, 9, setOpen)}
       sx={{
         gap: 2,
         justifyContent: 'space-between',
