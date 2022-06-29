@@ -19,6 +19,7 @@ dt_date = '%Y-%m-%d'
 @Libraries.validate_token  # Custom decorator to validate the token
 def all_request(**kwargs):
     """returns list of all projects"""
+    payload = kwargs.get('payload')
     date_begin = datetime.strptime(
         request.args.get('date_begin', None), dt_date)
     date_end = datetime.strptime(
@@ -29,10 +30,12 @@ def all_request(**kwargs):
     department = request.args.get('department', None)
     company_id = None if company_id == '' else company_id
     department = None if department == '' else department
+    user_id = payload.get('id')
+    print(department)
     # Necesito una lista de diccionarios de todos los proyectos con
     # todos sus datos en ese rango de fecha
     res = DBProcedures.requests_all(
-        date_begin, date_end, company_id, department)
+        date_begin, date_end, company_id, department, user_id)
     if res is None:
         return make_response(jsonify({'request': 'empty'}), 204)
     return make_response(jsonify(res), 200)
