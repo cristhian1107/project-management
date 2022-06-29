@@ -56,11 +56,10 @@ import {
   
 
 export default function RadarStatus ( { dashboard } ) {
-
-    console.log(dashboard)
+    let delayed;
     const options = {
         responsive: true,
-        
+        maintainAspectRatio: false,
         plugins: {
             legend: {
               position: 'top',
@@ -68,6 +67,18 @@ export default function RadarStatus ( { dashboard } ) {
             title: {
               display: true,
               text: 'Estados por empresa'
+            },
+        },
+        animation: {
+            onComplete: () => {
+              delayed = true;
+            },
+            delay: (context) => {
+              let delay = 0;
+              if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                delay = context.dataIndex * 600 + context.datasetIndex * 100;
+              }
+              return delay;
             },
         }
     }
@@ -121,11 +132,12 @@ nova plomo
         };
 
     return (
-        <Grid item xs={12} sm={12} lg={5.7} md={5.9}
+        <Grid item xs={12} sm={12} lg={5.9} md={5.9}
             sx={{
                 marginTop: "50px",
                 background: "#FFF",
                 borderRadius: "20px",
+                height: "400px",
             }}
         >
             <Radar data={data} options={options}/>
