@@ -55,6 +55,7 @@ export default function FiltersSection ({ css }) {
       >
         <Grid item xs={5.8} sm={2.8} xl={2}>
           <Calendar
+            variant='standard'
             label='Fecha inicio'
             value={startDate}
             handleDate={e => setFilters(obj => ({...obj, ...{startDate:e}}))}
@@ -62,6 +63,7 @@ export default function FiltersSection ({ css }) {
         </Grid>
         <Grid item xs={5.8} sm={2.8} xl={2}>
           <Calendar
+            variant='standard'
             label='Fecha fin'
             value={endDate}
             handleDate={e => setFilters(obj => ({...obj, ...{endDate:e}}))}
