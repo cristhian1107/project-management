@@ -64,7 +64,7 @@ export default function Graphic ( { dashboard } ) {
             },
             title: {
               display: true,
-              text: 'Gráfica'
+              text: 'Tipo de solicitudes'
             },
         }
     }
@@ -75,7 +75,7 @@ export default function Graphic ( { dashboard } ) {
     const pro = [];
     
     dashboard.map((obj) => (
-        company.push(obj.company),
+        company.push(obj.company_name),
         sol.push(obj.number_sol),
         req.push(obj.number_req),
         pro.push(obj.number_pro)
