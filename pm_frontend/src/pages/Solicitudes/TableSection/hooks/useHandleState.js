@@ -19,8 +19,11 @@ export function useHandleState () {
     }
 
     postEvent(payload).then(() => {
+      console.log("ANTEEEEEEEEEEES")
       getRequests(filters).then(setListRequests);
+      console.log("AAAAAAAAAAAAAAAAAA")
       setOpen(false);
+      console.log("FINALLLL")
     })
   }
 
