@@ -17,13 +17,15 @@ import FormReview from 'pages/Solicitudes/TableSection/FormReview';
 import FormApprove from 'pages/Solicitudes/TableSection/FormApprove';
 import FormReject from 'pages/Solicitudes/TableSection/FormReject';
 import FormCancel from 'pages/Solicitudes/TableSection/FormCancel';
+import FormResume from 'pages/Solicitudes/TableSection/Resume';
+import FormStop from 'pages/Solicitudes/TableSection/Stop';
 
 export default function ButtonActions ({ dataRequest }) {
   const [openReview, setOpenReview] = useState(false);
   const [openApprove, setOpenApprove] = useState(false);
   const [openReject, setOpenReject] = useState(false);
   const [openCancel, setOpenCancel] = useState(false);
-  const [openPlay, setOpenPlay] = useState(false);
+  const [openResume, setOpenResume] = useState(false);
   const [openStop, setOpenStop] = useState(false);
 
   const typeOf = dataRequest.name_typ ?? 'Solicitud';
@@ -52,15 +54,15 @@ export default function ButtonActions ({ dataRequest }) {
         renderButton={<ContainsTooltip label='Pausar' render={<StopCircleIcon />} />}
         title={`Pausar ${typeOf}`}
       >
-        <FormReview title='Pausar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
+        <FormStop title='Pausar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
       </CustomModal>
       <CustomModal
-        open={openPlay}
-        setOpen={setOpenPlay}
+        open={openResume}
+        setOpen={setOpenResume}
         renderButton={<ContainsTooltip label='Reaundar' render={<PlayCircleOutlineIcon />} />}
         title={`Reanudar ${typeOf}`}
       >
-        <FormReview title='Reanudar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
+        <FormResume title='Reanudar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
       </CustomModal>
       <CustomModal
         open={openCancel}
