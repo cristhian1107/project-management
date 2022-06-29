@@ -452,8 +452,21 @@ CREATE PROCEDURE requests_all
 , IN pdtmdate_end datetime
 , IN pbigcompany_id bigint
 , IN pvchdepartment varchar(50)
+, IN pbiguser_id bigint
 )
 BEGIN
+
+    DECLARE v_role_id bigint;
+    SELECT role_id INTO v_role_id
+    FROM users
+    WHERE
+        id = pbiguser_id;
+
+    -- * If general manager or TI * --
+    IF (v_role_id IN (3, 2))
+    THEN
+        SET pbiguser_id = NULL;
+    END IF;
 
     SELECT
           r.id , r.table_typ , r.code_typ
@@ -476,7 +489,8 @@ BEGIN
     WHERE
         CONVERT(r.date_issue, date) BETWEEN CONVERT(pdtmdate_begin, date) AND CONVERT(pdtmdate_end, date) AND
         r.company_id = IFNULL(pbigcompany_id, r.company_id) AND
-        r.department = IFNULL(pvchdepartment, r.department)
+        r.department = IFNULL(pvchdepartment, r.department) AND
+        r.user_id = IFNULL(pbiguser_id, r.user_id)
     ORDER BY r.id desc;
 
 END $$
