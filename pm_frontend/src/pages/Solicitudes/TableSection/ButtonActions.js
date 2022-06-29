@@ -17,8 +17,8 @@ import FormReview from 'pages/Solicitudes/TableSection/FormReview';
 import FormApprove from 'pages/Solicitudes/TableSection/FormApprove';
 import FormReject from 'pages/Solicitudes/TableSection/FormReject';
 import FormCancel from 'pages/Solicitudes/TableSection/FormCancel';
-import FormResume from 'pages/Solicitudes/TableSection/Resume';
-import FormStop from 'pages/Solicitudes/TableSection/Stop';
+import FormResume from 'pages/Solicitudes/TableSection/FormResume';
+import FormStop from 'pages/Solicitudes/TableSection/FormStop';
 
 export default function ButtonActions ({ dataRequest }) {
   const [openReview, setOpenReview] = useState(false);
