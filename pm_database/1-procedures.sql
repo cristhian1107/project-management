@@ -762,9 +762,9 @@ BEGIN
     SELECT
           cp.id as `company_id`
         , cp.tradename as `company_name`
-        , SUM(CASE WHEN re.code_typ = 0 THEN number_typ ELSE 0 END) as `number_sol`
-        , SUM(CASE WHEN re.code_typ = 1 THEN number_typ ELSE 0 END) as `number_req`
-        , SUM(CASE WHEN re.code_typ = 2 THEN number_typ ELSE 0 END) as `number_pro`
+        , CAST(SUM(CASE WHEN re.code_typ = 0 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_sol`
+        , CAST(SUM(CASE WHEN re.code_typ = 1 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_req`
+        , CAST(SUM(CASE WHEN re.code_typ = 2 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_pro`
     FROM companies cp
     LEFT JOIN tmp_dashboard_2 re ON re.company_id = cp.id
     GROUP BY
@@ -807,25 +807,62 @@ BEGIN
     SELECT
         --  cp.id as `company_id`
           cp.tradename as `company_name`
-        , SUM(CASE WHEN re.code_sta = 1 THEN number_sta ELSE 0 END) as 'solicitado'
-        , SUM(CASE WHEN re.code_sta = 2 THEN number_sta ELSE 0 END) as `confirmado`
-        , SUM(CASE WHEN re.code_sta = 3 THEN number_sta ELSE 0 END) as `aprobado`
-        -- , SUM(CASE WHEN re.code_sta = 4 THEN number_sta ELSE 0 END) as `definido`
-        , SUM(CASE WHEN re.code_sta = 5 THEN number_sta ELSE 0 END) as `proceso`
-        , SUM(CASE WHEN re.code_sta = 6 THEN number_sta ELSE 0 END) as `culminado`
-        , SUM(CASE WHEN re.code_sta = 7 THEN number_sta ELSE 0 END) as `rechazado`
-        , SUM(CASE WHEN re.code_sta = 8 THEN number_sta ELSE 0 END) as `cancelado`
-        , SUM(CASE WHEN re.code_sta = 9 THEN number_sta ELSE 0 END) as `pausado`
+        , CAST(SUM(CASE WHEN re.code_sta = 1 THEN number_sta ELSE 0 END) AS UNSIGNED) as 'solicitado'
+        , CAST(SUM(CASE WHEN re.code_sta = 2 THEN number_sta ELSE 0 END) AS UNSIGNED) as `confirmado`
+        , CAST(SUM(CASE WHEN re.code_sta = 3 THEN number_sta ELSE 0 END) AS UNSIGNED) as `aprobado`
+        -- , CAST(SUM(CASE WHEN re.code_sta = 4 THEN number_sta ELSE 0 END) AS UNSIGNED) as `definido`
+        , CAST(SUM(CASE WHEN re.code_sta = 5 THEN number_sta ELSE 0 END) AS UNSIGNED) as `proceso`
+        , CAST(SUM(CASE WHEN re.code_sta = 6 THEN number_sta ELSE 0 END) AS UNSIGNED) as `culminado`
+        , CAST(SUM(CASE WHEN re.code_sta = 7 THEN number_sta ELSE 0 END) AS UNSIGNED) as `rechazado`
+        , CAST(SUM(CASE WHEN re.code_sta = 8 THEN number_sta ELSE 0 END) AS UNSIGNED) as `cancelado`
+        , CAST(SUM(CASE WHEN re.code_sta = 9 THEN number_sta ELSE 0 END) AS UNSIGNED) as `pausado`
     FROM companies cp
     LEFT JOIN tmp_dashboard_3 re ON re.company_id = cp.id
     GROUP BY
           -- cp.id
           cp.tradename;
 
+    -- ************** --
+    -- * Dashoard 4 * --
+    -- ************** --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_4 AS (
+    SELECT
+          us.company_id
+        , us.department as `department_name`
+        , IFNULL(re.table_typ, 2) as table_typ
+        , IFNULL(re.code_typ, 0) as code_typ
+        , COUNT(IFNULL(re.code_typ, 0)) as number_typ
+    FROM requests re
+    INNER JOIN users us ON re.user_id = us.id
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
+    GROUP BY
+          us.company_id
+        , us.department
+        , IFNULL(re.table_typ, 2)
+        , IFNULL(re.code_typ, 0)
+    );
+
+    SELECT
+          cp.tradename as `company_name`
+        , IFNULL(re.department_name, 'Vacio') as `department_name`
+        , CAST(SUM(CASE WHEN re.code_typ = 0 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_sol`
+        , CAST(SUM(CASE WHEN re.code_typ = 1 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_req`
+        , CAST(SUM(CASE WHEN re.code_typ = 2 THEN number_typ ELSE 0 END) AS UNSIGNED) as `number_pro`
+    FROM companies cp
+    LEFT JOIN tmp_dashboard_4 re ON re.company_id = cp.id
+    GROUP BY
+          cp.tradename
+        , IFNULL(re.department_name, 'Vacio');
+
+    -- *********** --
     -- * Finally * --
+    -- *********** --
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_1;
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_2;
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_3;
+    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_4;
 
 END $$
 DELIMITER ;
