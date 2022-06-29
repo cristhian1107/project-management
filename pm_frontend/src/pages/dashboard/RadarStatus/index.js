@@ -97,13 +97,8 @@ export default function RadarStatus ( { dashboard } ) {
     const companies = [];
     const stateList = [];
  
-<<<<<<< HEAD
-    dashboard.map(({ company, ...status }) => (
-        companies.push(company),
-=======
     dashboard.map(({ company_name, ...status }) => (
         companies.push(company_name),
->>>>>>> master
         stateList.push(Object.values(status))
         ));
 /*
@@ -136,11 +131,7 @@ nova plomo
         };
 
     return (
-<<<<<<< HEAD
-        <Grid item xs={12} sm={12} lg={5.7} md={5.9}
-=======
         <Grid item xs={12} sm={12} lg={5.9} md={5.9}
->>>>>>> master
             sx={{
                 marginTop: "50px",
                 background: "#FFF",
