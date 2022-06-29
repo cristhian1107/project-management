@@ -1,4 +1,3 @@
-import {useMemo} from 'react';
 import {
     Chart as ChartJS,
     ArcElement,
@@ -57,8 +56,10 @@ import {
   
 
 export default function RadarStatus ( { dashboard } ) {
+    console.log(dashboard)
     const options = {
         responsive: true,
+        
         plugins: {
             legend: {
               position: 'top',
@@ -79,78 +80,47 @@ export default function RadarStatus ( { dashboard } ) {
         "Cancelado",
         "Pausado"
     ];
-    /*
-    [
-        {
-            company: AUTRISA,
-            "Solicitado": 5
-            "Confirmado": 2
-            "Aprobado": 3
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        },
-        {
-            company: INKAMOTORS,
-            "Solicitado": 5
-            "Confirmado": 2
-            "Aprobado": 3
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        },
-        {
-            company: NOVAAUTOS,
-            "Solicitado": 5
-            "Confirmado": 2
-            "Aprobado": 3
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        }
-    ]
-    */
+    
+    
     const companies = [];
     const stateList = [];
  
-    dashboard.map(( {company, ...status} ) => (
+    dashboard.map(({ company, ...status }) => (
         companies.push(company),
-        stateList.push(status.map((key, value) => value))
-    ));
-    const data = useMemo(function () {
-        return {
+        stateList.push(Object.values(status))
+        ));
+/*
+autrisa azul
+inka amarillo
+nova plomo
+*/
+    const data = {
             datasets: [
                 {
                     label: companies[0],
-                    backgroundColor: "#f96332",
+                    backgroundColor: "rgb(44, 168, 255, 0.4)",
+                    borderColor: "rgb(44, 168, 255)",
                     data: stateList[0],
                 },
                 {
                     label: companies[1],
-                    backgroundColor: "#ffb236",
+                    backgroundColor: "rgb(255, 178, 54, 0.4)",
+                    borderColor: "#ffb236",
                     data: stateList[1],
                 },
                 {
                     label: companies[2],
-                    backgroundColor: "#2ca8ff",
+                    backgroundColor: "rgb(159,162,167, 0.4)",
+                    borderColor: "rgb(159,162,167)",
                     data: stateList[2],
                 },
                 
             ],
             labels: states
         };
-    }, []);
+
     return (
-        <Grid item xs={12} sm={12} lg={6} md={6}
+        <Grid item xs={12} sm={12} lg={5.7} md={5.9}
             sx={{
                 marginTop: "50px",
                 background: "#FFF",
@@ -161,3 +131,44 @@ export default function RadarStatus ( { dashboard } ) {
         </Grid>
     )
 };
+
+/*
+dashboard = [
+        {
+            company: "AUTRISA",
+            "Solicitado": 5,
+            "Confirmado": 2,
+            "Aprobado": 3,
+            "Definido": 3,
+            "En Proceso": 3,
+            "Culminado": 7,
+            "Rechazado": 3,
+            "Cancelado": 5,
+            "Pausado": 4
+        },
+        {
+            company: "INKAMOTORS",
+            "Solicitado": 5,
+            "Confirmado": 2,
+            "Aprobado": 3,
+            "Definido": 3,
+            "En Proceso": 3,
+            "Culminado": 7,
+            "Rechazado": 3,
+            "Cancelado": 5,
+            "Pausado": 4
+        },
+        {
+            company: "NOVAAUTOS",
+            "Solicitado": 5,
+            "Confirmado": 2,
+            "Aprobado": 3,
+            "Definido": 3,
+            "En Proceso": 3,
+            "Culminado": 7,
+            "Rechazado": 3,
+            "Cancelado": 5,
+            "Pausado": 4
+        }
+    ]
+     */

@@ -31,6 +31,46 @@ export default function Dashboard() {
     getDashboard(filters).then(setDashboard);
   };
   
+
+  const sashboard = [
+    {
+        company: "AUTRISA",
+        "Solicitado": 1,
+        "Confirmado": 2,
+        "Aprobado": 3,
+ //       "Definido": 3,
+        "En Proceso": 3,
+        "Culminado": 4,
+        "Rechazado": 3,
+        "Cancelado": 3,
+        "Pausado": 4
+    },
+    {
+        company: "INKAMOTORS",
+        "Solicitado": 5,
+        "Confirmado": 6,
+        "Aprobado": 6,
+  //      "Definido": 7,
+        "En Proceso": 7,
+        "Culminado": 6,
+        "Rechazado": 7,
+        "Cancelado": 6,
+        "Pausado": 4
+    },
+    {
+        company: "NOVAAUTOS",
+        "Solicitado": 3,
+        "Confirmado": 2,
+        "Aprobado": 2,
+   //     "Definido": 2,
+        "En Proceso": 2,
+        "Culminado": 2,
+        "Rechazado": 2,
+        "Cancelado": 2,
+        "Pausado": 2
+    }
+]
+
   return (
     <Box>
       <h1> Dashboard
@@ -80,7 +120,7 @@ export default function Dashboard() {
           dashboard[1] && <Graphic dashboard={dashboard[1]}/>
         }
         {
-          dashboard[2] && <RadarStatus dashboard={dashboard[2]}/>
+         sashboard && <RadarStatus dashboard={sashboard}/>
         }
       </Grid>
     </Box>

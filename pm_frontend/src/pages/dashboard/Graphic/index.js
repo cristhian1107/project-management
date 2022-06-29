@@ -1,4 +1,3 @@
-import {useMemo} from 'react';
 import {
     Chart as ChartJS,
     ArcElement,
@@ -81,33 +80,33 @@ export default function Graphic ( { dashboard } ) {
         req.push(obj.number_req),
         pro.push(obj.number_pro)
     ));    
-    const data = useMemo(function () {
-        return {
-            datasets: [
-                {
-                    label: types[0],
-                    backgroundColor: "#f96332",
-                    data: sol,
-                },
-                {
-                    label: types[1],
-                    backgroundColor: "#ffb236",
-                    data: req,
-                },
-                {
-                    label: types[2],
-                    backgroundColor: "#2ca8ff",
-                    data: pro,
-                },
-                
-            ],
-            labels: company
-        };
-    }, []);
+
+    const data = {
+        datasets: [
+            {
+                label: types[0],
+                backgroundColor: "#f96332",
+                data: sol,
+            },
+            {
+                label: types[1],
+                backgroundColor: "#ffb236",
+                data: req,
+            },
+            {
+                label: types[2],
+                backgroundColor: "#2ca8ff",
+                data: pro,
+            },
+            
+        ],
+        labels: company
+    };
     return (
-        <Grid item xs={12} sm={12} lg={6} md={6}
+        <Grid item xs={12} sm={12} lg={5.7} md={5.9}
             sx={{
                 marginTop: "50px",
+                marginRight: "10px",
                 background: "#FFF",
                 borderRadius: "20px",
             }}
