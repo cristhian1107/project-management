@@ -55,26 +55,19 @@ import {
   );
   
 
-export default function ProgressiveLine ( { dashboard } ) {
+export default function ProgressiveLine ( { dashboard, company } ) {
     let delayed;
     const options = {
         responsive: true,
-        interaction: {
-            intersect: false
-        },
+        maintainAspectRatio: false,
         plugins: {
             legend: {
               position: 'top',
             },
             title: {
               display: true,
-              text: 'Estados por empresa'
+              text: "Estados por dia de " + company
             },
-        },
-        scales: {
-            x: {
-              type: 'linear'
-            }
         },
         animation: {
             onComplete: () => {
@@ -95,34 +88,54 @@ export default function ProgressiveLine ( { dashboard } ) {
         "Confirmado",
         "Culminado",
         "Pausado",
-        "En Proceso",
+        "Proceso",
         "Rechazado",
         "Solicitado"
     ];
     
-    
-    const companies = [];
-    const stateList = [];
- 
-    dashboard.map(({ company_name, ...status }) => (
-        companies.push(company_name),
-        stateList.push(Object.values(status))
-        ));
+    const aprobado = [];
+    const cancelado = [];
+    const confirmado = [];
+    const culminado = [];
+    const pausado = [];
+    const proceso = [];
+    const rechazado = [];
+    const solicitado = [];
+    const days = [];
+    dashboard.map((data) => (
+        days.push(data.day),
+        aprobado.push(data.Aprobado),
+        cancelado.push(data.Cancelado),
+        confirmado.push(data.Confirmado),
+        culminado.push(data.Culminado),
+        pausado.push(data.Pausado),
+        proceso.push(data.Proceso),
+        rechazado.push(data.Rechazado),
+        solicitado.push(data.Solicitado)
+    ));
+    let content = [];
+    content.push(
+        {"color": "red", "name": "Aprobado", "state": aprobado},
+        {"color": "red", "name": "Cancelado", "state": cancelado},
+        {"color": "red", "name": "Confirmado", "state": confirmado},
+        {"color": "red", "name": "Culminado", "state": culminado},
+        {"color": "red", "name": "Pausado", "state": pausado},
+        {"color": "red", "name": "En Proceso", "state": proceso},
+        {"color": "red", "name": "Rechazado", "state": rechazado},
+        {"color": "red", "name": "Solicitado", "state": solicitado}
+    )
+    const dataset = [];
+    content.map(({state, color, name}) => (
+        dataset.push({label: name, borderColor: color, data: state})
+    ));
+
     const data = {
-            datasets: [
-                {
-                    label: companies[0],
-                    borderColor: "rgb(44, 168, 255)",
-                    data: [1,2],
-                    borderWidth: 1,
-                    radius: 0,
-                }
-            ],
-            labels: states
+            datasets: dataset,
+            labels: days,
     };
 
     return (
-        <Grid item xs={12} sm={12} lg={5.9} md={5.9}
+        <Grid item xs={12} sm={12} lg={12} md={12}
             sx={{
                 marginTop: "50px",
                 background: "#FFF",

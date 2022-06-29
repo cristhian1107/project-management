@@ -98,9 +98,9 @@ export default function RadarStatus ( { dashboard } ) {
     const stateList = [];
  
     dashboard.map(({ company_name, ...status }) => (
-        companies.push(company_name),
-        stateList.push(Object.values(status))
-        ));
+      companies.push(company_name),
+      stateList.push(Object.values(status))
+    ));
 /*
 autrisa azul
 inka amarillo

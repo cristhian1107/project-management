@@ -1,18 +1,18 @@
 import Grid from '@mui/material/Grid';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks/useBackend';
 import {
+  CodeField,
   PriorityField,
   CompanyField,
+  DateTentativeField,
   DepartmentField,
   UserField,
-  SubjectField,
-  ReasonField,
   ReasonRejecteField
 } from 'pages/Solicitudes/TableSection/FormFields';
 
-export default function FormReject ({ dataRequest, setOpen, mode, title }) {
+export default function FormStop ({ dataRequest, setOpen, mode, title }) {
   const { postEvent } = useBackend();
 
   const handleReject = (e) => {
@@ -24,7 +24,7 @@ export default function FormReject ({ dataRequest, setOpen, mode, title }) {
     const payload = {
       request_id: dataRequest.id,
       date_issue,
-      code_sta: 7
+      code_sta: 9
     }
 
     postEvent(payload).then(() => {
@@ -43,10 +43,17 @@ export default function FormReject ({ dataRequest, setOpen, mode, title }) {
       }}
       autoComplete="off"
     >
+      <CodeField
+        mode={mode}
+        value={dataRequest.code}
+      />
       <PriorityField
         mode={mode}
         name={dataRequest.name_pri}
         code={dataRequest.code_pri}
+      />
+      <DateTentativeField
+        value={dataRequest.date_tentative}
       />
       <CompanyField
         value={dataRequest.company_tradename}
@@ -57,19 +64,15 @@ export default function FormReject ({ dataRequest, setOpen, mode, title }) {
       <UserField
         value={dataRequest.user_fullname}
       />
-      <SubjectField
-        value={dataRequest.subject}
+      <ReasonRejecteField
+        label='Motivo de pausa'
       />
-      <ReasonField
-        value={dataRequest.reason}
-      />
-      <ReasonRejecteField />
 
       <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
         <ButtonForm
           type='submit'
-          variant='error'
-          startIcon={<ThumbDownIcon />}
+          variant='success'
+          startIcon={<ThumbUpIcon />}
         >
           {title}
         </ButtonForm>

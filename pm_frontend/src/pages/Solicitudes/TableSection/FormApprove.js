@@ -4,7 +4,6 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks/useBackend';
 import {
-  TypeField,
   PriorityField,
   DateTentativeField,
   CompanyField,
@@ -13,7 +12,8 @@ import {
   SubjectField,
   ReasonField,
   TitleField,
-  DescriptionField
+  DescriptionField,
+  CodeField
 } from 'pages/Solicitudes/TableSection/FormFields';
 
 export default function FormReview ({ dataRequest, setOpen, mode, title }) {
@@ -53,9 +53,9 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
         }}
         autoComplete="off"
       >
-        <TypeField
+        <CodeField
           mode={mode}
-          value={dataRequest.name_typ}
+          value={dataRequest.code}
         />
         <PriorityField
           mode={mode}
@@ -65,8 +65,6 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
         <DateTentativeField
           mode={mode}
           value={dataRequest.date_tentative}
-          date={dateTentative}
-          handleDate={setDateTentative}
         />
         <CompanyField
           value={dataRequest.company_tradename}
