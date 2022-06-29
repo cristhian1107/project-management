@@ -877,39 +877,91 @@ BEGIN
     -- * Dashoard 5 * --
     -- ************** --
     CREATE TEMPORARY TABLE IF NOT EXISTS tmp_calendar AS (
-    SELECT a.Date
+    SELECT a.date
     from (
         SELECT last_day(v_date_start) - INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY as Date
         from (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) as a
         cross join (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) as b
         cross join (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) as c
     ) a
-    WHERE a.Date BETWEEN v_date_start AND last_day(v_date_end) ORDER BY a.Date
+    WHERE a.date BETWEEN v_date_start AND last_day(v_date_end) ORDER BY a.date
     );
 
     CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_5 AS (
     SELECT
           re.company_id
-        , CONVERT(re.date_issue, DATE) as date_issue
+        , CONVERT(rev.date_issue, DATE) as date_issue
         , re.table_sta as table_sta
         , re.code_sta as code_sta
         , COUNT(re.code_sta) as number_sta
     FROM requests re
+    INNER JOIN requests_events rev ON rev.request_id = re.id AND rev.item = (
+        SELECT ev.item FROM requests_events ev
+        WHERE ev.request_id = re.id
+        ORDER BY ev.date_issue desc LIMIT 1
+    )
     WHERE
-        YEAR(re.date_issue) = pintyear AND
-        MONTH(re.date_issue) = pintmonth
+        YEAR(rev.date_issue) = pintyear AND
+        MONTH(rev.date_issue) = pintmonth
     GROUP BY
           re.company_id
-        , CONVERT(re.date_issue, DATE)
+        , CONVERT(rev.date_issue, DATE)
         , re.table_sta
         , re.code_sta
     );
 
-    SELECT *
-    FROM tmp_calendar ca
-    LEFT JOIN 
+    -- SELECT * FROM tmp_dashboard_5;
 
-    SELECT * FROM tmp_calendar;
+    -- * Autrisa * --
+    SELECT
+          ca.date
+        , CAST(SUM(CASE WHEN da.code_sta = 1 THEN number_sta ELSE 0 END) AS UNSIGNED) as 'solicitado'
+        , CAST(SUM(CASE WHEN da.code_sta = 2 THEN number_sta ELSE 0 END) AS UNSIGNED) as `confirmado`
+        , CAST(SUM(CASE WHEN da.code_sta = 3 THEN number_sta ELSE 0 END) AS UNSIGNED) as `aprobado`
+        -- , CAST(SUM(CASE WHEN da.code_sta = 4 THEN number_sta ELSE 0 END) AS UNSIGNED) as `definido`
+        , CAST(SUM(CASE WHEN da.code_sta = 5 THEN number_sta ELSE 0 END) AS UNSIGNED) as `proceso`
+        , CAST(SUM(CASE WHEN da.code_sta = 6 THEN number_sta ELSE 0 END) AS UNSIGNED) as `culminado`
+        , CAST(SUM(CASE WHEN da.code_sta = 7 THEN number_sta ELSE 0 END) AS UNSIGNED) as `rechazado`
+        , CAST(SUM(CASE WHEN da.code_sta = 8 THEN number_sta ELSE 0 END) AS UNSIGNED) as `cancelado`
+        , CAST(SUM(CASE WHEN da.code_sta = 9 THEN number_sta ELSE 0 END) AS UNSIGNED) as `pausado`
+    FROM tmp_calendar ca
+    LEFT JOIN tmp_dashboard_5 da ON ca.date = da.date_issue AND da.company_id = 1
+    GROUP BY
+          ca.date;
+
+    -- * Incamotors * --
+    SELECT
+          ca.date
+        , CAST(SUM(CASE WHEN da.code_sta = 1 THEN number_sta ELSE 0 END) AS UNSIGNED) as 'solicitado'
+        , CAST(SUM(CASE WHEN da.code_sta = 2 THEN number_sta ELSE 0 END) AS UNSIGNED) as `confirmado`
+        , CAST(SUM(CASE WHEN da.code_sta = 3 THEN number_sta ELSE 0 END) AS UNSIGNED) as `aprobado`
+        -- , CAST(SUM(CASE WHEN da.code_sta = 4 THEN number_sta ELSE 0 END) AS UNSIGNED) as `definido`
+        , CAST(SUM(CASE WHEN da.code_sta = 5 THEN number_sta ELSE 0 END) AS UNSIGNED) as `proceso`
+        , CAST(SUM(CASE WHEN da.code_sta = 6 THEN number_sta ELSE 0 END) AS UNSIGNED) as `culminado`
+        , CAST(SUM(CASE WHEN da.code_sta = 7 THEN number_sta ELSE 0 END) AS UNSIGNED) as `rechazado`
+        , CAST(SUM(CASE WHEN da.code_sta = 8 THEN number_sta ELSE 0 END) AS UNSIGNED) as `cancelado`
+        , CAST(SUM(CASE WHEN da.code_sta = 9 THEN number_sta ELSE 0 END) AS UNSIGNED) as `pausado`
+    FROM tmp_calendar ca
+    LEFT JOIN tmp_dashboard_5 da ON ca.date = da.date_issue AND da.company_id = 2
+    GROUP BY
+          ca.date;
+
+    -- * NovaAutos * --
+    SELECT
+          ca.date
+        , CAST(SUM(CASE WHEN da.code_sta = 1 THEN number_sta ELSE 0 END) AS UNSIGNED) as 'solicitado'
+        , CAST(SUM(CASE WHEN da.code_sta = 2 THEN number_sta ELSE 0 END) AS UNSIGNED) as `confirmado`
+        , CAST(SUM(CASE WHEN da.code_sta = 3 THEN number_sta ELSE 0 END) AS UNSIGNED) as `aprobado`
+        -- , CAST(SUM(CASE WHEN da.code_sta = 4 THEN number_sta ELSE 0 END) AS UNSIGNED) as `definido`
+        , CAST(SUM(CASE WHEN da.code_sta = 5 THEN number_sta ELSE 0 END) AS UNSIGNED) as `proceso`
+        , CAST(SUM(CASE WHEN da.code_sta = 6 THEN number_sta ELSE 0 END) AS UNSIGNED) as `culminado`
+        , CAST(SUM(CASE WHEN da.code_sta = 7 THEN number_sta ELSE 0 END) AS UNSIGNED) as `rechazado`
+        , CAST(SUM(CASE WHEN da.code_sta = 8 THEN number_sta ELSE 0 END) AS UNSIGNED) as `cancelado`
+        , CAST(SUM(CASE WHEN da.code_sta = 9 THEN number_sta ELSE 0 END) AS UNSIGNED) as `pausado`
+    FROM tmp_calendar ca
+    LEFT JOIN tmp_dashboard_5 da ON ca.date = da.date_issue AND da.company_id = 3
+    GROUP BY
+          ca.date;
 
     -- *********** --
     -- * Finally * --
@@ -918,6 +970,7 @@ BEGIN
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_2;
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_3;
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_4;
+    DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_5;
     DROP TEMPORARY TABLE IF EXISTS tmp_calendar;
 
 END $$
