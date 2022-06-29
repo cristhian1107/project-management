@@ -1,9 +1,5 @@
-// React core
 import { useCallback } from 'react';
-// Services
 import func from 'services/private.services';
-// Utilities
-import { subtractDays } from 'utilities/dateOperations';
 
 /**
  * Provides functions to request different routes of the private API.
@@ -31,9 +27,6 @@ function useBackend () {
     department
   }) => {
     const splitForCharacter = (date) =>  date?.toISOString().split('T')[0];
-    console.log(startDate)
-    //const [dateBegin, dateEnd] = subtractDays([startDate, endDate], 0);
-    //console.log(dateBegin)
     const params = new URLSearchParams({
       date_begin: splitForCharacter(startDate),
       date_end: splitForCharacter(endDate),
@@ -47,6 +40,8 @@ function useBackend () {
   obj.postRequest = useCallback((body) => func({method: 'POST', path: 'request', body}), []);
   
   obj.putRequest = useCallback((body) => func({method: 'PUT', path: 'request', body}), []);
+
+  obj.postEvent = useCallback((body) => func({method: 'POST', path: 'request/event', body }), []);
 
   return obj;
 }

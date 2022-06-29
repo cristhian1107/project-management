@@ -48,8 +48,10 @@ def get_request(**kwargs):
     """returns a list of specific projects"""
 
     payload = kwargs.get('payload')
-    id = payload.get('id')
+    # id = payload.get('id')
     # Necesito un diccionario de el proyectos con todos sus datos
+    # print(id)
+    id = request.args.get('id', None)
     res = DBProcedures.requests_one(id, True)
     if res is None:
         return make_response(jsonify({'request': 'empty'}), 204)
@@ -133,13 +135,16 @@ def update_event(**kwargs):
     Returns:
         Response: JSON success or failure.
     """
+    payload = kwargs.get('payload')
     data = request.get_json()
     item = RequestEvent()
     item.request_id = data.get('request_id', None)
     item.code_sta = data.get('code_sta', None)
     item.table_sta = tables.get('STA')
-    item.date_issue = data.get('date_issue', None)
-    item.user_id = data.get('user_id', None)
+    item.date_issue = datetime.strptime(data.get(
+        'date_issue', None), time)
+    item.user_id = payload.get('id', None)
+    print(item.to_dict())
     res = DBProcedures.requests_events_insert(item)
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)

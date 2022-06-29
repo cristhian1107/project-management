@@ -1,7 +1,7 @@
 // Utils and parts of the component
-import { links } from 'components/utils';
-import BasicLayout from 'components/drawer/basicLaoyut';
-import StylesNavItem from 'components/drawer/styles/styleNavItem';
+import { links } from 'components/common/utils';
+import BasicLayout from 'components/common/Drawer/BasicLaoyut';
+import StylesNavItem from 'components/common/Drawer/styles/StyleNavItem';
 
 export default function LeftDrawer () {
 

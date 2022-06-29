@@ -1,97 +1,112 @@
-// React core
 import { useState, useEffect } from 'react';
-// @mui 
-import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import Grid from '@mui/material/Grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-// Global components
+import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
 import ButtonForm from 'components/ButtonForm';
 import Calendar from 'components/calendar';
-// Local components
-import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
-// Custom hooks
 import { useBackend } from 'hooks/useBackend';
 
-export default function FormModal ({ dataRequest, setOpen }) {
+export default function FormReview ({ dataRequest, setOpen, mode, title }) {
   const [dateTentative, setDateTentative] = useState(null);
   const [priorities, setPriorities] = useState([]);
   const [types, setTypes] = useState([]);
-  const { getPriorities, getTypes, putRequest } = useBackend();
+  const { getPriorities, getTypes } = useBackend();
+  const { putRequest } = useBackend();
 
   useEffect(() => {
-    getPriorities().then(setPriorities);
-    getTypes().then(setTypes);
+    if (mode === 'Solicitado') {
+      getPriorities().then(setPriorities);
+      getTypes().then(setTypes);
+    }
   }, [getPriorities, getTypes]);
 
-  const handleConfirmation = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    let date_current = new Date();
-    date_current.setDate(date_current.getDate() - 1)
-    const date_issue = date_current.toISOString()
+  const actions = {
+    handleConfirmar: (e) => {
+      e.preventDefault();
+      const data = new FormData(e.currentTarget);
+      let date_current = new Date();
+      date_current.setDate(date_current.getDate() - 1)
+      const date_issue = date_current.toISOString()
 
-    const payload = {
-      id: dataRequest.id,
-      date_issue,
-      date_tentative: dateTentative.toISOString(),
-      name: data.get('name'),
-      description: data.get('description'),
-      code_typ: data.get('code_typ'),
-      code_pri: data.get('code_pri')
-    };
+      const payload = {
+        id: dataRequest.id,
+        date_issue,
+        date_tentative: dateTentative.toISOString(),
+        name: data.get('name'),
+        description: data.get('description'),
+        code_typ: data.get('code_typ'),
+        code_pri: data.get('code_pri')
+      };
 
-    console.log(payload);
-    putRequest(payload).then(() => {
-      setOpen(false);
-    });
+      putRequest(payload).then(() => {
+        setOpen(false);
+      });
+    },
+
+    handleReanudar: (e) => {
+      e.preventDefault();
+      console.log(`Vamos a ${title}`);
+    },
+
+    handlePausar: (e) => {
+      e.preventDefault();
+      console.log(`Vamos a ${title}`);
+    },
+
+    handleCancelar: (e) => {
+      e.preventDefault();
+      console.log(`Vamos a ${title}`);
+    }
   }
 
   return (
     <Grid
       container
       component="form"
-      onSubmit= {handleConfirmation}
+      onSubmit= {actions[`handle${title}`]}
       sx={{
         gap: 2,
         justifyContent: 'space-between',
       }}
-      // noValidate
       autoComplete="off"
     >
       <FormFieldItem
+        disabled={mode !== 'Solicitado' ? true : false}
         required
-        select
+        select={mode !== 'Solicitado' ? false : true}
         bp={{ xs: 5.5, sm: 3.8 }}
         label='Tipo'
         name='code_typ'
-        defaultValue=''
+        defaultValue={mode !== 'Solicitado' ? dataRequest.name_typ : ''}
       >
         {
-          types.map(({ alias, code, name }) => (
+          mode === 'Solicitado' && types.map(({ alias, code, name }) => (
             <MenuItem key={alias} value={code}>{name}</MenuItem>
           ))
         }
       </FormFieldItem>
       <FormFieldItem
+        disabled={mode !== 'Solicitado' ? true : false}
         required
-        select
+        select={mode !== 'Solicitado' ? false : true}
         bp={{ xs: 5.5, sm: 3.8 }}
         label='Prioridad'
         name='code_pri'
-        defaultValue={dataRequest.code_pri}
+        defaultValue={mode !== 'Solicitado' ? dataRequest.name_pri : dataRequest.code_pri}
       >
         {
-          priorities.map(({ alias, code, name }) => (
+          mode === 'Solicitado' && priorities.map(({ alias, code, name }) => (
             <MenuItem key={alias} value={code}>{name}</MenuItem>
           ))
         }
       </FormFieldItem>
       <Grid item xs={12} sm={3.8}>
         <Calendar
+          disabled={mode !== 'Solicitado' ? true : false}
           required
           label='Fecha tentativa'
-          value={dateTentative}
+          value={mode !== 'Solicitado' ? dataRequest.date_tentative : dateTentative}
           handleDate={setDateTentative}
           variant='outlined'
         />
@@ -133,18 +148,21 @@ export default function FormModal ({ dataRequest, setOpen }) {
         lines={{ multiline: true, maxLength: 500 }}
       />
       <FormFieldItem
+        disabled={mode !== 'Solicitado' ? true : false}
         bp={{ xs: 12 }}
         required
+        defaultValue={mode !== 'Solicitado' ? dataRequest.name : ''}
         label='title'
         name='name'
       />
       <FormFieldItem
-        css={{ background: '#fff' }}
+        disabled={mode !== 'Solicitado' ? true : false}
         bp={{ xs: 12 }}
         label='Descripcion'
         name='description'
-        lines={{ multiline: true, maxLength: 500 }}
-        renderIcon={<p>Max length 500</p>}
+        defaultValue={ mode !== 'Solicitado' ? dataRequest.description : ''}
+        lines={{ multiline: mode !== 'Solicitado' ? false : true, maxLength: 500 }}
+        renderIcon={mode !== 'Solicitado' ? null : <p>Max length 500</p>}
       />
       <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
         <ButtonForm
@@ -152,14 +170,7 @@ export default function FormModal ({ dataRequest, setOpen }) {
           variant="success"
           startIcon={<ThumbUpIcon />}
         >
-          Confirmar
-        </ButtonForm>
-        <ButtonForm
-          type="submit"
-          variant='error'
-          startIcon={<ThumbDownIcon />}
-        >
-          Rechazar
+          {title}
         </ButtonForm>
       </Grid>
     </Grid>

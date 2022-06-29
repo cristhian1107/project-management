@@ -5,10 +5,10 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 // Utils and parts of the component
-import { drawerWidth } from 'components/utils';
-import LeftDrawer from 'components/drawer';
-import CustomAppBar from 'components/appBar';
-import DrawerType from 'components/sideNav/drawerType';
+import { drawerWidth } from 'components/common/utils';
+import LeftDrawer from 'components/common/Drawer';
+import CustomAppBar from 'components/common/AppBar';
+import DrawerType from 'components/common/SideNav/DrawerType';
 
 export default function SideNav () {
 
