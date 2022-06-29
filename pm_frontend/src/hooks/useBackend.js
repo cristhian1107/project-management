@@ -28,7 +28,7 @@ function useBackend () {
     startDate,
     endDate,
     idCompany,
-    deparment
+    department
   }) => {
     const splitForCharacter = (date) =>  date?.toISOString().split('T')[0];
     console.log(startDate)
@@ -38,7 +38,7 @@ function useBackend () {
       date_begin: splitForCharacter(startDate),
       date_end: splitForCharacter(endDate),
       company_id: idCompany,
-      deparment
+      department
     }).toString();
 
     return func({path: `request/all?${params}`})
