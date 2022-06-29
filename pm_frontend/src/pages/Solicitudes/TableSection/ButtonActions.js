@@ -30,6 +30,23 @@ export default function ButtonActions ({ dataRequest }) {
 
   const typeOf = dataRequest.name_typ ?? 'Solicitud';
 
+  // const ActionButton = ({ open, setOpen, typeOf }) => {
+  //   return (
+  //     <CustomModal
+  //       open={open}
+  //       setOpen={setOpen}
+  //       renderButton={<ContainsTooltip label='Confirmar' render={<CheckIcon />} />}
+  //       title={`Confirmar ${typeOf}`}
+  //     >
+  //       <FormReview title='Confirmar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
+  //     </CustomModal>
+  //   )
+  // }
+
+  // const RenderButtons = ({ currentState }) => {
+    
+  // }
+
   return (
     <Grid container sx={{ justifyContent: 'center', flexWrap: 'nowrap' }}>
       <CustomModal
@@ -54,7 +71,7 @@ export default function ButtonActions ({ dataRequest }) {
         renderButton={<ContainsTooltip label='Pausar' render={<StopCircleIcon />} />}
         title={`Pausar ${typeOf}`}
       >
-        <FormStop title='Pausar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
+        <FormStop title='Pausar' mode={dataRequest.name_sta} setOpen={setOpenStop} dataRequest={dataRequest}/>  
       </CustomModal>
       <CustomModal
         open={openResume}
@@ -62,7 +79,7 @@ export default function ButtonActions ({ dataRequest }) {
         renderButton={<ContainsTooltip label='Reaundar' render={<PlayCircleOutlineIcon />} />}
         title={`Reanudar ${typeOf}`}
       >
-        <FormResume title='Reanudar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
+        <FormResume title='Reanudar' mode={dataRequest.name_sta} setOpen={setOpenResume} dataRequest={dataRequest}/>  
       </CustomModal>
       <CustomModal
         open={openCancel}
