@@ -11,6 +11,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Stack from '@mui/material/Stack';
 import Graphic from 'pages/dashboard/Graphic';
 import RadarStatus from 'pages/dashboard/RadarStatus';
+import Area from 'pages/dashboard/Area';
+import PolarArea from 'pages/dashboard/PolarArea';
+import ProgressiveLine from 'pages/dashboard/ProgressiveLine';
 
 export default function Dashboard() {
   const [dashboard, setDashboard] = useState([]);
@@ -30,46 +33,6 @@ export default function Dashboard() {
     filters.month = newDate.getMonth() + 1;
     getDashboard(filters).then(setDashboard);
   };
-  
-
-  const sashboard = [
-    {
-      company_name: "AUTRISA",
-        "Solicitado": 1,
-        "Confirmado": 2,
-        "Aprobado": 3,
- //       "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 4,
-        "Rechazado": 3,
-        "Cancelado": 3,
-        "Pausado": 4
-    },
-    {
-      company_name: "INKAMOTORS",
-        "Solicitado": 5,
-        "Confirmado": 6,
-        "Aprobado": 6,
-  //      "Definido": 7,
-        "En Proceso": 7,
-        "Culminado": 6,
-        "Rechazado": 7,
-        "Cancelado": 6,
-        "Pausado": 4
-    },
-    {
-      company_name: "NOVAAUTOS",
-        "Solicitado": 3,
-        "Confirmado": 2,
-        "Aprobado": 2,
-   //     "Definido": 2,
-        "En Proceso": 2,
-        "Culminado": 2,
-        "Rechazado": 2,
-        "Cancelado": 2,
-        "Pausado": 2
-    }
-]
 
   return (
     <Box>
@@ -121,6 +84,16 @@ export default function Dashboard() {
         }
         {
          dashboard[2] && <RadarStatus dashboard={dashboard[2]}/>
+        }
+      </Grid>
+      <Grid container>
+        {
+          dashboard[3] && <Area dashboard={dashboard[3]}/>
+        }
+      </Grid>
+      <Grid container>
+        {
+          dashboard[2] && <ProgressiveLine dashboard={dashboard[2]}/>
         }
       </Grid>
     </Box>
