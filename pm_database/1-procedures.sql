@@ -914,7 +914,7 @@ BEGIN
 
     -- * Autrisa * --
     SELECT
-          ca.date
+          DAY(ca.date) as `day`
         , CAST(SUM(CASE WHEN da.code_sta = 1 THEN number_sta ELSE 0 END) AS UNSIGNED) as 'solicitado'
         , CAST(SUM(CASE WHEN da.code_sta = 2 THEN number_sta ELSE 0 END) AS UNSIGNED) as `confirmado`
         , CAST(SUM(CASE WHEN da.code_sta = 3 THEN number_sta ELSE 0 END) AS UNSIGNED) as `aprobado`
@@ -927,11 +927,11 @@ BEGIN
     FROM tmp_calendar ca
     LEFT JOIN tmp_dashboard_5 da ON ca.date = da.date_issue AND da.company_id = 1
     GROUP BY
-          ca.date;
+          DAY(ca.date);
 
     -- * Incamotors * --
     SELECT
-          ca.date
+          DAY(ca.date) as `day`
         , CAST(SUM(CASE WHEN da.code_sta = 1 THEN number_sta ELSE 0 END) AS UNSIGNED) as 'solicitado'
         , CAST(SUM(CASE WHEN da.code_sta = 2 THEN number_sta ELSE 0 END) AS UNSIGNED) as `confirmado`
         , CAST(SUM(CASE WHEN da.code_sta = 3 THEN number_sta ELSE 0 END) AS UNSIGNED) as `aprobado`
@@ -944,11 +944,11 @@ BEGIN
     FROM tmp_calendar ca
     LEFT JOIN tmp_dashboard_5 da ON ca.date = da.date_issue AND da.company_id = 2
     GROUP BY
-          ca.date;
+          DAY(ca.date);
 
     -- * NovaAutos * --
     SELECT
-          ca.date
+          DAY(ca.date) as `day`
         , CAST(SUM(CASE WHEN da.code_sta = 1 THEN number_sta ELSE 0 END) AS UNSIGNED) as 'solicitado'
         , CAST(SUM(CASE WHEN da.code_sta = 2 THEN number_sta ELSE 0 END) AS UNSIGNED) as `confirmado`
         , CAST(SUM(CASE WHEN da.code_sta = 3 THEN number_sta ELSE 0 END) AS UNSIGNED) as `aprobado`
@@ -961,7 +961,7 @@ BEGIN
     FROM tmp_calendar ca
     LEFT JOIN tmp_dashboard_5 da ON ca.date = da.date_issue AND da.company_id = 3
     GROUP BY
-          ca.date;
+          DAY(ca.date);
 
     -- *********** --
     -- * Finally * --
