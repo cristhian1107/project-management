@@ -9,6 +9,7 @@ from database.db_procedure import DBProcedures
 from datetime import datetime
 from general.library import Libraries
 import asyncio
+from flasgger.utils import swag_from
 
 time = '%Y-%m-%dT%H:%M:%S.%fZ'
 dt_date = '%Y-%m-%d'
@@ -16,6 +17,7 @@ dt_date = '%Y-%m-%d'
 
 @app_views.route('/request/all', methods=['GET'],
                  strict_slashes=False)
+@swag_from('/routes/documentation/request/request_all.yml', methods=['GET'])
 @Libraries.validate_token  # Custom decorator to validate the token
 def all_request(**kwargs):
     """returns list of all projects"""
