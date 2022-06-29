@@ -715,6 +715,9 @@ CREATE PROCEDURE dashboard_all
 BEGIN
 
     DECLARE v_total_request bigint;
+    DECLARE v_date_start, v_date_end datetime;
+    SET v_date_start = STR_TO_DATE(CONCAT(CONVERT(pintyear, char) ,'-', LPAD(CONVERT(pintmonth, char),2,'00'), '-', '01'), '%Y-%m-%d');
+    SET v_date_end = DATE_ADD(DATE_ADD(v_date_start, INTERVAL 1 MONTH), INTERVAL -1 DAY);
 
     -- * Total * --
     SELECT COUNT(re.id) INTO v_total_request
@@ -870,6 +873,44 @@ BEGIN
           cp.tradename
         , IFNULL(re.department_name, 'Vacio');
 
+    -- ************** --
+    -- * Dashoard 5 * --
+    -- ************** --
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_calendar AS (
+    SELECT a.Date
+    from (
+        SELECT last_day(v_date_start) - INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY as Date
+        from (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) as a
+        cross join (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) as b
+        cross join (SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) as c
+    ) a
+    WHERE a.Date BETWEEN v_date_start AND last_day(v_date_end) ORDER BY a.Date
+    );
+
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_dashboard_5 AS (
+    SELECT
+          re.company_id
+        , CONVERT(re.date_issue, DATE) as date_issue
+        , re.table_sta as table_sta
+        , re.code_sta as code_sta
+        , COUNT(re.code_sta) as number_sta
+    FROM requests re
+    WHERE
+        YEAR(re.date_issue) = pintyear AND
+        MONTH(re.date_issue) = pintmonth
+    GROUP BY
+          re.company_id
+        , CONVERT(re.date_issue, DATE)
+        , re.table_sta
+        , re.code_sta
+    );
+
+    SELECT *
+    FROM tmp_calendar ca
+    LEFT JOIN 
+
+    SELECT * FROM tmp_calendar;
+
     -- *********** --
     -- * Finally * --
     -- *********** --
@@ -877,6 +918,7 @@ BEGIN
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_2;
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_3;
     DROP TEMPORARY TABLE IF EXISTS tmp_dashboard_4;
+    DROP TEMPORARY TABLE IF EXISTS tmp_calendar;
 
 END $$
 DELIMITER ;
