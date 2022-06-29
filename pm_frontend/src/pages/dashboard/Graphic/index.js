@@ -56,8 +56,10 @@ import {
   
 
 export default function Graphic ( { dashboard } ) {
+    let delayed;
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
               position: 'top',
@@ -65,6 +67,18 @@ export default function Graphic ( { dashboard } ) {
             title: {
               display: true,
               text: 'Tipo de solicitudes'
+            },
+        },
+        animation: {
+            onComplete: () => {
+              delayed = true;
+            },
+            delay: (context) => {
+              let delay = 0;
+              if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                delay = context.dataIndex * 600 + context.datasetIndex * 100;
+              }
+              return delay;
             },
         }
     }
@@ -103,12 +117,13 @@ export default function Graphic ( { dashboard } ) {
         labels: company
     };
     return (
-        <Grid item xs={12} sm={12} lg={5.7} md={5.9}
+        <Grid item xs={12} sm={12} lg={5.9} md={5.9}
             sx={{
                 marginTop: "50px",
                 marginRight: "10px",
                 background: "#FFF",
                 borderRadius: "20px",
+                height: "400px",
             }}
         >
             <Bar data={data} options={options}/>
