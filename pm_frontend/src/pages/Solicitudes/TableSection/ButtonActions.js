@@ -43,7 +43,7 @@ export default function ButtonActions ({ dataRequest }) {
       <CustomModal
         open={openApprove}
         setOpen={setOpenApprove}
-        renderButton={<ContainsTooltip label='Confirmar' render={<DoneAllIcon />} />}
+        renderButton={<ContainsTooltip label='Aprobar' render={<DoneAllIcon />} />}
         title={`Aprobar ${typeOf}`}
       >
         <FormApprove title='Aprobar' mode={dataRequest.name_sta} setOpen={setOpenApprove} dataRequest={dataRequest}/>  
