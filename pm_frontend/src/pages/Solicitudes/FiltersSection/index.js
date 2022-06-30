@@ -14,16 +14,17 @@ import FiltersContext from 'context/FiltersContext';
 
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 import Calendar from 'components/calendar';
+import { useSelector } from 'react-redux';
 
 export default function FiltersSection ({ css }) {
-
+  const userState = useSelector((state) => state.user);
   const {filters, setFilters, setListRequests} = useContext(FiltersContext);
   const {startDate, endDate, idCompany, department} = filters;
   // Fill selects.
   const [companies, setCompanies] = useState([]);
   const [departments, setDepartments] = useState([]);
   const { getCompanies, getDepartments, getRequests } = useBackend();
-
+  console.log(userState);
   useEffect(() => {
     getDepartments().then(setDepartments);
     getCompanies().then(setCompanies);
@@ -73,13 +74,14 @@ export default function FiltersSection ({ css }) {
         <Grid item xs={12} sm={2.8} xl={2}>
           <TextFieldFullWidth
             select
-            defaultValue={""}
+            disabled
+            defaultValue={userState.company_id}
             id="filter_empresa"
             label="Empresa"
-            value={idCompany}
             variant="standard"
             onChange={handleChangeCompany}
           >
+            <MenuItem key="uwu" value="">{"< TODAS >"}</MenuItem>
             {
               companies.map(({ tradename, id }) => (
                 <MenuItem key={tradename} value={id}>{tradename}</MenuItem>
@@ -97,6 +99,7 @@ export default function FiltersSection ({ css }) {
             variant="standard"
             onChange={handleChangeDepartment}
           >
+            <MenuItem key="uwu" value="">{"< TODAS >"}</MenuItem>
             {
               departments.map(({ department: name }) => (
                 <MenuItem key={name} value={name}>{name}</MenuItem>
