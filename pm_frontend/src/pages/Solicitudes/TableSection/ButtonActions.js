@@ -44,7 +44,6 @@ export default function ButtonActions ({ dataRequest }) {
   // Different actions correspond to a record in a current state.
   // Each action visually defines a modal and a button
   // 
-  console.log(allowedActions);
   const actions = {
     'Solicitado': [
       {
