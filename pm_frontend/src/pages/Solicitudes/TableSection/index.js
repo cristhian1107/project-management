@@ -21,7 +21,6 @@ export default function TableSection({ css }) {
   }, [getEvents]);
 
   useEffect(() => {
-    console.log(localFilters);
     if (localFilters.length > 0)
       setListShow(() => listRequests.filter(record => localFilters.includes(record.code_sta)))
     if (localFilters.length === 0)
