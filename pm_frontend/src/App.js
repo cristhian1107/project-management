@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createUser, resetUser } from 'redux/states'; // Actions of the global state
 import useUser from 'hooks/useUser'; // Custom hook
 import SideNav from 'components/common/SideNav'; // Global common component
+import Loading from 'components/Loading';
 import { routes } from 'config';
 import axios from 'axios';
 
@@ -95,7 +96,7 @@ function App () {
           )}
         </ThemeProvider>
       ) : (
-        <h1>Loading...</h1>
+        <Loading />
       )}
     </>
   );
