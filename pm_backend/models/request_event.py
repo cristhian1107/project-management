@@ -22,4 +22,5 @@ class RequestEvent(BaseModel):
         self.code_sta = None
         self.date_issue = None
         self.user_id = None
+        self.reason = None
         super().__init__(**kwargs)
