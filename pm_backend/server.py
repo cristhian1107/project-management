@@ -5,8 +5,6 @@ from os import getenv
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from routes import app_views
-from flasgger import Swagger
-from flasgger.utils import swag_from
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -32,13 +30,6 @@ def error(e):
         response: json response.
     """
     return make_response(jsonify({"error": "Not found"}), 404)
-
-app.config['SWAGGER'] = {
-    'title': 'Gestion de Proyectos Restful API',
-    'uiversion': 3
-}
-
-Swagger(app)
 
 
 if __name__ == '__main__':

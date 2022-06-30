@@ -6,7 +6,6 @@ from flask import jsonify, make_response, request
 from routes import app_views
 from database.db_procedure import DBProcedures
 from general.library import Libraries
-# from flasgger.utils import swag_from
 
 
 @app_views.route("/status", strict_slashes=False)
@@ -28,9 +27,7 @@ def all_dashboard(**kwargs):
     if year is None or month is None:
         return make_response(jsonify({'request': 'empty'}), 204)
 
-    print('{} {}'.format(year, month))
     info = DBProcedures.dashboard_all(year, month)
-    print(info)
     if info is None:
         return make_response(jsonify({'request': 'empty'}), 204)
     return make_response(jsonify(info), 201)

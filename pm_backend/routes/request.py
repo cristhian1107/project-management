@@ -17,7 +17,6 @@ dt_date = '%Y-%m-%d'
 
 @app_views.route('/request/all', methods=['GET'],
                  strict_slashes=False)
-@swag_from('/routes/documentation/request/request_all.yml', methods=['GET'])
 @Libraries.validate_token  # Custom decorator to validate the token
 def all_request(**kwargs):
     """returns list of all projects"""
@@ -33,7 +32,6 @@ def all_request(**kwargs):
     company_id = None if company_id == '' else company_id
     department = None if department == '' else department
     user_id = payload.get('id')
-    print(department)
     # Necesito una lista de diccionarios de todos los proyectos con
     # todos sus datos en ese rango de fecha
     res = DBProcedures.requests_all(
@@ -52,7 +50,6 @@ def get_request(**kwargs):
     payload = kwargs.get('payload')
     # id = payload.get('id')
     # Necesito un diccionario de el proyectos con todos sus datos
-    # print(id)
     id = request.args.get('id', None)
     res = DBProcedures.requests_one(id, True)
     if res is None:
@@ -90,7 +87,6 @@ def insert_request(**kwargs):
     # ------------------
     # Data is sent to procedures and is returned on success or failure.
     res = DBProcedures.requests_insert(item)
-    print(res.to_dict())
     email = DBProcedures.requests_email(item.id)
 
 #    if email:
@@ -146,7 +142,6 @@ def update_event(**kwargs):
     item.date_issue = datetime.strptime(data.get(
         'date_issue', None), time)
     item.user_id = payload.get('id', None)
-    print(item.to_dict())
     res = DBProcedures.requests_events_insert(item)
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)

@@ -6,14 +6,13 @@ from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
 import hashlib
 from general.library import Libraries
-from flasgger.utils import swag_from
 
 
 @app_views.route('/user', methods=['GET'], strict_slashes=False)
-@swag_from('/routes/documentation/user/login.yml', methods=['GET'])
 @Libraries.validate_token
 def get_user(**kwargs):
     payload = kwargs.get('payload')
+    print(payload, type(payload))
     id = payload.get('id')
     item = User()
     item = DBProcedures.users_one(id)
@@ -30,7 +29,6 @@ def get_user(**kwargs):
 
 @app_views.route('/login', methods=['POST'],
                  strict_slashes=False)
-@swag_from('/routes/documentation/user/login.yml', methods=['POST'])
 def login():
     """Validate login"""
     body = request.get_json()
