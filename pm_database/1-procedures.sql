@@ -41,6 +41,7 @@ BEGIN
         rop.role_id = v_role_id AND
         rop.is_active = 1;
 
+    -- Info permissions
     CREATE TEMPORARY TABLE IF NOT EXISTS tmp_permissions (
         `id`          bigint NOT NULL ,
         `name`        varchar(50) NOT NULL ,
@@ -48,7 +49,6 @@ BEGIN
         `is_active`   bit NOT NULL
     );
 
-    -- Info permissions
     INSERT INTO tmp_permissions (`id`, `name`, `alias`, `is_active`)
     VALUES
     (1, 'Solicitudes Filtros', 'FILTERS', 0);
@@ -107,6 +107,13 @@ BEGIN
         rop.is_active = 1;
 
     -- Info permissions
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_permissions (
+        `id`          bigint NOT NULL ,
+        `name`        varchar(50) NOT NULL ,
+        `alias`       varchar(25) NOT NULL ,
+        `is_active`   bit NOT NULL
+    );
+
     INSERT INTO tmp_permissions (`id`, `name`, `alias`, `is_active`)
     VALUES
     (1, 'Solicitudes Filtros', 'FILTERS', 0);
