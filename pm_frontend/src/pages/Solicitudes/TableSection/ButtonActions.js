@@ -9,6 +9,8 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'; // Re
 import FindInPageIcon from '@mui/icons-material/FindInPage'; // Ver informe
 import StopCircleIcon from '@mui/icons-material/StopCircle'; // Pausar
 import DoneAllIcon from '@mui/icons-material/DoneAll'; // Aprobar
+// Redux
+import { useSelector } from 'react-redux';
 // Global components
 import CustomModal from 'components/CustomModal';
 // Local components
@@ -21,6 +23,7 @@ import FormResume from 'pages/Solicitudes/TableSection/FormResume';
 import FormStop from 'pages/Solicitudes/TableSection/FormStop';
 
 export default function ButtonActions ({ dataRequest }) {
+  const userState = useSelector(state => state.user);
   // Define states to control modals
   const [openReview, setOpenReview] = useState(false);
   const [openApprove, setOpenApprove] = useState(false);
@@ -29,19 +32,24 @@ export default function ButtonActions ({ dataRequest }) {
   const [openResume, setOpenResume] = useState(false);
   const [openStop, setOpenStop] = useState(false);
   const [openAssign, setOpenAssign] = useState(false);
-
+  
   // Define the type and current state of the record
   const typeOf = dataRequest.name_typ ?? 'Solicitud';
   const currentState = dataRequest.name_sta;
 
+  // Define permissions
+  const { filters, ...allowedActions } = userState
+
   // All actions grouped into states
   // Different actions correspond to a record in a current state.
   // Each action visually defines a modal and a button
+  // 
   const actions = {
     'Solicitado': [
       {
         title: 'Confirmar',
         open: openReview,
+        isActive: allowedActions.btn_solicitar
         setOpen: setOpenReview,
         Button: <ContainsTooltip label='Confirmar' render={<CheckIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
@@ -52,6 +60,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Rechazar',
         open: openReject,
         setOpen: setOpenReject,
+        isActive: allowedActions.btn_rechazar;
         Button: <ContainsTooltip label='Rechazar' render={<CloseIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -63,6 +72,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Aprobar',
         open: openApprove,
         setOpen: setOpenApprove,
+        isActive: allowedActions.btn_aprobar;
         Button:<ContainsTooltip label='Aprobar' render={<DoneAllIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormApprove title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -72,6 +82,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Rechazar',
         open: openReject,
         setOpen: setOpenReject,
+        isActive: allowedActions.btn_rechazar;
         Button: <ContainsTooltip label='Rechazar' render={<CloseIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -83,6 +94,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Asignar',
         open: openAssign,
         setOpen: setOpenAssign,
+        isActive: allowedActions.btn_asignar,
         Button: <ContainsTooltip label='Asignar' render={<CloseIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormReview title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -92,6 +104,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Cancelar',
         open: openCancel,
         setOpen: setOpenCancel,
+        isActive: allowedActions.btn_cancelar,
         Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -103,6 +116,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Pausar',
         open: openStop,
         setOpen: setOpenStop,
+        isActive: allowedActions.btn_pausar,
         Button: <ContainsTooltip label='Pausar' render={<StopCircleIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormStop title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -112,6 +126,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Cancelar',
         open: openCancel,
         setOpen: setOpenCancel,
+        isActive: allowedActions.btn_cancelar,
         Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -126,6 +141,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Reanudar',
         open: openResume,
         setOpen: setOpenResume,
+        isActive: allowedActions.btn_reanudar,
         Button: <ContainsTooltip label='Reaundar' render={<PlayCircleOutlineIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormResume title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -135,6 +151,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Cancelar',
         open: openCancel,
         setOpen: setOpenCancel,
+        isActive: allowedActions.btn_cancelar,
         Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -160,18 +177,23 @@ export default function ButtonActions ({ dataRequest }) {
   return (
     <Grid container sx={{ justifyContent: 'center', flexWrap: 'nowrap' }}>
       {
-        actions[currentState]?.map(({ title, open, setOpen, Form, Button }) => (
-          <GenerateButton
-            key={title}
-            open={open}
-            setOpen={setOpen}
-            typeOf={typeOf}
-            title={title}
-            data={dataRequest}
-            Form={Form}
-            Button={Button}
-          />
-        ))
+        actions[currentState]?.map(({ isActive, title, open, setOpen, Form, Button }) => {
+          if (!isActive)
+            return null;
+
+          return (
+            <GenerateButton
+              key={title}
+              open={open}
+              setOpen={setOpen}
+              typeOf={typeOf}
+              title={title}
+              data={dataRequest}
+              Form={Form}
+              Button={Button}
+            />
+          )
+        })
       }
       <ContainsTooltip label='Ver informe'>
         <FindInPageIcon />
