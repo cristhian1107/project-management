@@ -3,6 +3,7 @@
     (class) DBProcedure.
 """
 from database.engine.db_storage import DBStorage
+from models.base_model import BaseModel
 from models.user import User
 from models.role import Role
 from models.option import Option

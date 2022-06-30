@@ -30,7 +30,7 @@ class User(BaseModel):
         self.campus = ''
         self.role = None
         self.options = []
-        self.permissions = {}
+        self.permissions = None
         if 'password' in kwargs:
             password = kwargs['password']
             m = hashlib.md5()
