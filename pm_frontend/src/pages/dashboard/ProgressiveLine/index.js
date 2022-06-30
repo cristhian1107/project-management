@@ -56,7 +56,6 @@ import {
   
 
 export default function ProgressiveLine ( { dashboard, company } ) {
-    console.log(dashboard)
     let delayed;
     const options = {
         responsive: true,
@@ -116,7 +115,6 @@ export default function ProgressiveLine ( { dashboard, company } ) {
         solicitado.push(data.solicitado)
     ));
     let content = [];
-    console.log(solicitado)
     content.push(
         {"color": "#9ee09e", "name": "Aprobado", "state": aprobado},
         {"color": "#feb144", "name": "Cancelado", "state": cancelado},
