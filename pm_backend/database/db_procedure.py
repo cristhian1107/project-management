@@ -53,8 +53,7 @@ class DBProcedures():
                         new_user.options.append(Option(**opt))
                 # Info permissions.
                 if x == 3:
-                    for opt in tables[x]:
-                        new_user.permissions.append(Option(**opt))
+                    new_user.permissions = tables[x][0]
             return (new_user)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())
@@ -97,8 +96,7 @@ class DBProcedures():
                         new_user.options.append(Option(**opt))
                 # Info permissions.
                 if x == 3:
-                    for opt in tables[x]:
-                        new_user.permissions.append(Option(**opt))
+                    new_user.permissions = tables[x][0]
             return (new_user)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())

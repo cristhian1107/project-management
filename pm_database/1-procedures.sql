@@ -42,27 +42,14 @@ BEGIN
         rop.is_active = 1;
 
     -- Info permissions
-    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_permissions (
-        `id`          bigint NOT NULL ,
-        `name`        varchar(50) NOT NULL ,
-        `alias`       varchar(25) NOT NULL ,
-        `is_active`   bit NOT NULL
-    );
-
-    INSERT INTO tmp_permissions (`id`, `name`, `alias`, `is_active`)
-    VALUES
-    (1, 'Solicitudes Filtros', 'FILTERS', 0);
 
     -- * If general manager or TI * --
     IF (v_role_id IN (3, 2))
     THEN
-        UPDATE tmp_permissions SET is_active = 1 WHERE id = 1;
+        SELECT 1 as `filters`;
+    ELSE
+        SELECT 0 as `filters`;
     END IF;
-
-    SELECT * FROM tmp_permissions;
-
-    -- * Finally * --
-    DROP TEMPORARY TABLE IF EXISTS tmp_permissions;
 
 END $$
 DELIMITER ;
@@ -107,27 +94,14 @@ BEGIN
         rop.is_active = 1;
 
     -- Info permissions
-    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_permissions (
-        `id`          bigint NOT NULL ,
-        `name`        varchar(50) NOT NULL ,
-        `alias`       varchar(25) NOT NULL ,
-        `is_active`   bit NOT NULL
-    );
-
-    INSERT INTO tmp_permissions (`id`, `name`, `alias`, `is_active`)
-    VALUES
-    (1, 'Solicitudes Filtros', 'FILTERS', 0);
 
     -- * If general manager or TI * --
     IF (v_role_id IN (3, 2))
     THEN
-        UPDATE tmp_permissions SET is_active = 1 WHERE id = 1;
+        SELECT 0 as `filters`;
+    ELSE
+        SELECT 1 as `filters`;
     END IF;
-
-    SELECT * FROM tmp_permissions;
-
-    -- * Finally * --
-    DROP TEMPORARY TABLE IF EXISTS tmp_permissions;
 
 END $$
 DELIMITER ;
