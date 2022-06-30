@@ -17,12 +17,15 @@ import { useBackend } from 'hooks/useBackend';
 
 export default function TableRoot () {
   const { getRequests } = useBackend();
-  const { filters, listRequests, setListRequests } = useContext(FiltersContext);
-  const rows = listRequests;
+  const { filters, setListRequests, listShow, setListShow } = useContext(FiltersContext);
+  const rows = listShow;
 
   useEffect(() => {
-    getRequests(filters).then(setListRequests);
-  }, [getRequests, setListRequests])
+    getRequests(filters).then(res => {
+      setListRequests(res);
+      setListShow(res);
+    });
+  }, [getRequests, setListRequests, setListShow])
 
   return (
     <TableContainer
