@@ -71,12 +71,71 @@ BEGIN
 
     -- Info permissions
 
-    -- * If general manager or TI * --
-    IF (v_role_id IN (3, 2))
+    IF (v_role_id = 1) -- Solicitante
     THEN
-        SELECT 1 as `filters`;
-    ELSE
-        SELECT 0 as `filters`;
+        SELECT
+              0 as `filters`
+            , 1 as `btn_solicitar`
+            , 0 as `btn_confirmar`
+            , 0 as `btn_aprobar`
+            , 0 as `btn_asignar`
+            , 0 as `btn_culminar`
+            , 0 as `btn_rechazar`
+            , 0 as `btn_cancelar`
+            , 0 as `btn_pausar`
+            , 0 as `btn_reanudar`;
+    ELSEIF (v_role_id = 2) -- Gerencia de TI
+    THEN
+        SELECT
+              1 as `filters`
+            , 1 as `btn_solicitar`
+            , 1 as `btn_confirmar`
+            , 0 as `btn_aprobar`
+            , 1 as `btn_asignar`
+            , 1 as `btn_culminar`
+            , 1 as `btn_rechazar`
+            , 1 as `btn_cancelar`
+            , 1 as `btn_pausar`
+            , 1 as `btn_reanudar`;
+    ELSEIF (v_role_id = 3) -- Gerencia General
+    THEN
+        SELECT
+              1 as `filters`
+            , 1 as `btn_solicitar`
+            , 0 as `btn_confirmar`
+            , 1 as `btn_aprobar`
+            , 0 as `btn_asignar`
+            , 0 as `btn_culminar`
+            , 1 as `btn_rechazar`
+            , 1 as `btn_cancelar`
+            , 0 as `btn_pausar`
+            , 0 as `btn_reanudar`;
+    ELSEIF (v_role_id = 4) -- Agente
+    THEN
+        SELECT
+              1 as `filters`
+            , 1 as `btn_solicitar`
+            , 0 as `btn_confirmar`
+            , 0 as `btn_aprobar`
+            , 0 as `btn_asignar`
+            , 0 as `btn_culminar`
+            , 0 as `btn_rechazar`
+            , 0 as `btn_cancelar`
+            , 0 as `btn_pausar`
+            , 0 as `btn_reanudar`;
+    ELSEIF (v_role_id = 5) -- Jefe de proyecto
+    THEN
+        SELECT
+              1 as `filters`
+            , 1 as `btn_solicitar`
+            , 0 as `btn_confirmar`
+            , 0 as `btn_aprobar`
+            , 1 as `btn_asignar`
+            , 1 as `btn_culminar`
+            , 0 as `btn_rechazar`
+            , 0 as `btn_cancelar`
+            , 1 as `btn_pausar`
+            , 1 as `btn_reanudar`;
     END IF;
 
 END $$
