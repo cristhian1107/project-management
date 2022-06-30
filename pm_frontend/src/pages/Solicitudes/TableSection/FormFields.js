@@ -180,6 +180,7 @@ function ReasonRejecteField ({ label }) {
   return (
     <FormFieldItem
       bp={{ xs: 12 }}
+      required
       label={label ?? 'Motivo de rechazo'}
       name='reason_reject'
       lines={{ multiline: true, maxLength: 500 }}
