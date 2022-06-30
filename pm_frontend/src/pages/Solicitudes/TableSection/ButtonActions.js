@@ -21,82 +21,158 @@ import FormResume from 'pages/Solicitudes/TableSection/FormResume';
 import FormStop from 'pages/Solicitudes/TableSection/FormStop';
 
 export default function ButtonActions ({ dataRequest }) {
+  // Define states to control modals
   const [openReview, setOpenReview] = useState(false);
   const [openApprove, setOpenApprove] = useState(false);
   const [openReject, setOpenReject] = useState(false);
   const [openCancel, setOpenCancel] = useState(false);
   const [openResume, setOpenResume] = useState(false);
   const [openStop, setOpenStop] = useState(false);
+  const [openAssign, setOpenAssign] = useState(false);
 
+  // Define the type and current state of the record
   const typeOf = dataRequest.name_typ ?? 'Solicitud';
+  const currentState = dataRequest.name_sta;
 
-  // const ActionButton = ({ open, setOpen, typeOf }) => {
-  //   return (
-  //     <CustomModal
-  //       open={open}
-  //       setOpen={setOpen}
-  //       renderButton={<ContainsTooltip label='Confirmar' render={<CheckIcon />} />}
-  //       title={`Confirmar ${typeOf}`}
-  //     >
-  //       <FormReview title='Confirmar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
-  //     </CustomModal>
-  //   )
-  // }
+  // All actions grouped into states
+  // Different actions correspond to a record in a current state.
+  // Each action visually defines a modal and a button
+  const actions = {
+    'Solicitado': [
+      {
+        title: 'Confirmar',
+        open: openReview,
+        setOpen: setOpenReview,
+        Button: <ContainsTooltip label='Confirmar' render={<CheckIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormReview title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      },
+      {
+        title: 'Rechazar',
+        open: openReject,
+        setOpen: setOpenReject,
+        Button: <ContainsTooltip label='Rechazar' render={<CloseIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      }
+    ],
+    'Confirmado': [
+      {
+        title: 'Aprobar',
+        open: openApprove,
+        setOpen: setOpenApprove,
+        Button:<ContainsTooltip label='Aprobar' render={<DoneAllIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormApprove title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      },
+      {
+        title: 'Rechazar',
+        open: openReject,
+        setOpen: setOpenReject,
+        Button: <ContainsTooltip label='Rechazar' render={<CloseIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      }
+    ],
+    'Aprobado': [
+      {
+        title: 'Asignar',
+        open: openAssign,
+        setOpen: setOpenAssign,
+        Button: <ContainsTooltip label='Asignar' render={<CloseIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormReview title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      },
+      {
+        title: 'Cancelar',
+        open: openCancel,
+        setOpen: setOpenCancel,
+        Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      }
+    ],
+    'En Proceso': [
+      {
+        title: 'Pausar',
+        open: openStop,
+        setOpen: setOpenStop,
+        Button: <ContainsTooltip label='Pausar' render={<StopCircleIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormStop title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      },
+      {
+        title: 'Cancelar',
+        open: openCancel,
+        setOpen: setOpenCancel,
+        Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      }
+    ],
+    'Culminado': [],
+    'Rechazado': [],
+    'Cancelado': [],
+    'Pausado': [
+      {
+        title: 'Reanudar',
+        open: openResume,
+        setOpen: setOpenResume,
+        Button: <ContainsTooltip label='Reaundar' render={<PlayCircleOutlineIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormResume title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      },
+      {
+        title: 'Cancelar',
+        open: openCancel,
+        setOpen: setOpenCancel,
+        Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+        )
+      }
+    ]
+  }
 
-  // const RenderButtons = ({ currentState }) => {
-    
-  // }
+  // Component converts each action object to an element in the DOM
+  const GenerateButton = ({ open, setOpen, typeOf, title, data, Form, Button }) => {
+    return (
+      <CustomModal
+        open={open}
+        setOpen={setOpen}
+        renderButton={Button}
+        title={`Confirmar ${typeOf}`}
+      >
+        <Form title={title} mode={data.name_sta} setOpen={setOpen} data={data} />
+      </CustomModal>
+    )
+  }
 
   return (
     <Grid container sx={{ justifyContent: 'center', flexWrap: 'nowrap' }}>
-      <CustomModal
-        open={openReview}
-        setOpen={setOpenReview}
-        renderButton={<ContainsTooltip label='Confirmar' render={<CheckIcon />} />}
-        title={`Confirmar ${typeOf}`}
-      >
-        <FormReview title='Confirmar' mode={dataRequest.name_sta} setOpen={setOpenReview} dataRequest={dataRequest}/>  
-      </CustomModal>
-      <CustomModal
-        open={openApprove}
-        setOpen={setOpenApprove}
-        renderButton={<ContainsTooltip label='Aprobar' render={<DoneAllIcon />} />}
-        title={`Aprobar ${typeOf}`}
-      >
-        <FormApprove title='Aprobar' mode={dataRequest.name_sta} setOpen={setOpenApprove} dataRequest={dataRequest}/>  
-      </CustomModal>
-      <CustomModal
-        open={openStop}
-        setOpen={setOpenStop}
-        renderButton={<ContainsTooltip label='Pausar' render={<StopCircleIcon />} />}
-        title={`Pausar ${typeOf}`}
-      >
-        <FormStop title='Pausar' mode={dataRequest.name_sta} setOpen={setOpenStop} dataRequest={dataRequest}/>  
-      </CustomModal>
-      <CustomModal
-        open={openResume}
-        setOpen={setOpenResume}
-        renderButton={<ContainsTooltip label='Reaundar' render={<PlayCircleOutlineIcon />} />}
-        title={`Reanudar ${typeOf}`}
-      >
-        <FormResume title='Reanudar' mode={dataRequest.name_sta} setOpen={setOpenResume} dataRequest={dataRequest}/>  
-      </CustomModal>
-      <CustomModal
-        open={openCancel}
-        setOpen={setOpenCancel}
-        renderButton={<ContainsTooltip label='Cancelar' render={<DeleteIcon />} />}
-        title={`Cancelar ${typeOf}`}
-      >
-        <FormCancel title='Cancelar' mode={dataRequest.name_sta} setOpen={setOpenCancel} dataRequest={dataRequest}/>
-      </CustomModal>
-      <CustomModal
-        open={openReject}
-        setOpen={setOpenReject}
-        renderButton={<ContainsTooltip label='Rechazar' render={<CloseIcon />} />}
-        title='Rechazar Solicitud'
-      >
-        <FormReject title='Rechazar' mode={dataRequest.name_sta} setOpen={setOpenReject} dataRequest={dataRequest}/>
-      </CustomModal>
+      {
+        actions[currentState]?.map(({ title, open, setOpen, Form, Button }) => (
+          <GenerateButton
+            key={title}
+            open={open}
+            setOpen={setOpen}
+            typeOf={typeOf}
+            title={title}
+            data={dataRequest}
+            Form={Form}
+            Button={Button}
+          />
+        ))
+      }
       <ContainsTooltip label='Ver informe'>
         <FindInPageIcon />
       </ContainsTooltip>
