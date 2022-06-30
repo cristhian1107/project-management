@@ -138,6 +138,7 @@ def update_event(**kwargs):
     item = RequestEvent()
     item.request_id = data.get('request_id', None)
     item.code_sta = data.get('code_sta', None)
+    item.reason = data.get('reason', None)
     item.table_sta = tables.get('STA')
     item.date_issue = datetime.strptime(data.get(
         'date_issue', None), time)

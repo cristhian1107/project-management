@@ -85,6 +85,7 @@ class DBProcedures():
                 return (None)
 
             for x in range(0, len(tables)):
+                print(tables[x][0])
                 # Info user.
                 if x == 0:
                     new_user = User(**tables[x][0])
@@ -190,14 +191,15 @@ class DBProcedures():
             del storage
 
     @staticmethod
-    def requests_all(date_begin, date_end, company_id, department, user_id) -> list:
+    def requests_all(dt_begin, dt_end, company_id, department, user) -> list:
         """All requests.
 
         Args:
-            date_begin (dtm): Filter by date begin.
-            date_end (dtm): Filter by date end.
-            company_id (long): Filter by company.
+            dt_begin (dtm): Filter by date begin.
+            dt_end (dtm): Filter by date end.
+            company_id (int): Filter by company id.
             department (str): Filter by department.
+            user (int): Filter by user id.
 
         Returns:
             list: List of contain all requests
@@ -208,11 +210,11 @@ class DBProcedures():
             item = Request()
             items = []
             parameters = []
-            parameters.append(date_begin)
-            parameters.append(date_end)
+            parameters.append(dt_begin)
+            parameters.append(dt_end)
             parameters.append(company_id)
             parameters.append(department)
-            parameters.append(user_id)
+            parameters.append(user)
             storage.open_db()
             tables = storage.exec_procedure('requests_all', parameters)
 
@@ -236,6 +238,7 @@ class DBProcedures():
 
         Args:
             id (long): Filter by id.
+            details (bool): Show details.
 
         Returns:
             Request: object request.
@@ -337,7 +340,7 @@ class DBProcedures():
         """Get all departments by company.
 
         Args:
-            id (long): Filter by id.
+            company_id (long): Filter by company id.
 
         Returns:
             list: List of contain all departments.

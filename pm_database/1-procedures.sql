@@ -13,42 +13,18 @@ CREATE PROCEDURE users_login
 , IN pvchpassword varchar(50) )
 BEGIN
 
-    DECLARE v_user_id, v_role_id bigint;
-    SELECT id, role_id INTO v_user_id, v_role_id
+    DECLARE v_user_id bigint;
+    SELECT id INTO v_user_id
     FROM users
     WHERE
         user = pvchuserr AND
         password = pvchpassword;
 
-    -- Info user.
-    SELECT id , company_id , role_id , name
-        , lastname , email , user , password
-        , gender , position , department , campus
-    FROM users
-    WHERE
-        id = v_user_id;
-
-    -- Info role.
-    SELECT id , name , description , is_active
-    FROM roles
-    WHERE id = v_role_id;
-
-    -- Info options.
-    SELECT opt.id , opt.name , opt.alias , opt.description, rop.is_active
-    FROM options opt
-    INNER JOIN roles_options rop ON opt.id = rop.option_id
-    WHERE
-        rop.role_id = v_role_id AND
-        rop.is_active = 1;
-
-    -- Info permissions
-
-    -- * If general manager or TI * --
-    IF (v_role_id IN (3, 2))
+    IF (v_user_id IS NOT NULL)
     THEN
-        SELECT 1 as `filters`;
-    ELSE
-        SELECT 0 as `filters`;
+        CALL users_one(
+            v_user_id
+        );
     END IF;
 
 END $$
@@ -98,9 +74,9 @@ BEGIN
     -- * If general manager or TI * --
     IF (v_role_id IN (3, 2))
     THEN
-        SELECT 0 as `filters`;
-    ELSE
         SELECT 1 as `filters`;
+    ELSE
+        SELECT 0 as `filters`;
     END IF;
 
 END $$
@@ -229,6 +205,7 @@ CREATE PROCEDURE requests_events_insert
 , IN pintcode_sta int
 , IN pdtmdate_issue datetime
 , IN pbiguser_id bigint
+, IN pvchreason varchar(100)
 , IN pdtmcreate_at datetime
 , IN pvchcreate_by varchar(50)
 , IN pdtmupdate_at datetime
@@ -250,12 +227,12 @@ BEGIN
     -- * Insert event * --
     INSERT INTO requests_events
         ( request_id , item , table_sta , code_sta
-        , date_issue , user_id , create_at , create_by
-        , update_at , update_by)
+        , date_issue , user_id , reason
+        , create_at , create_by, update_at , update_by)
     VALUES
         ( pbigrequest_id , pintitem , pinttable_sta , pintcode_sta
-        , pdtmdate_issue , pbiguser_id , CURRENT_TIMESTAMP() , pvchcreate_by
-        , NULL , NULL);
+        , pdtmdate_issue , pbiguser_id , pvchreason
+        , CURRENT_TIMESTAMP() , pvchcreate_by, NULL , NULL);
 
     -- * Update Request * --
     UPDATE requests
@@ -346,6 +323,7 @@ BEGIN
         , pintcode_sta
         , pdtmdate_issue
         , pbiguser_id
+        , NULL
         , pdtmcreate_at
         , pvchcreate_by
         , NULL
@@ -450,6 +428,7 @@ BEGIN
         , pintcode_sta
         , pdtmdate_issue
         , pbiguser_id
+        , NULL
         , pdtmupdate_at
         , pvchupdate_by
         , NULL
@@ -555,7 +534,7 @@ BEGIN
     THEN
         SELECT
               re.request_id , re.item , re.table_sta , re.code_sta
-            , re.date_issue , re.user_id , sta.name as name_sta
+            , re.date_issue , re.user_id , sta.name as name_sta , re.reason
             , re.create_at , re.create_by , re.update_at , re.update_by
         FROM requests_events re
         LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
