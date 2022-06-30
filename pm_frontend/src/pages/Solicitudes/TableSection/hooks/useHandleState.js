@@ -20,6 +20,7 @@ export function useHandleState () {
    */
   const handleState = (e, request_id, code_sta, setOpen) => {
     e.preventDefault();
+    const data = new FormData(e.currentTarget)
     let date_current = new Date();
     date_current.setDate(date_current.getDate() - 1)
     const date_issue = date_current.toISOString()
@@ -28,7 +29,8 @@ export function useHandleState () {
     const payload = {
       request_id,
       date_issue,
-      code_sta
+      code_sta,
+      reason:data.get("reason_reject")
     }
     
     // Request to the backend to make the state change

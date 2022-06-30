@@ -74,7 +74,6 @@ export default function FiltersSection ({ css }) {
         <Grid item xs={12} sm={2.8} xl={2}>
           <TextFieldFullWidth
             select
-            disabled
             defaultValue={userState.company_id}
             id="filter_empresa"
             label="Empresa"

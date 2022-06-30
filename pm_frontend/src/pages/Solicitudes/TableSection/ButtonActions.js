@@ -38,18 +38,19 @@ export default function ButtonActions ({ dataRequest }) {
   const currentState = dataRequest.name_sta;
 
   // Define permissions
-  const { filters, ...allowedActions } = userState
+  const { filters, ...allowedActions } = userState.permissions
 
   // All actions grouped into states
   // Different actions correspond to a record in a current state.
   // Each action visually defines a modal and a button
   // 
+  console.log(allowedActions);
   const actions = {
     'Solicitado': [
       {
         title: 'Confirmar',
         open: openReview,
-        isActive: allowedActions.btn_solicitar
+        isActive: allowedActions.btn_solicitar,
         setOpen: setOpenReview,
         Button: <ContainsTooltip label='Confirmar' render={<CheckIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
@@ -60,7 +61,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Rechazar',
         open: openReject,
         setOpen: setOpenReject,
-        isActive: allowedActions.btn_rechazar;
+        isActive: allowedActions.btn_rechazar,
         Button: <ContainsTooltip label='Rechazar' render={<CloseIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -72,7 +73,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Aprobar',
         open: openApprove,
         setOpen: setOpenApprove,
-        isActive: allowedActions.btn_aprobar;
+        isActive: allowedActions.btn_aprobar,
         Button:<ContainsTooltip label='Aprobar' render={<DoneAllIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormApprove title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
@@ -82,7 +83,7 @@ export default function ButtonActions ({ dataRequest }) {
         title: 'Rechazar',
         open: openReject,
         setOpen: setOpenReject,
-        isActive: allowedActions.btn_rechazar;
+        isActive: allowedActions.btn_rechazar,
         Button: <ContainsTooltip label='Rechazar' render={<CloseIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
           <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
