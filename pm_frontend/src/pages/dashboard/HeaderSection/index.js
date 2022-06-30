@@ -26,6 +26,7 @@ export default function Dashboard() {
 
   useEffect(() => {
    getDashboard(filters).then(setDashboard);
+   console.log(dashboard)
   }, [getDashboard]);
   
   const handleDate = (newDate) => {
