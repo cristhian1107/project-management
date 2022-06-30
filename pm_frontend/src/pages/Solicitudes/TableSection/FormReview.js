@@ -1,8 +1,9 @@
-import { useState  } from 'react';
+import { useState, useContext  } from 'react';
 import Grid from '@mui/material/Grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks/useBackend';
+import FiltersContext from 'context/FiltersContext';
 import {
   TypeField,
   PriorityField,
@@ -18,7 +19,8 @@ import {
 
 export default function FormReview ({ dataRequest, setOpen, mode, title }) {
   const [dateTentative, setDateTentative] = useState(null);
-  const { putRequest } = useBackend();
+  const { putRequest, getRequests } = useBackend();
+  const { filters, setListRequests } = useContext(FiltersContext);
 
   const handleConfirm = (e) => {
     e.preventDefault();
@@ -37,6 +39,7 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
     };
 
     putRequest(payload).then(() => {
+      getRequests(filters).then(setListRequests);
       setOpen(false);
     });
   }
