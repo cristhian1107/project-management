@@ -13,12 +13,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 // Custom Hooks
 import useUser  from 'hooks/useUser';
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { handleDrawer } from 'redux/states';
 // Image
 import userImage from 'assets/images/back.jpeg';
 
 export default function BasicLayout ({ children }) {
+  const userState = useSelector(state => state.user);
   const dispatch = useDispatch()
   const { logout } = useUser();
 
@@ -26,7 +27,7 @@ export default function BasicLayout ({ children }) {
     logout();
     dispatch(handleDrawer(false));
   }
-
+  console.log(userState);
   return (
     <Box
       sx={{
@@ -47,17 +48,19 @@ export default function BasicLayout ({ children }) {
               fontWeight: 'bold',
               textAlign: 'center',
             }}>
-            GP Autrisa
+            {userState.company_id === 1 && 'Autrisa'}
+            {userState.company_id === 2 && 'IncaMotors'}
+            {userState.company_id === 3 && 'Nova Autos'}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar src={userImage} sx={{ mr: 2 }}/>
           <Typography sx={{ color: '#FFF', }} component='div'>
             <Typography sx={{ letterSpacing: 2, fontWeight: 'bold' }}>
-              Javier Pilco
+              {`${userState.name} ${userState.lastname}`}
             </Typography>
             <Typography sx={{ color: '#FFFc' }}>
-              Gerente TI
+              {`${userState.position}`}
             </Typography>
           </Typography>
         </Box>

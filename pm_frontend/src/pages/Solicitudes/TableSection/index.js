@@ -1,15 +1,10 @@
-// React core
-import { useState, useEffect } from 'react';
-// @mui
+import { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-// Custom hooks
+import FiltersContext from 'context/FiltersContext';
 import { useBackend } from 'hooks/useBackend'
-// Parts of the components
 import TableRoot from 'pages/Solicitudes/TableSection/TableRoot';
-// Global components
 import Button from 'components/button';
-// Local components
 import {
   ContainerFilters, LabelTypography, ListFilters, ItemToFilter,
   ContainerBoxSearch, FormGrid, ButtonToSearch, StyleSearchIcon,
@@ -17,6 +12,7 @@ import {
 } from './styles';
 
 export default function TableSection({ css }) {
+  const { setListShow, listRequests, localFilters, setLocalFilters } = useContext(FiltersContext);
   const { getEvents } = useBackend();
   const [states, setStates] = useState([])
 
@@ -24,18 +20,40 @@ export default function TableSection({ css }) {
     getEvents().then(setStates);
   }, [getEvents]);
 
+  useEffect(() => {
+    if (localFilters.length > 0)
+      setListShow(() => listRequests.filter(record => localFilters.includes(record.code_sta)))
+    if (localFilters.length === 0)
+      setListShow(listRequests);
+  }, [localFilters, listRequests])
+
+  const handleLocalFilters = (item) => {
+    if (localFilters.includes(item.code))
+      setLocalFilters(list => list.filter(elm => elm != item.code));
+    else
+      setLocalFilters(list => [...list, item.code]);
+  }
+
   return (
     <Box sx={{ ...css }}>
-      <ContainerFilters onClick={() => console.log(1)}>
+      <ContainerFilters>
         <LabelTypography>
           Filtrar por estado:
         </LabelTypography>
         <ListFilters>
-          <Button>Todos</Button>
+          <Button
+            onClick={() => setLocalFilters([])}
+          >
+            Todos
+          </Button>
           {
             states.map((state) => {
               return (
-                <ItemToFilter colorBorder={state.description} key={state.alias}>
+                <ItemToFilter
+                  onClick={() => handleLocalFilters(state)}
+                  colorBorder={state.description}
+                  key={state.alias}
+                >
                   {state.name}
                 </ItemToFilter>
               )

@@ -18,13 +18,13 @@ import { useSelector } from 'react-redux';
 
 export default function FiltersSection ({ css }) {
   const userState = useSelector((state) => state.user);
-  const {filters, setFilters, setListRequests} = useContext(FiltersContext);
-  const {startDate, endDate, idCompany, department} = filters;
+  const { filters, setFilters, setListRequests } = useContext(FiltersContext);
+  const { startDate, endDate, idCompany, department } = filters;
   // Fill selects.
   const [companies, setCompanies] = useState([]);
   const [departments, setDepartments] = useState([]);
   const { getCompanies, getDepartments, getRequests } = useBackend();
-  console.log(userState);
+
   useEffect(() => {
     getDepartments().then(setDepartments);
     getCompanies().then(setCompanies);
@@ -32,8 +32,9 @@ export default function FiltersSection ({ css }) {
 
   const handleSubmit = (e)=> {
     e.preventDefault()
-    console.log(filters)
-    getRequests(filters).then(setListRequests);
+    getRequests(filters).then(res => {
+      setListRequests(res);
+    });
   }
 
   const handleChangeCompany = (e) => setFilters(obj => ({...obj, ...{idCompany: e.target.value}}));
@@ -74,8 +75,7 @@ export default function FiltersSection ({ css }) {
         <Grid item xs={12} sm={2.8} xl={2}>
           <TextFieldFullWidth
             select
-            disabled
-            defaultValue={userState.company_id}
+            defaultValue={companies.length ? userState.company_id : ''}
             id="filter_empresa"
             label="Empresa"
             variant="standard"

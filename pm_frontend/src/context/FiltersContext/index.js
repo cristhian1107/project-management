@@ -6,6 +6,8 @@ export function FiltersContextProvider({ children }) {
   const dateTimeEnd = new Date();
   const dateTimeBegin = new Date();
   dateTimeBegin.setDate(dateTimeEnd.getDate() - 7);
+  const [listShow, setListShow] = useState([]);
+  const [localFilters, setLocalFilters] = useState([]);
   const [listRequests, setListRequests] = useState([])
   const [filters, setFilters] = useState({
     startDate: dateTimeBegin,
@@ -14,7 +16,18 @@ export function FiltersContextProvider({ children }) {
     department: ''
   });
   return (
-    <FiltersContext.Provider value={{ filters, setFilters, listRequests, setListRequests }}>
+    <FiltersContext.Provider
+      value={{
+        filters,
+        setFilters,
+        listRequests,
+        setListRequests,
+        listShow,
+        setListShow,
+        localFilters,
+        setLocalFilters
+      }}
+    >
       {children}
     </FiltersContext.Provider>
   )
