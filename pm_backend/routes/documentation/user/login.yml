@@ -1,0 +1,68 @@
+Session.
+---
+tags:
+  - Login
+requestBody:
+  description: Optional description in *Markdown*
+  required: true
+  content:
+    application/json:
+      schema:
+         encoding:
+              payload:
+                contentType: application/json
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    OpenID:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations
+responses:
+  404:
+    description: user not found!
+  200:
+    description: request executed successfully
+    schema:
+      properties:
+        __class__:
+          type: string
+        created_at:
+          type: string
+          description: time of creation of the instance
+        updated_at:
+           type: string
+           description: time of last update of the instance
+        id:
+          type: string
+          description: The uuid of the instance
+        email:
+           type: string
+           description: user's email
+        password:
+           type: string
+           description: user's password
+        first_name:
+           type: string
+           description: user's first name
+        last_name:
+           type: string
+           description: user's last name

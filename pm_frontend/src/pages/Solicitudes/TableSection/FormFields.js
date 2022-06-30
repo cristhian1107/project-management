@@ -154,7 +154,7 @@ function TitleField ({ mode, value }) {
       bp={{ xs: 12 }}
       required
       defaultValue={mode !== 'Solicitado' ? value : ''}
-      label='title'
+      label='Titulo'
       name='name'
     />
   )
@@ -180,6 +180,7 @@ function ReasonRejecteField ({ label }) {
   return (
     <FormFieldItem
       bp={{ xs: 12 }}
+      required
       label={label ?? 'Motivo de rechazo'}
       name='reason_reject'
       lines={{ multiline: true, maxLength: 500 }}
