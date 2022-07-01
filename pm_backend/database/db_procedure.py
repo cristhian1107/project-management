@@ -85,7 +85,6 @@ class DBProcedures():
                 return (None)
 
             for x in range(0, len(tables)):
-                print(tables[x][0])
                 # Info user.
                 if x == 0:
                     new_user = User(**tables[x][0])

@@ -12,7 +12,6 @@ from general.library import Libraries
 @Libraries.validate_token
 def get_user(**kwargs):
     payload = kwargs.get('payload')
-    print(payload, type(payload))
     id = payload.get('id')
     item = User()
     item = DBProcedures.users_one(id)
