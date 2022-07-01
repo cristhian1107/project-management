@@ -41,6 +41,7 @@ export default function Login () {
             gap: 2,
             maxWidth: '400px',
           }}
+          autoComplete='off'
         >
           <TextField
             required
@@ -54,14 +55,8 @@ export default function Login () {
             sx={{
               fontWeight: 'bold',
               '& div': {
-                // background: 'rgba(120,120,120, .5)',
                 borderRadius: 50,
-                color: '#fff',
               },
-              '& label': {
-                // color: '#fff8 !important',
-                // fontWeight: 'bold',
-              }
             }}
           />
           <TextField
@@ -75,14 +70,8 @@ export default function Login () {
             sx={{
               fontWeight: 'bold',
               '& div': {
-                // background: 'rgba(120,120,120, .5)',
                 borderRadius: 50,
-                color: '#fff',
               },
-              '& label': {
-                // color: '#fff8 !important',
-                // fontWeight: 'bold',
-              }
             }}
           />
           <Button
