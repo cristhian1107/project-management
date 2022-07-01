@@ -376,22 +376,11 @@ BEGIN
 
     -- * Insert event * --
     call requests_events_insert
-        ( pbigid
-        , NULL
-        , pinttable_sta
-        , pintcode_sta
-        , pdtmdate_issue
-        , pbiguser_id
-        , NULL
-        , pdtmcreate_at
-        , pvchcreate_by
-        , NULL
-        , NULL);
+        ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, NULL, pdtmcreate_at, pvchcreate_by, NULL, NULL);
 
     -- * Recovery requets * --
     call requests_one
-        ( pbigid
-        , 0);
+        ( pbigid, 0);
 
 END $$
 DELIMITER ;
