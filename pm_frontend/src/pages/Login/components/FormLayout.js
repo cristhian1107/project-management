@@ -10,10 +10,14 @@ export default function FormLayout ({ children }) {
     <Box
       sx={{
         mt: 10,
-        px: 2,
+        py: 4,
+        mx: 'auto',
+        borderRadius: 4,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        maxWidth: 450,
+        background: '#fff',
       }}
     >
       <Box
@@ -40,24 +44,10 @@ export default function FormLayout ({ children }) {
             sx={{
               width: 40,
               height: 40,
-              color: '#fff'
+              color: 'var(--btn-primary)',
             }}
           />
         </Avatar>
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{
-            position: 'absolute',
-            left: 85,
-            fontStyle: 'italic',
-            color: '#fff',
-            letterSpacing: 4,
-            fontSize: '1.5rem',
-          }}
-        >
-          LogIn
-        </Typography>
       </Box>
       {children}
     </Box>

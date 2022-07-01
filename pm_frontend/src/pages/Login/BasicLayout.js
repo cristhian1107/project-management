@@ -40,7 +40,8 @@ export default function BasicLayout({children}) {
         sx={{
           position: 'relative',
           boxShadow: 'none',
-          pt: 8,
+          pt: { xs: 2, sm: 8 },
+          px: 2,
         }}
       >
         {children}
