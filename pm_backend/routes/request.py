@@ -84,7 +84,7 @@ def insert_request(**kwargs):
     # Save object in Database.
     res = DBProcedures.requests_insert(item)
     # Get values for email.
-    email = DBProcedures.requests_email(item.id)
+    email = DBProcedures.requests_email(res.id)
     if email:
         asyncio.run(Libraries.send_email(email))
 
@@ -114,6 +114,10 @@ def update_request(**kwargs):
     item.code_typ = data.get('code_typ', None)
     item.code_pri = data.get('code_pri', None)
     res = DBProcedures.requests_update(item)
+    # Get values for email.
+    email = DBProcedures.requests_email(item.id)
+    if email:
+        asyncio.run(Libraries.send_email(email))
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
     return make_response(jsonify({'request': 'success'}), 201)
@@ -140,6 +144,10 @@ def update_event(**kwargs):
         'date_issue', None), time)
     item.user_id = payload.get('id', None)
     res = DBProcedures.requests_events_insert(item)
+    # Get values for email.
+    email = DBProcedures.requests_email(item.request_id)
+    if email:
+        asyncio.run(Libraries.send_email(email))
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
     return make_response(jsonify({'request': 'success'}), 201)
