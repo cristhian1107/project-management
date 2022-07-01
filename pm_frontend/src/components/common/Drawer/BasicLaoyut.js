@@ -27,7 +27,6 @@ export default function BasicLayout ({ children }) {
     logout();
     dispatch(handleDrawer(false));
   }
-  console.log(userState);
   return (
     <Box
       sx={{

@@ -30,7 +30,8 @@ export default function HeaderSection() {
     const code_pri = data.get('priority');
     const reason = data.get('reason');
     let date_current = new Date();
-    date_current.setDate(date_current.getDate() - 1)
+    // date_current.setDate(date_current.getDate() - 1)
+    date_current.setDate(date_current.getDate())
     const date_issue = date_current.toISOString()
 
     postRequest({subject, code_pri, reason, date_issue})

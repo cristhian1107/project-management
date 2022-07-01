@@ -53,6 +53,7 @@ export default function TableRoot () {
             <TableCell>Codigo</TableCell>
             <TableCell align='left'>Nombre</TableCell>
             <TableCell align='left'>Prioridad</TableCell>
+            <TableCell align='left'>Solicitante</TableCell>
             <TableCell align='left'>Empresa</TableCell>
             <TableCell align='left'>Estado</TableCell>
             <TableCell align='center'>Actions</TableCell>
@@ -74,6 +75,7 @@ export default function TableRoot () {
               </TableCell>
               <TableCell align='left'>{row.name}</TableCell>
               <TableCell align='left'>{row.name_pri}</TableCell>
+              <TableCell align='left'>{row.user_fullname}</TableCell>
               <TableCell align='left'>{row.company_tradename}</TableCell>
               <TableCell align='left'>{row.name_sta}</TableCell>
               <TableCell>

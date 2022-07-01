@@ -26,7 +26,6 @@ export default function Dashboard() {
 
   useEffect(() => {
    getDashboard(filters).then(setDashboard);
-   console.log(dashboard)
   }, [getDashboard]);
   
   const handleDate = (newDate) => {
@@ -75,6 +74,7 @@ export default function Dashboard() {
         {
           dashboard[0] && dashboard[0].map((obj) => (
           <CardState
+            key={obj.name_sta}
             {...obj}
             />
           ))

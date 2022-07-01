@@ -34,11 +34,13 @@ def login():
     request.headers.get('jwt')
     name = body.get('username')
     password = body.get('password')
+    print(password)
     m = hashlib.md5()
     m.update(str.encode(password))
     password = m.hexdigest()
     item = User()
     # item = DBProcedures.users_login('javier.pilco', password)
+    print(password)
     item = DBProcedures.users_login(name, password)
     if item is None or not item:
         return make_response(jsonify({'status': 'failure'}), 203)  # RFC 7235

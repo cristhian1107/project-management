@@ -115,7 +115,9 @@ def update_request(**kwargs):
     item.code_pri = data.get('code_pri', None)
     res = DBProcedures.requests_update(item)
     # Get values for email.
+    print(item.id)
     email = DBProcedures.requests_email(item.id)
+    print(email)
     if email:
         asyncio.run(Libraries.send_email(email))
     if not res:
