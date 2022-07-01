@@ -23,8 +23,16 @@ export default function HeaderSection() {
     getPriorities().then(setPriorities);
   }, [getPriorities]);
 
+  /**
+   * Make the request to the backend to insert a new request
+   * @event
+   * @param {object} e - Submit event
+   */
   const handleSubmit = (e) => {
+    // The default behavior of the event stops.
     e.preventDefault();
+
+    // Recovery data of the inputs in the form
     const data = new FormData(e.currentTarget);
     const subject = data.get('subject');
     const code_pri = data.get('priority');
@@ -33,6 +41,7 @@ export default function HeaderSection() {
     date_current.setDate(date_current.getDate() - 1)
     const date_issue = date_current.toISOString()
 
+    // Making the request
     postRequest({subject, code_pri, reason, date_issue})
       .then(({ data }) => {
         setListRequests((currentState) => {
