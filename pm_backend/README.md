@@ -65,19 +65,14 @@ To initialize the API-REST, the following packages are necessary.
 * `pip                    22.1.2`
 * `Flask                  2.1.2`
 * `Flask-Cors             3.0.10`
-* `MarkupSafe             2.1.1`
 * `mysql-connector-python 8.0.28`
 * `pycodestyle            2.8.0`
 * `PyJWT                  2.4.0`
-* `requests               2.27.1`
-* `Routes                 2.5.1`
-* `urllib3                1.26.9`
-* `virtualenv             20.14.0`
 
 ## API Documentation
 
 Enter to [API Documentation Postman](https://documenter.getpostman.com/view/21422686/UzBvFiJU) see how we should use the API.
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/cristhian1107/project-management)
+[![Product Name Screen Shot][product-screenshot]](https://documenter.getpostman.com/view/21422686/UzBvFiJU)
 
 [product-screenshot]: ../pm_attached/images/scream-2.jpg
