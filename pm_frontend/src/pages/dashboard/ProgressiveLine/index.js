@@ -66,7 +66,7 @@ export default function ProgressiveLine ( { dashboard, company } ) {
             },
             title: {
               display: true,
-              text: "Estados por dia de " + company
+              text: `Estados por día (${company})`
             },
         },
         animation: {
