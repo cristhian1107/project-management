@@ -148,6 +148,3 @@ export default function ProgressiveLine ( { dashboard, company } ) {
         </Grid>
     )
 };
-/* pm_backend/routes/request.py pm_backend/routes/user.py pm_backend/server.py pm_database/1-procedures.sql pm_frontend/src/pages/dashboard/HeaderSection/index.js pm_frontend/src/pages/dashboard/ProgressiveLine/index.js
-
-*/

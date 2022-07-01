@@ -7,8 +7,3 @@ export default function Dashboard() {
     </>
   )
 }
-
-//import StadisticSection from 'layouts/solicitudes/components/filtersSection';
-//import TableSection from 'layouts/solicitudes/components/tableSection';
-//      <StadisticSection css={{ my: 10 }}/>
-//      <TableSection />

@@ -101,11 +101,7 @@ export default function RadarStatus ( { dashboard } ) {
       companies.push(company_name),
       stateList.push(Object.values(status))
     ));
-/*
-autrisa azul
-inka amarillo
-nova plomo
-*/
+
     const data = {
             datasets: [
                 {
@@ -143,44 +139,3 @@ nova plomo
         </Grid>
     )
 };
-
-/*
-dashboard = [
-        {
-            company: "AUTRISA",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        },
-        {
-            company: "INKAMOTORS",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        },
-        {
-            company: "NOVAAUTOS",
-            "Solicitado": 5,
-            "Confirmado": 2,
-            "Aprobado": 3,
-            "Definido": 3,
-            "En Proceso": 3,
-            "Culminado": 7,
-            "Rechazado": 3,
-            "Cancelado": 5,
-            "Pausado": 4
-        }
-    ]
-     */
