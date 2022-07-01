@@ -47,10 +47,10 @@
   <p align="center">
     MVP Project Management System
     <br />
-    <a href="https://github.com/cristhian1107/project-management"><strong>Explore the landing page »</strong></a>
+    <a href="https://374763.wixsite.com/my-site-1"><strong>Explore the landing page »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/cristhian1107/project-management">View Demo</a>
+    <a href="https://374763.wixsite.com/my-site-1">View Demo</a>
     ·
     <a href="mailto:cristhian.cjaa@gmail.com">Report Bug</a>
     ·
