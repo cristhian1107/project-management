@@ -40,6 +40,8 @@ export default function FiltersSection ({ css }) {
   const handleChangeCompany = (e) => setFilters(obj => ({...obj, ...{idCompany: e.target.value}}));
   const handleChangeDepartment = (e) => setFilters(obj => ({...obj, ...{department: e.target.value}}));
 
+  const isActiveFilters = Boolean(userState.permissions.filters);
+
   return (
     <Box sx={{ ...css }}>
       <Typography variant='h5' textAlign='center'>
@@ -74,14 +76,15 @@ export default function FiltersSection ({ css }) {
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
           <TextFieldFullWidth
+            disabled={!isActiveFilters}
             select
-            defaultValue={companies.length ? userState.company_id : ''}
+            defaultValue={""}
             id="filter_empresa"
             label="Empresa"
             variant="standard"
             onChange={handleChangeCompany}
           >
-            <MenuItem key="uwu" value="">{"< TODAS >"}</MenuItem>
+            <MenuItem key="Todas" value="">{"< TODAS >"}</MenuItem>
             {
               companies.map(({ tradename, id }) => (
                 <MenuItem key={tradename} value={id}>{tradename}</MenuItem>
@@ -91,15 +94,15 @@ export default function FiltersSection ({ css }) {
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
           <TextFieldFullWidth
+            disabled={!isActiveFilters}
             select
             id="filter_area"
             defaultValue={""}
             label="Area"
-            value={department}
             variant="standard"
             onChange={handleChangeDepartment}
           >
-            <MenuItem key="uwu" value="">{"< TODAS >"}</MenuItem>
+            <MenuItem key="Todas" value="">{"< TODAS >"}</MenuItem>
             {
               departments.map(({ department: name }) => (
                 <MenuItem key={name} value={name}>{name}</MenuItem>

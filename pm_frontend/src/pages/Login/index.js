@@ -35,7 +35,13 @@ export default function Login () {
           container
           component="form"
           onSubmit={handleSubmit}
-          sx={{ mt: 6, gap: 2, maxWidth: '400px' }}
+          sx={{
+            mt: 6,
+            px: 1,
+            gap: 2,
+            maxWidth: '400px',
+          }}
+          autoComplete='off'
         >
           <TextField
             required
@@ -49,14 +55,8 @@ export default function Login () {
             sx={{
               fontWeight: 'bold',
               '& div': {
-                background: 'rgba(120,120,120, .5)',
                 borderRadius: 50,
-                color: '#fff',
               },
-              '& label': {
-                color: '#fff8 !important',
-                fontWeight: 'bold',
-              }
             }}
           />
           <TextField
@@ -70,14 +70,8 @@ export default function Login () {
             sx={{
               fontWeight: 'bold',
               '& div': {
-                background: 'rgba(120,120,120, .5)',
                 borderRadius: 50,
-                color: '#fff',
               },
-              '& label': {
-                color: '#fff8 !important',
-                fontWeight: 'bold',
-              }
             }}
           />
           <Button
@@ -85,7 +79,7 @@ export default function Login () {
             fullWidth
             variant="contained"
             sx={{
-              mt: 3,
+              mt: 4,
               background: 'var(--btn-gradient)',
               fontWeight: 'bold',
               textTransform: 'none',
