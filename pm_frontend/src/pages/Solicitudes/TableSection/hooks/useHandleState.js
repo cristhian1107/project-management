@@ -22,7 +22,8 @@ export function useHandleState () {
     e.preventDefault();
     const data = new FormData(e.currentTarget)
     let date_current = new Date();
-    date_current.setDate(date_current.getDate() - 1)
+    // date_current.setDate(date_current.getDate() - 1)
+    date_current.setDate(date_current.getDate())
     const date_issue = date_current.toISOString()
 
     // Request body

@@ -691,7 +691,7 @@ BEGIN
         , CONCAT('Su ',
             IF(re.code = '', CONCAT('SOL', CONVERT(YEAR(re.date_issue), char), '-', LPAD(CONVERT(re.id, char), 7, '0')), re.code)
             , ' paso a estado de ') as `message`
-        , 'www.localhost.com' as `url`
+        , 'http://localhost:3000/' as `url`
         , 'SMTP.Office365.com' as `host`
         , 587 as `port`
         , 'repuestos@autrisa.com' as `email`
@@ -717,14 +717,15 @@ BEGIN
         rv.request_id desc, rv.item desc
     LIMIT 1);
 
+    -- SELECT * from tmp_email;
     -- * Part 3 * --
     SELECT `to_name`, `to_email` INTO v_to_name, v_to_email FROM tmp_email;
     IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'SOL'))
     THEN
         UPDATE tmp_email
         SET
-          `to_name` = `cc_name`
-        , `to_email` = `cc_email`
+          `to_name` = 'Javier Pilco'
+        , `to_email` = 'cristhian.cjaa@outlook.com'
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
         , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', v_to_name);

@@ -49,7 +49,7 @@ export default function ButtonActions ({ dataRequest }) {
       {
         title: 'Confirmar',
         open: openReview,
-        isActive: allowedActions.btn_solicitar,
+        isActive: allowedActions.btn_confirmar,
         setOpen: setOpenReview,
         Button: <ContainsTooltip label='Confirmar' render={<CheckIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (

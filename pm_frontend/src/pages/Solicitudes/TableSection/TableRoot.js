@@ -51,10 +51,11 @@ export default function TableRoot () {
             }}
           >
             <TableCell>Codigo</TableCell>
-            <TableCell align='right'>Nombre</TableCell>
-            <TableCell align='right'>Prioridad</TableCell>
-            <TableCell align='right'>Empresa</TableCell>
-            <TableCell align='right'>Estado</TableCell>
+            <TableCell align='left'>Nombre</TableCell>
+            <TableCell align='left'>Prioridad</TableCell>
+            <TableCell align='left'>Solicitante</TableCell>
+            <TableCell align='left'>Empresa</TableCell>
+            <TableCell align='left'>Estado</TableCell>
             <TableCell align='center'>Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -64,7 +65,7 @@ export default function TableRoot () {
               key={row.id}
               sx={{
                 '&:hover': { background: 'rgba(0, 0, 0, .1)' },
-                '& td': { py: 3 },
+                '& td': { py: 2 },
                 '&:last-child td, &:last-child th': { border: 0 },
                 position: 'relative',
               }}
@@ -72,10 +73,11 @@ export default function TableRoot () {
               <TableCell component="th" scope="row">
                 {row.code}
               </TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name_pri}</TableCell>
-              <TableCell align='right'>{row.company_tradename}</TableCell>
-              <TableCell align='right'>{row.name_sta}</TableCell>
+              <TableCell align='left'>{row.name}</TableCell>
+              <TableCell align='left'>{row.name_pri}</TableCell>
+              <TableCell align='left'>{row.user_fullname}</TableCell>
+              <TableCell align='left'>{row.company_tradename}</TableCell>
+              <TableCell align='left'>{row.name_sta}</TableCell>
               <TableCell>
                 <ButtonActions dataRequest={row} />
               </TableCell>

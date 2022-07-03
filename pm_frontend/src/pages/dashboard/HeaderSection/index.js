@@ -26,7 +26,6 @@ export default function Dashboard() {
 
   useEffect(() => {
    getDashboard(filters).then(setDashboard);
-   console.log(dashboard)
   }, [getDashboard]);
   
   const handleDate = (newDate) => {
@@ -34,141 +33,6 @@ export default function Dashboard() {
     filters.month = newDate.getMonth() + 1;
     getDashboard(filters).then(setDashboard);
   };
-
-  const sashboard = [
-    {
-        "day": 1,
-        "Solicitado": 5,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 2,
-        "Solicitado": 3,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 3,
-        "Solicitado": 4,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 4,
-        "Solicitado": 1,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 6,
-        "Solicitado": 9,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 7,
-        "Solicitado": 9,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 8,
-        "Solicitado": 9,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 9,
-        "Solicitado": 9,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 10,
-        "Solicitado": 2,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 11,
-        "Solicitado": 9,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    },
-    {
-        "day": 15,
-        "Solicitado": 9,
-        "Confirmado": 2,
-        "Aprobado": 3,
-        "Definido": 3,
-        "En Proceso": 3,
-        "Culminado": 7,
-        "Rechazado": 3,
-        "Cancelado": 5,
-        "Pausado": 4
-    }
-]
 
   return (
     <Box>
@@ -205,10 +69,12 @@ export default function Dashboard() {
       sx={{
         gap: 2,
         width: "100%",
+        justifyContent: "space-between",
       }}>
         {
           dashboard[0] && dashboard[0].map((obj) => (
           <CardState
+            key={obj.name_sta}
             {...obj}
             />
           ))
@@ -229,17 +95,17 @@ export default function Dashboard() {
       </Grid>
       <Grid container>
         {
-          dashboard[4] && <ProgressiveLine dashboard={dashboard[4]} company="Autrisa"/>
+          dashboard[4] && <ProgressiveLine dashboard={dashboard[4]} company="AUTRISA"/>
         }
       </Grid>
       <Grid container>
         {
-          dashboard[5] && <ProgressiveLine dashboard={dashboard[5]} company="Inka Motors"/>
+          dashboard[5] && <ProgressiveLine dashboard={dashboard[5]} company="INCAMOTORS"/>
         }
       </Grid>
       <Grid container>
         {
-          dashboard[6] && <ProgressiveLine dashboard={dashboard[6]} company="Nova Autos"/>
+          dashboard[6] && <ProgressiveLine dashboard={dashboard[6]} company="NOVA AUTOS"/>
         }
       </Grid>
     </Box>

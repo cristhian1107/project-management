@@ -28,8 +28,9 @@ const iconDict = {
 export default function CardState({ name_sta, number_sta, total, color_sta: clr }) {
     const newColor = clr.slice(0,2) + clr[3] + clr[5];
     return (
-        <Grid item xs={12} sm={5.7} lg={2.7} md={3.7}>
+        <Grid key={name_sta} item xs={12} sm={5.7} md={3.7} lg={3.7} xl={2.7} >
         <Card
+            key={name_sta}
             sx={{
             display: "flex",
             justifyContent: "space-between",
