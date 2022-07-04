@@ -26,7 +26,7 @@ import { useBackend } from 'hooks/useBackend';
 // Context
 import FiltersContext from 'context/FiltersContext';
 // Parts of the component
-import ButtonActions from 'pages/Solicitudes/TableSection/ButtonActions'
+import ButtonActions from 'pages/Solicitudes/components/TableSection/ButtonActions'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
