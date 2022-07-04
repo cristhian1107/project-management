@@ -14,13 +14,13 @@ import { useSelector } from 'react-redux';
 // Global components
 import CustomModal from 'components/CustomModal';
 // Local components
-import ContainsTooltip from 'pages/Solicitudes/components/ContainsTooltip';
-import FormReview from 'pages/Solicitudes/TableSection/FormReview';
-import FormApprove from 'pages/Solicitudes/TableSection/FormApprove';
-import FormReject from 'pages/Solicitudes/TableSection/FormReject';
-import FormCancel from 'pages/Solicitudes/TableSection/FormCancel';
-import FormResume from 'pages/Solicitudes/TableSection/FormResume';
-import FormStop from 'pages/Solicitudes/TableSection/FormStop';
+import ContainsTooltip from 'pages/Solicitudes/components/common/ContainsTooltip';
+import FormReview from 'pages/Solicitudes/components/TableSection/FormReview';
+import FormApprove from 'pages/Solicitudes/components/TableSection/FormApprove';
+import FormReject from 'pages/Solicitudes/components/TableSection/FormReject';
+import FormCancel from 'pages/Solicitudes/components/TableSection/FormCancel';
+import FormResume from 'pages/Solicitudes/components/TableSection/FormResume';
+import FormStop from 'pages/Solicitudes/components/TableSection/FormStop';
 
 export default function ButtonActions ({ dataRequest }) {
   const userState = useSelector(state => state.user);
