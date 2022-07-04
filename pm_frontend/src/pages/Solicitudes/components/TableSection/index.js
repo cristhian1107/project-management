@@ -9,7 +9,7 @@ import {
   ContainerFilters, LabelTypography, ListFilters, ItemToFilter,
   ContainerBoxSearch, FormGrid, ButtonToSearch, StyleSearchIcon,
   BoxInput, ContainerTable
-} from './styles';
+} from './styled-components';
 
 export default function TableSection({ css }) {
   const { setListShow, listRequests, localFilters, setLocalFilters } = useContext(FiltersContext);
@@ -25,11 +25,11 @@ export default function TableSection({ css }) {
       setListShow(() => listRequests.filter(record => localFilters.includes(record.code_sta)))
     if (localFilters.length === 0)
       setListShow(listRequests);
-  }, [localFilters, listRequests])
+  }, [localFilters, listRequests, setListShow])
 
   const handleLocalFilters = (item) => {
     if (localFilters.includes(item.code))
-      setLocalFilters(list => list.filter(elm => elm != item.code));
+      setLocalFilters(list => list.filter(elm => elm !== item.code));
     else
       setLocalFilters(list => [...list, item.code]);
   }
