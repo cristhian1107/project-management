@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Send from '@mui/icons-material/Send';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks';
-import BasicLayout from 'pages/Solicitudes/HeaderSection/BasicLayout';
+import BasicLayout from 'pages/Solicitudes/components/HeaderSection/BasicLayout';
 import { FormFieldItem } from 'pages/Solicitudes/components/common';
 import FiltersContext from 'context/FiltersContext';
 
