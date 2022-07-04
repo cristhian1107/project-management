@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import FiltersContext from 'context/FiltersContext';
 import { useBackend } from 'hooks/useBackend'
-import TableRoot from 'pages/Solicitudes/TableSection/TableRoot';
+import TableRoot from 'pages/Solicitudes/components/TableSection/TableRoot';
 import Button from 'components/button';
 import {
   ContainerFilters, LabelTypography, ListFilters, ItemToFilter,
