@@ -1,3 +1,3 @@
 export * from './useBackend';
 export * from './useFetchAndLoading';
-export * from './useUser';
+export {default as useUser} from './useUser';
