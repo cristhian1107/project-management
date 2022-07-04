@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
-import ContainsTooltip from 'pages/Solicitudes/components/ContainsTooltip';
+import ContainsTooltip from 'pages/Solicitudes/components/common/ContainsTooltip';
 
 const style = {
   position: 'relative',
