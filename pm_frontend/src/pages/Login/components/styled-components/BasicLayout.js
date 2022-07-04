@@ -1,15 +1,9 @@
-// Styles @mui 
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-// Images
-// import bgImage from 'assets/images/back.jpeg';
 import bgImage from 'assets/images/bgWindow.jpeg';
 
-export default function BasicLayout({children}) {
-
+export function LoginLayout (props) {
   return (
     <Grid
-      container component="main"
       sx={{
         position: 'relative',
         minHeight: '100vh',
@@ -30,22 +24,21 @@ export default function BasicLayout({children}) {
           backdropFilter: 'blur(10px)',
         }
       }}
-    >
-      <CssBaseline />
-      <Grid
-        item
-        elevation={6}
-        xs={12}
-        sm={6}
-        sx={{
-          position: 'relative',
-          boxShadow: 'none',
-          pt: { xs: 2, sm: 8 },
-          px: 2,
-        }}
-      >
-        {children}
-      </Grid>
-    </Grid>
-  );
+      {...props}
+    />
+  )
+}
+
+export function FormCardContainer (props) {
+  return (
+    <Grid
+      sx={{
+        position: 'relative',
+        boxShadow: 'none',
+        pt: { xs: 2, sm: 8 },
+        px: 2,
+      }}
+      {...props}
+    />
+  )
 }

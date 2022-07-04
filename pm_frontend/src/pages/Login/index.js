@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CustomAlert from 'components/Alert';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import BasicLayout from 'pages/Login/BasicLayout';
-import FormLayout from 'pages/Login/components/FormLayout';
-import useUser from 'hooks/useUser';
+import { BasicLayout, FormLayout } from 'pages/Login/components';
+import { useUser } from 'hooks';
 import { LoadingButton } from 'components/Loading';
+import {
+  FormContainer,
+  FormField,
+  SubmitButton,
+  SnipperContainer,
+  Alert
+} from 'pages/Login/styled-components';
 
 export default function Login () {
   const [error, setError] = useState(false);
@@ -16,6 +17,7 @@ export default function Login () {
   const navigate = useNavigate();
   const { isLogged, login } = useUser();
 
+  // Redirect user if logged in
   useEffect(() => {
     if (isLogged) navigate('/dashboard', {replace: true});
   }, [isLogged, navigate]);
@@ -27,6 +29,9 @@ export default function Login () {
     const data = new FormData(e.currentTarget);
     const username = data.get('username');
     const password = data.get('password');
+    
+    // Credential validation with the backend
+    // If the credentials are incorrect, show alert
     login({username, password}).then((res) => {
       if (res !== 'Success')
         setError(res);
@@ -37,18 +42,13 @@ export default function Login () {
   return (
     <BasicLayout>
       <FormLayout titleForm='Sign In'>
-        <Grid
+        <FormContainer
           container
           component="form"
           onSubmit={handleSubmit}
-          sx={{
-            mt: 4,
-            px: { xs: 2, sm: 4 },
-            gap: 2,
-          }}
           autoComplete='off'
         >
-          <TextField
+          <FormField
             required
             fullWidth
             id="username"
@@ -57,14 +57,8 @@ export default function Login () {
             autoFocus
             label='Username'
             variant='outlined'
-            sx={{
-              fontWeight: 'bold',
-              '& div': {
-                borderRadius: 50,
-              },
-            }}
           />
-          <TextField
+          <FormField
             required
             fullWidth
             id="password"
@@ -72,63 +66,34 @@ export default function Login () {
             type="password"
             label='Password'
             variant='outlined'
-            sx={{
-              fontWeight: 'bold',
-              '& div': {
-                borderRadius: 50,
-              },
-            }}
           />
           {
             !loading ? (
-              <Button
+              <SubmitButton
                 id='btn-login'
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{
-                  mt: 4,
-                  background: 'var(--btn-gradient)',
-                  fontWeight: 'bold',
-                  textTransform: 'none',
-                  borderRadius: 50,
-                  letterSpacing: 1,
-                  fontSize: '1.1rem',
-                }}
               >
                 Log In
-              </Button>
+              </SubmitButton>
             ) : (
-              <Box
-                sx={{
-                  mt: 4,
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
+              <SnipperContainer>
                 <LoadingButton />
-              </Box>
+              </SnipperContainer>
             )
           }
-        </Grid>
+        </FormContainer>
       </FormLayout>
       {error && (
-        <CustomAlert
+        <Alert
           severity='error'
           open={Boolean(error)}
           setOpen={setError}
           time={300}
-          sx={{
-            background: '#f55',
-            mt: 2,
-            mx: 'auto',
-            borderRadius: 4,
-            maxWidth: '450px',
-          }}
         >
           {error}
-        </CustomAlert>
+        </Alert>
       )}
     </BasicLayout>
   );
