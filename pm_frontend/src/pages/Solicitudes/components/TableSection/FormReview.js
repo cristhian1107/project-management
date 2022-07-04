@@ -15,7 +15,7 @@ import {
   ReasonField,
   TitleField,
   DescriptionField
-} from 'pages/Solicitudes/TableSection/FormFields';
+} from 'pages/Solicitudes/components/TableSection/FormFields';
 
 export default function FormReview ({ dataRequest, setOpen, mode, title }) {
   const [dateTentative, setDateTentative] = useState(null);
