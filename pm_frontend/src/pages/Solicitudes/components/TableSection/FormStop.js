@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks/useBackend';
-import { useHandleState } from 'pages/Solicitudes/TableSection/hooks';
+import { useHandleState } from 'pages/Solicitudes/components/TableSection/hooks';
 import {
   CodeField,
   PriorityField,
@@ -11,7 +11,7 @@ import {
   DepartmentField,
   UserField,
   ReasonRejecteField
-} from 'pages/Solicitudes/TableSection/FormFields';
+} from 'pages/Solicitudes/components/TableSection/FormFields';
 
 export default function FormStop ({ dataRequest, setOpen, mode, title }) {
   const { handleState }= useHandleState();
