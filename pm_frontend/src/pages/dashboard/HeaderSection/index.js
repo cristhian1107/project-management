@@ -37,7 +37,7 @@ export default function Dashboard() {
   return (
     <Box>
       <h1> Dashboard
-        <LocalizationProvider dateAdapter={AdapterDateFns} locale={es}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
           <Stack spacing={3}
             sx={{
               display: "flex",
