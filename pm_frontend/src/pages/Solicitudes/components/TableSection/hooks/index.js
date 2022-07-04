@@ -1,1 +1,1 @@
-export * from 'pages/Solicitudes/TableSection/hooks/useHandleState';
+export * from 'pages/Solicitudes/components/TableSection/hooks/useHandleState';
