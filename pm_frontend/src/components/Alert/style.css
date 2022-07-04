@@ -1,0 +1,22 @@
+.alert {
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes Mounted {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes UnMounted {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -17,14 +17,19 @@ export default function useUser () {
 
   // Validate credentials with a service
   const login = useCallback(async ({ username, password }) => {
-    loginService({username, password})
+    return loginService({username, password})
       .then(data => {
+        if (data?.status === 'failure')
+          return 'Username or Password incorrect';
         // Store session token in local memory
         ls.setItem('token', data.jwt);
         // Loading data of the user in the global state
         dispatch(createUser(data));
+        return 'Success';
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+      });
   }, [dispatch]);
 
   // Ends the user session and remove stored data
