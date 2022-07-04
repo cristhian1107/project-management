@@ -29,7 +29,7 @@ export default function Login () {
     const data = new FormData(e.currentTarget);
     const username = data.get('username');
     const password = data.get('password');
-    
+
     // Credential validation with the backend
     // If the credentials are incorrect, show alert
     login({username, password}).then((res) => {
@@ -67,22 +67,20 @@ export default function Login () {
             label='Password'
             variant='outlined'
           />
-          {
-            !loading ? (
-              <SubmitButton
-                id='btn-login'
-                type="submit"
-                fullWidth
-                variant="contained"
-              >
-                Log In
-              </SubmitButton>
-            ) : (
-              <SnipperContainer>
-                <LoadingButton />
-              </SnipperContainer>
-            )
-          }
+          {!loading ? (
+            <SubmitButton
+              id='btn-login'
+              type="submit"
+              fullWidth
+              variant="contained"
+            >
+              Log In
+            </SubmitButton>
+          ) : (
+            <SnipperContainer>
+              <LoadingButton />
+            </SnipperContainer>
+          )}
         </FormContainer>
       </FormLayout>
       {error && (
