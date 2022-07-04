@@ -1,16 +1,11 @@
-// React core
 import { useState, useEffect, useContext } from 'react';
-// @mui
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import Send from '@mui/icons-material/Send';
-// Global components
 import ButtonForm from 'components/ButtonForm';
-// Custom hooks
-import { useBackend } from 'hooks/useBackend';
-// Local components
+import { useBackend } from 'hooks';
 import BasicLayout from 'pages/Solicitudes/HeaderSection/BasicLayout';
-import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
+import { FormFieldItem } from 'pages/Solicitudes/components/common';
 import FiltersContext from 'context/FiltersContext';
 
 export default function HeaderSection() {

@@ -1,17 +1,12 @@
-// React core
 import { useState, useEffect, useContext } from 'react';
-// @mui
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
-// Custom hooks
-import { useBackend } from 'hooks/useBackend';
-// Context
+import { useBackend } from 'hooks';
 import FiltersContext from 'context/FiltersContext';
-
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 import Calendar from 'components/calendar';
 import { useSelector } from 'react-redux';
