@@ -223,6 +223,10 @@ CONSTRAINT `fk_requests_events_users` FOREIGN KEY `user_id` (`user_id`) REFERENC
 );
 
 
+-- ************ `requests_teams` **********************
+-- Create at: 2022-07-04 (Cristhian Apaza)
+-- Update at:
+-- ****************************************************
 CREATE TABLE IF NOT EXISTS `requests_teams`
 (
  `request_id` bigint NOT NULL ,
