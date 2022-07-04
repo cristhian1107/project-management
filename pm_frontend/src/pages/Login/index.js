@@ -1,18 +1,18 @@
-// React core
-import { useEffect } from 'react';
-// React router dom
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Parts of the component
-import BasicLayout from 'pages/Login/BasicLayout';
-import FormLayout from 'pages/Login/components/FormLayout';
-// @mui
+import CustomAlert from 'components/Alert';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-// Custom hooks
+import BasicLayout from 'pages/Login/BasicLayout';
+import FormLayout from 'pages/Login/components/FormLayout';
 import useUser from 'hooks/useUser';
+import { LoadingButton } from 'components/Loading';
 
 export default function Login () {
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { isLogged, login } = useUser();
 
@@ -22,10 +22,16 @@ export default function Login () {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError(false);
+    setLoading(true);
     const data = new FormData(e.currentTarget);
     const username = data.get('username');
     const password = data.get('password');
-    login({username, password});
+    login({username, password}).then((res) => {
+      if (res !== 'Success')
+        setError(res);
+      setLoading(false);
+    });
   };
 
   return (
@@ -36,10 +42,9 @@ export default function Login () {
           component="form"
           onSubmit={handleSubmit}
           sx={{
-            mt: 6,
-            px: 1,
+            mt: 4,
+            px: { xs: 2, sm: 4 },
             gap: 2,
-            maxWidth: '400px',
           }}
           autoComplete='off'
         >
@@ -74,24 +79,57 @@ export default function Login () {
               },
             }}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 4,
-              background: 'var(--btn-gradient)',
-              fontWeight: 'bold',
-              textTransform: 'none',
-              borderRadius: 50,
-              letterSpacing: 1,
-              fontSize: '1.1rem',
-            }}
-          >
-            Log In
-          </Button>
+          {
+            !loading ? (
+              <Button
+                id='btn-login'
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 4,
+                  background: 'var(--btn-gradient)',
+                  fontWeight: 'bold',
+                  textTransform: 'none',
+                  borderRadius: 50,
+                  letterSpacing: 1,
+                  fontSize: '1.1rem',
+                }}
+              >
+                Log In
+              </Button>
+            ) : (
+              <Box
+                sx={{
+                  mt: 4,
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <LoadingButton />
+              </Box>
+            )
+          }
         </Grid>
       </FormLayout>
+      {error && (
+        <CustomAlert
+          severity='error'
+          open={Boolean(error)}
+          setOpen={setError}
+          time={300}
+          sx={{
+            background: '#f55',
+            mt: 2,
+            mx: 'auto',
+            borderRadius: 4,
+            maxWidth: '450px',
+          }}
+        >
+          {error}
+        </CustomAlert>
+      )}
     </BasicLayout>
   );
 }
