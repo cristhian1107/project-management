@@ -131,10 +131,10 @@ CONSTRAINT `fk_options_roles` FOREIGN KEY (`option_id`) REFERENCES `options` (`i
 );
 
 
--- ************ `tables` **********************
+-- ************ `tables` *******************************
 -- Create at: 2022-06-11 (Cristhian Apaza)
 -- Update at:
--- ***************************************************
+-- *****************************************************
 CREATE TABLE IF NOT EXISTS `tables`
 (
  `table`       int NOT NULL ,
@@ -152,10 +152,10 @@ PRIMARY KEY (`table`, `code`)
 );
 
 
--- ************ `requests` **********************
+-- ************ `requests` *****************************
 -- Create at: 2022-06-11 (Cristhian Apaza)
 -- Update at:
--- ***************************************************
+-- *****************************************************
 CREATE TABLE IF NOT EXISTS `requests`
 (
  `id`             bigint NOT NULL ,
@@ -199,7 +199,7 @@ CONSTRAINT `fk_requests_tables_typ` FOREIGN KEY `table_code_typ` (`table_typ`, `
 -- ************ `requests_events` **********************
 -- Create at: 2022-06-11 (Cristhian Apaza)
 -- Update at:
--- ***************************************************
+-- *****************************************************
 CREATE TABLE IF NOT EXISTS `requests_events`
 (
  `request_id` bigint NOT NULL ,
@@ -220,4 +220,26 @@ KEY `table_code_sta` (`table_sta`, `code_sta`),
 CONSTRAINT `fk_requests_events_tables_sta` FOREIGN KEY `table_code_sta` (`table_sta`, `code_sta`) REFERENCES `tables` (`table`, `code`),
 KEY `user_id` (`user_id`),
 CONSTRAINT `fk_requests_events_users` FOREIGN KEY `user_id` (`user_id`) REFERENCES `users` (`id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `requests_teams`
+(
+ `request_id` bigint NOT NULL ,
+ `user_id`    bigint NOT NULL ,
+ `table_fun`  int NOT NULL ,
+ `code_fun`   int NOT NULL ,
+ `is_active`  bit NOT NULL ,
+ `create_at`  datetime NOT NULL ,
+ `create_by`  varchar(50) NOT NULL ,
+ `update_at`  datetime NULL ,
+ `update_by`  varchar(50) NULL ,
+
+PRIMARY KEY (`request_id`, `user_id`),
+KEY `request_id` (`request_id`),
+CONSTRAINT `fk_requests_teams` FOREIGN KEY `request_id` (`request_id`) REFERENCES `requests` (`id`),
+KEY `user_id` (`user_id`),
+CONSTRAINT `fk_requests_teams_users` FOREIGN KEY `user_id` (`user_id`) REFERENCES `users` (`id`),
+KEY `table_code_fun` (`table_fun`, `code_fun`),
+CONSTRAINT `fk_requests_teams_tables_fun` FOREIGN KEY `table_code_fun` (`table_fun`, `code_fun`) REFERENCES `tables` (`table`, `code`)
 );
