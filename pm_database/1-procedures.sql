@@ -398,12 +398,14 @@ CREATE PROCEDURE requests_insert
 , IN pvchupdate_by varchar(50) )
 BEGIN
 
+    DECLARE v_role_id bigint;
+
     -- * Correlative * --
     SELECT IF(ISNULL(MAX(id)), 1, MAX(id) + 1)  INTO pbigid
     FROM requests;
 
     -- * User * --
-    SELECT company_id, department, campus, user INTO pbigcompany_id, pvchdepartment, pvchcampus, pvchcreate_by
+    SELECT company_id, department, campus, user, role_id INTO pbigcompany_id, pvchdepartment, pvchcampus, pvchcreate_by, v_role_id
     FROM users
     WHERE
         id = pbiguser_id;
@@ -434,6 +436,40 @@ BEGIN
     -- * Insert event * --
     call requests_events_insert
         ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, NULL, pdtmcreate_at, pvchcreate_by, NULL, NULL);
+
+
+    -- * Roles * --
+    IF (v_role_id IN (2, 3)) -- Gerencia TI & Gerencia general.
+    THEN
+
+        -- * State * --
+        SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
+        FROM tables
+        WHERE
+            `table` = 3 AND
+            `alias` = 'CON';
+
+        -- * Insert event * --
+        call requests_events_insert
+        ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+
+    END If;
+
+    IF (v_role_id = 3) -- Gerencia general.
+    THEN
+
+        -- * State * --
+        SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
+        FROM tables
+        WHERE
+            `table` = 3 AND
+            `alias` = 'APR';
+
+        -- * Insert event * --
+        call requests_events_insert
+        ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+
+    END If;
 
     -- * Recovery requets * --
     call requests_one
