@@ -323,10 +323,11 @@ CREATE PROCEDURE requests_teams_insert
 , IN pbitis_active bit
 , IN pbiguser_id bigint
 , IN pdtmdate_issue datetime
+, IN pbitis_last bit
 , IN pdtmcreate_at datetime
 , IN pvchcreate_by varchar(50)
 , IN pdtmupdate_at datetime
-, IN pvchupdate_by varchar(50) )
+, IN pvchupdate_by varchar(50))
 BEGIN
 
     DECLARE v_table_sta, v_code_sta int;
@@ -353,8 +354,11 @@ BEGIN
         , CURRENT_TIMESTAMP(), pvchcreate_by , NULL , NULL);
 
     -- * Insert event * --
-    call requests_events_insert
-        ( pbigrequest_id, NULL, v_table_sta, v_code_sta, pdtmdate_issue, pbiguser_id, 'Equipo asignado', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+    IF pbitis_last = 1
+    THEN
+        call requests_events_insert
+            ( pbigrequest_id, NULL, v_table_sta, v_code_sta, pdtmdate_issue, pbiguser_id, 'Equipo asignado', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+    END IF;
 
 END $$
 DELIMITER ;
