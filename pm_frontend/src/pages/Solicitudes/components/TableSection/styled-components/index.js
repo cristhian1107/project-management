@@ -44,13 +44,14 @@ export const ListFilters = (props) => (
   />
 )
 
-export const ItemToFilter = ({ colorBorder, ...props }) => (
+export const ItemToFilter = ({ colorBorder, BG, ...props }) => (
   <Button
     css={{
       minWidth: 'max-content',
-      background: 'transparent',
+      background: BG ? `rgb(${BG[0]},${BG[1]},${BG[2]}, 0.4)`: 'transparent',
       color: '#000',
       border: `2px solid ${colorBorder}`,
+      "&:hover": {background: `rgb(${BG[0]},${BG[1]},${BG[2]})`}
     }}
     {...props}
   />
