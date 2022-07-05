@@ -30,7 +30,7 @@ def all_dashboard(**kwargs):
     month = request.args.get('month', None)
 
     if year is None or month is None:
-        return make_response(jsonify({'request': 'Incomplete parameters'}), 204)
+        return make_response(jsonify({'request': 'empty'}), 204)
 
     info = DBProcedures.dashboard_all(year, month)
     if info is None:
