@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
-import { useHandleState } from 'pages/Solicitudes/TableSection/hooks';
+import { useHandleState } from 'pages/Solicitudes/components/TableSection/hooks';
 import {
   CodeField,
   PriorityField,
@@ -9,7 +9,7 @@ import {
   DateTentativeField,
   DepartmentField,
   UserField
-} from 'pages/Solicitudes/TableSection/FormFields';
+} from 'pages/Solicitudes/components/TableSection/FormFields';
 
 export default function FormResume ({ dataRequest, setOpen, mode, title }) {
   const { handleState } = useHandleState();

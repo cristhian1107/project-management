@@ -1,28 +1,26 @@
 import Grid from '@mui/material/Grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
-import { useHandleState } from 'pages/Solicitudes/TableSection/hooks';
+import { useBackend } from 'hooks/useBackend';
+import { useHandleState } from 'pages/Solicitudes/components/TableSection/hooks';
 import {
+  CodeField,
   PriorityField,
-  DateTentativeField,
   CompanyField,
+  DateTentativeField,
   DepartmentField,
   UserField,
-  SubjectField,
-  ReasonField,
-  TitleField,
-  DescriptionField,
-  CodeField
-} from 'pages/Solicitudes/TableSection/FormFields';
+  ReasonRejecteField
+} from 'pages/Solicitudes/components/TableSection/FormFields';
 
-export default function FormApprove ({ dataRequest, setOpen, mode, title }) {
+export default function FormStop ({ dataRequest, setOpen, mode, title }) {
   const { handleState }= useHandleState();
 
   return (
     <Grid
       container
       component="form"
-      onSubmit={e => handleState(e, dataRequest.id, 3, setOpen)}
+      onSubmit={e => handleState(e, dataRequest.id, 9, setOpen)}
       sx={{
         gap: 2,
         justifyContent: 'space-between',
@@ -39,7 +37,6 @@ export default function FormApprove ({ dataRequest, setOpen, mode, title }) {
         code={dataRequest.code_pri}
       />
       <DateTentativeField
-        mode={mode}
         value={dataRequest.date_tentative}
       />
       <CompanyField
@@ -51,24 +48,14 @@ export default function FormApprove ({ dataRequest, setOpen, mode, title }) {
       <UserField
         value={dataRequest.user_fullname}
       />
-      <SubjectField
-        value={dataRequest.subject}
+      <ReasonRejecteField
+        label='Motivo de pausa'
       />
-      <ReasonField
-        value={dataRequest.reason}
-      />
-      <TitleField
-        mode={mode}
-        value={dataRequest.name}
-      />
-      <DescriptionField
-        mode={mode}
-        value={dataRequest.description}
-      />
+
       <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
         <ButtonForm
-          type="submit"
-          variant="success"
+          type='submit'
+          variant='success'
           startIcon={<ThumbUpIcon />}
         >
           {title}

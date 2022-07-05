@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ButtonForm from 'components/ButtonForm';
-import { useHandleState } from 'pages/Solicitudes/TableSection/hooks';
+import { useHandleState } from 'pages/Solicitudes/components/TableSection/hooks';
 import {
   PriorityField,
   CompanyField,
@@ -10,7 +10,7 @@ import {
   SubjectField,
   ReasonField,
   ReasonRejecteField
-} from 'pages/Solicitudes/TableSection/FormFields';
+} from 'pages/Solicitudes/components/TableSection/FormFields';
 
 export default function FormReject ({ dataRequest, setOpen, mode, title }) {
   const { handleState } = useHandleState();

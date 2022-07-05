@@ -1,16 +1,11 @@
-// React core
 import { useState, useEffect, useContext } from 'react';
-// @mui
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import Send from '@mui/icons-material/Send';
-// Global components
 import ButtonForm from 'components/ButtonForm';
-// Custom hooks
-import { useBackend } from 'hooks/useBackend';
-// Local components
-import BasicLayout from 'pages/Solicitudes/HeaderSection/BasicLayout';
-import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
+import { useBackend } from 'hooks';
+import BasicLayout from 'pages/Solicitudes/components/HeaderSection/BasicLayout';
+import { FormFieldItem } from 'pages/Solicitudes/components/common';
 import FiltersContext from 'context/FiltersContext';
 
 export default function HeaderSection() {
@@ -70,6 +65,7 @@ export default function HeaderSection() {
           required
           label='Asunto'
           name='subject'
+          maxChars= '50'
         />
         <FormFieldItem
           bp={{ xs: 12, md: 3.5 }}

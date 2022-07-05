@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import Calendar from 'components/calendar';
 import { useBackend } from 'hooks/useBackend';
-import FormFieldItem from 'pages/Solicitudes/components/FormFieldItem';
+import FormFieldItem from 'pages/Solicitudes/components/common/FormFieldItem';
 
 function TypeField ({ mode, value }) {
   const [types, setTypes] = useState([]);
@@ -156,6 +156,7 @@ function TitleField ({ mode, value }) {
       defaultValue={mode !== 'Solicitado' ? value : ''}
       label='Titulo'
       name='name'
+      maxChars= '50'
     />
   )
 }

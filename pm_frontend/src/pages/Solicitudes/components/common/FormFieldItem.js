@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 
-export default function FormFieldItem ({ bp, css, renderIcon, lines, ...props }) {
+export default function FormFieldItem ({ bp, css, renderIcon, lines, maxChars, ...props }) {
 
   return (
     <Grid
@@ -22,7 +22,7 @@ export default function FormFieldItem ({ bp, css, renderIcon, lines, ...props })
         multiline={lines?.multiline ? true : false}
         {...props}
         inputProps={{
-          maxLength: lines?.multiline ? lines?.maxLength : 'auto',
+          maxLength: lines?.multiline ? lines?.maxLength : (maxChars ? maxChars: 'auto'),
         }}
         InputProps={{
           sx: { fontSize: { xs: '.85rem', sm:'inherit' } },
