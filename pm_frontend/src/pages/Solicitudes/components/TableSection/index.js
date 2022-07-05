@@ -59,7 +59,6 @@ function hexToRgb(hex) {
           </Button>
           {
             states.map((state) => {
-              console.log(state.description)
               return (
                 <ItemToFilter
                   onClick={() => handleLocalFilters(state)}
