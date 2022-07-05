@@ -2,6 +2,7 @@
 """Contains:
     (class) DBProcedure.
 """
+from typing import List
 from database.engine.db_storage import DBStorage
 from models.base_model import BaseModel
 from models.user import User
@@ -9,6 +10,7 @@ from models.role import Role
 from models.option import Option
 from models.request import Request
 from models.request_event import RequestEvent
+from models.request_team import RequestTeam
 from models.table import Table
 from models.companie import Companie
 from general.library import Libraries
@@ -159,6 +161,29 @@ class DBProcedures():
             storage.open_db()
             parameters = item.to_list()
             return (storage.exec_save('requests_events_insert', parameters))
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (False)
+        finally:
+            del storage
+
+    @staticmethod
+    def requests_teams_insert(items=[]) -> bool:
+        """Insert new requests events.
+
+        Args:
+            items (list): List new objects.
+
+        Returns:
+            bool: True or False.
+        """
+        # TODO: Connect to Database.
+        storage = DBStorage()
+        try:
+            if not items:
+                return (False)
+            storage.open_db()
+            return (storage.exec_multi_save('requests_teams_insert', items))
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())
             return (False)

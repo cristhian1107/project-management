@@ -3,12 +3,14 @@
 from database import tables
 from models.request import Request
 from models.request_event import RequestEvent
+from models.request_team import RequestTeam
 from routes import app_views
 from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
 from datetime import datetime
 from general.library import Libraries
 import asyncio
+
 # from flasgger.utils import swag_from
 
 time = '%Y-%m-%dT%H:%M:%S.%fZ'
@@ -149,5 +151,41 @@ def update_event(**kwargs):
     if email:
         asyncio.run(Libraries.send_email(email))
     if not res:
+        return make_response(jsonify({'request': 'failure'}), 204)
+    return make_response(jsonify({'request': 'success'}), 201)
+
+
+@app_views.route('/request/team', methods=['POST'], strict_slashes=False)
+@Libraries.validate_token
+def insert_team(**kwargs):
+    """API (POST) Route /request/team.
+    Insert team of the request.
+
+    Returns:
+        Response: JSON success or failure.
+    """
+    payload = kwargs.get('payload')
+    data = request.get_json()
+    items = []
+    details = data.get('team', None)
+
+    if type(details) is not list:
+        return make_response(jsonify({'request': 'failure'}), 204)
+    for detail in details:
+        item = RequestTeam()
+        item.request_id = data.get('request_id', None)
+        item.worker_id = detail.get('worker_id', None)
+        item.table_fun = tables.get('FUN')
+        item.code_fun = detail.get('code_fun', None)
+        item.is_active = True
+        item.user_id = payload.get('id', None)
+        item.date_issue = datetime.strptime(data.get('date_issue', None), time)
+        print(item.to_dict())
+        items.append(item)
+    is_correct = DBProcedures.requests_teams_insert(items)
+    # email = DBProcedures.requests_email(item.request_id)
+    # if email:
+    #     asyncio.run(Libraries.send_email(email))
+    if not is_correct:
         return make_response(jsonify({'request': 'failure'}), 204)
     return make_response(jsonify({'request': 'success'}), 201)

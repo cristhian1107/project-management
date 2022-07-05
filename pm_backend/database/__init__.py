@@ -5,5 +5,6 @@ tables = {
     'TAB': 1,
     'TYP': 2,
     'STA': 3,
-    'PRI': 4
+    'PRI': 4,
+    'FUN': 5
 }

@@ -29,7 +29,7 @@ class DBStorage:
         """
         try:
             self.__cursor = self.__connector.cursor(dictionary=True)
-            Libraries.write_log('Connection is open MySQL')
+            # Libraries.write_log('Connection is open MySQL')
         except mysql.connector.Error as error:
             Libraries.write_log(error.msg, traceback.format_exc())
 
@@ -39,7 +39,7 @@ class DBStorage:
         if self.__connector.is_connected():
             self.__cursor.close()
             self.__connector.close()
-            Libraries.write_log('Connection is closed MySQL')
+            # Libraries.write_log('Connection is closed MySQL')
 
     def exec_procedure(self, name, parameters=[]):
         """Execute a stored procedure on the MySQL Database.
@@ -87,6 +87,40 @@ class DBStorage:
             if self.__cursor.rowcount > 0:
                 is_correct = True
             return (is_correct)
+        except mysql.connector.Error as error:
+            self.__connector.rollback()
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (is_correct)
+        finally:
+            self.close_db()
+
+    def exec_multi_save(self, name, items=[]):
+        """Execute a stored procedure on the MySQL Database.
+
+        Args:
+            name (str): Stored procedure name.
+            items (list): List items.
+
+        Returns:
+            bool: True or False.
+        """
+        is_correct = False
+        try:
+            for item in items:
+                parameters = item.to_list()
+                outputs = self.__cursor.callproc(name, parameters)
+                if outputs:
+                    outs = list(outputs.values())
+                    item.request_id = outs[0]
+                if self.__cursor.rowcount > 0:
+                    is_correct = True
+
+            if is_correct:
+                self.__connector.commit()
+                return (is_correct)
+            else:
+                self.__connector.rollback()
+                return (is_correct)
         except mysql.connector.Error as error:
             self.__connector.rollback()
             Libraries.write_log(error.msg, traceback.format_exc())
