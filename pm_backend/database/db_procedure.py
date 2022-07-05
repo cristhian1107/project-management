@@ -291,7 +291,7 @@ class DBProcedures():
                 # Info team.
                 if x == 2:
                     for opt in tables[x]:
-                        item.states.append(RequestTeam(**opt))
+                        item.team.append(RequestTeam(**opt))
             return (item)
         except BaseException as error:
             Libraries.write_log(error.msg, traceback.format_exc())

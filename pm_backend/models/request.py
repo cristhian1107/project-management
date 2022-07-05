@@ -35,4 +35,5 @@ class Request(BaseModel):
         self.code_pri = None
         self.percentage = None
         self.states = []
+        self.team = []
         super().__init__(**kwargs)
