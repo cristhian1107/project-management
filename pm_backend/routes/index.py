@@ -10,10 +10,10 @@ from general.library import Libraries
 
 @app_views.route("/status", strict_slashes=False)
 def view_status():
-    """Check the status of the app.
+    """API (GET) Route /status
 
     Returns:
-        response: Json response.
+        response: JSON response status API.
     """
     return make_response(jsonify({"status": "OK"}), 200)
 
@@ -21,11 +21,16 @@ def view_status():
 @app_views.route("/dashboard/all", strict_slashes=False)
 @Libraries.validate_token
 def all_dashboard(**kwargs):
-    payload = kwargs.get('payload')
+    """API (GET) Route /dashboard/all
+
+    Returns:
+        response: JSON contains data for the chart.
+    """
     year = request.args.get('year', None)
     month = request.args.get('month', None)
+
     if year is None or month is None:
-        return make_response(jsonify({'request': 'empty'}), 204)
+        return make_response(jsonify({'request': 'Incomplete parameters'}), 204)
 
     info = DBProcedures.dashboard_all(year, month)
     if info is None:
