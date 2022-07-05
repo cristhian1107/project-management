@@ -646,6 +646,17 @@ BEGIN
         WHERE
             re.request_id = pbigid
         ORDER BY re.request_id desc, re.item desc;
+
+        SELECT
+              rt.request_id , rt.worker_id ,  rt.is_active
+            , CONCAT(usr.name, ' ', usr.lastname) as worker_fullname
+            , rt.table_fun , rt.code_fun , fun.name as [name_fun]
+            , re.create_at , re.create_by , re.update_at , re.update_by
+        FROM requests_teams rt
+        INNER JOIN users us ON rt.worker_id = us.id
+        INNER JOIN tables fun ON rt.table_fun = fun.table AND rt.code_fun = fun.code
+        WHERE
+            rt.request_id = pbigid;
     END IF;
 
 END $$
