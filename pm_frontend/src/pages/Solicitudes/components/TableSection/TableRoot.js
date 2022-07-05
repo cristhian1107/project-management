@@ -317,8 +317,8 @@ export default function EnhancedTable() {
                         padding="none">
                         {row.code}
                       </TableCell>
-                      <TableCell align='left'>{row.name}</TableCell>
-                      <TableCell align='left'>{date.toLocaleDateString('es-PE', {year:"numeric", month:"2-digit", day:"2-digit", hour:"numeric", minute:"numeric"})}</TableCell>
+                      <TableCell align='left' sx={{maxWidth:"250px"}}>{row.name}</TableCell>
+                      <TableCell align='left' sx={{minWidth:"180px"}}>{date.toLocaleDateString('es-PE', {year:"numeric", month:"2-digit", day:"2-digit", hour:"numeric", minute:"numeric"})}</TableCell>
                       <TableCell align='left'>{row.name_pri}</TableCell>
                       <TableCell align='left'>{row.user_fullname}</TableCell>
                       <TableCell align='left'>{row.company_tradename}</TableCell>
