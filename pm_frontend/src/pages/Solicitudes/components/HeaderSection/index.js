@@ -65,6 +65,7 @@ export default function HeaderSection() {
           required
           label='Asunto'
           name='subject'
+          maxChars= '50'
         />
         <FormFieldItem
           bp={{ xs: 12, md: 3.5 }}
