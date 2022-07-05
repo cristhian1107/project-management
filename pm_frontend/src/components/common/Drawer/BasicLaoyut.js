@@ -11,7 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import LogoutIcon from '@mui/icons-material/Logout';
 // Custom Hooks
-import useUser  from 'hooks/useUser';
+import useUser from 'hooks/useUser';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { handleDrawer } from 'redux/states';
@@ -20,7 +20,7 @@ import userImage from 'assets/images/back.jpeg';
 
 export default function BasicLayout ({ children }) {
   const userState = useSelector(state => state.user);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { logout } = useUser();
 
   function handleLogOut () {
@@ -31,30 +31,31 @@ export default function BasicLayout ({ children }) {
     <Box
       sx={{
         borderRadius: 2,
-        px: 1,
+        px: 1
       }}
     >
       <Toolbar sx={{ display: 'inherit', p: 2 }}>
         <Box>
           <Typography
-            variant="h5"
+            variant='h5'
             noWrap
-            component="div"
+            component='div'
             sx={{
               mb: 2,
               color: 'white',
               letterSpacing: 4,
               fontWeight: 'bold',
-              textAlign: 'center',
-            }}>
+              textAlign: 'center'
+            }}
+          >
             {userState.company_id === 1 && 'Autrisa'}
             {userState.company_id === 2 && 'IncaMotors'}
             {userState.company_id === 3 && 'Nova Autos'}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar src={userImage} sx={{ mr: 2 }}/>
-          <Typography sx={{ color: '#FFF', }} component='div'>
+          <Avatar src={userImage} sx={{ mr: 2 }} />
+          <Typography sx={{ color: '#FFF' }} component='div'>
             <Typography sx={{ letterSpacing: 2, fontWeight: 'bold' }}>
               {`${userState.name} ${userState.lastname}`}
             </Typography>
@@ -79,7 +80,7 @@ export default function BasicLayout ({ children }) {
             linear-gradient(to right, rgba(255, 255, 255, 0),
             rgb(255, 255, 255),
             rgba(255, 255, 255, 0))
-          `,
+          `
         }}
       />
       <List sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -89,14 +90,14 @@ export default function BasicLayout ({ children }) {
           disablePadding
           sx={{
             color: 'white',
-            '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' },
+            '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' }
           }}
         >
           <ListItemButton onClick={handleLogOut}>
             <ListItemIcon sx={{ color: 'white' }}>
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary='Log Out'/>
+            <ListItemText primary='Log Out' />
           </ListItemButton>
         </ListItem>
       </List>

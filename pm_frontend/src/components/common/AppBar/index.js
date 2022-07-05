@@ -9,8 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import HomeIcon from '@mui/icons-material/Home';
 import WidgetIcon from '@mui/icons-material/Widgets';
-import NotificationIcon from '@mui/icons-material/Notifications'
-import { useDispatch, useSelector } from 'react-redux'
+import NotificationIcon from '@mui/icons-material/Notifications';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleDrawer } from 'redux/states'; // Actions of the global state
 import { drawerWidth } from 'components/common/utils';
 import bgImage from 'assets/images/back.jpeg';
@@ -23,47 +23,47 @@ export default function CustomAppBar () {
 
   const stringAvatar = (name) => {
     return {
-      'src': `${bgImage}`,
-      'children': name.split(" ").map(e => e[0]).join(""),
-      'sx': {fontWeight: 'bold'},
-      'alt': name,
-      'title': name
+      src: `${bgImage}`,
+      children: name.split(' ').map(e => e[0]).join(''),
+      sx: { fontWeight: 'bold' },
+      alt: name,
+      title: name
     };
   };
 
   return (
     <AppBar
-      position="fixed"
+      position='fixed'
       sx={{
-        width: { xs: `calc(100% - 16px)`, lg: `calc(100% - ${drawerWidth}px - 24px)` },
+        width: { xs: 'calc(100% - 16px)', lg: `calc(100% - ${drawerWidth}px - 24px)` },
         ml: { lg: `calc(${drawerWidth}px)` },
         boxShadow: 'none',
         m: 1,
         background: '#fff',
-        borderRadius: 2,
+        borderRadius: 2
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Box sx={{
           display: 'flex',
           alignItems: 'center',
-          color: 'rgb(66, 66, 74)',
+          color: 'rgb(66, 66, 74)'
         }}
         >
           <IconButton
             onClick={() => navigate('/dashboard')}
-            edge="start"
-            sx={{color: 'inherit'}}
+            edge='start'
+            sx={{ color: 'inherit' }}
           >
             <HomeIcon />
           </IconButton>
           <Typography
-            variant="h6"
+            variant='h6'
             noWrap
-            component="div"
+            component='div'
             sx={{
               textTransform: 'capitalize',
-              fontSize: { xs: '1rem', sm: '1.25rem' },
+              fontSize: { xs: '1rem', sm: '1.25rem' }
             }}
           >
             {pathname}
@@ -72,24 +72,25 @@ export default function CustomAppBar () {
         <Box sx={{
           display: 'flex',
           alignItems: 'center',
-          color: 'rgb(66, 66, 74)',
+          color: 'rgb(66, 66, 74)'
         }}
         >
           <IconButton sx={{
-            color: 'inherit',
-          }}>
+            color: 'inherit'
+          }}
+          >
             <WidgetIcon />
           </IconButton>
           <IconButton
-            edge="start"
+            edge='start'
             sx={{ color: 'inherit' }}
           >
             <NotificationIcon />
           </IconButton>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
+            color='inherit'
+            aria-label='open drawer'
+            edge='start'
             onClick={() => dispatch(toggleDrawer())}
             sx={{ display: { lg: 'none' } }}
           >
@@ -97,10 +98,10 @@ export default function CustomAppBar () {
           </IconButton>
           <Avatar
             {...stringAvatar('Product Manager')}
-            sx={{ display: 'block', width: {xs: '30px'}, height: {xs: '30px'}}}
+            sx={{ display: 'block', width: { xs: '30px' }, height: { xs: '30px' } }}
           />
         </Box>
       </Toolbar>
     </AppBar>
-  )
+  );
 }

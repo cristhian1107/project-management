@@ -15,11 +15,11 @@ export default function DrawerType ({ typeOfDrawer, children }) {
       {
         typeOfDrawer === 'temporary' ? (
           <Drawer
-            variant="temporary"
+            variant='temporary'
             open={drawerState.open}
             onClose={() => dispatch(toggleDrawer())}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true // Better open performance on mobile.
             }}
             sx={{
               display: { xs: 'block', lg: 'none' },
@@ -32,15 +32,15 @@ export default function DrawerType ({ typeOfDrawer, children }) {
                 boxSizing: 'border-box',
                 width: drawerWidth,
                 background: 'linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25))',
-                boxShadow: 'none',
-              },
+                boxShadow: 'none'
+              }
             }}
           >
             {children}
           </Drawer>
         ) : (
           <Drawer
-            variant="permanent"
+            variant='permanent'
             open
             sx={{
               display: { xs: 'none', lg: 'block' },
@@ -53,8 +53,8 @@ export default function DrawerType ({ typeOfDrawer, children }) {
                 boxSizing: 'border-box',
                 width: drawerWidth,
                 background: 'linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25))',
-                boxShadow: 'none',
-              },
+                boxShadow: 'none'
+              }
             }}
           >
             {children}

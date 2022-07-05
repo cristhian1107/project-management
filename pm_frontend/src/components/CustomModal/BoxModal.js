@@ -12,7 +12,7 @@ const style = {
   maxWidth: 950,
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: { xs: 2, sm: 4 },
+  p: { xs: 2, sm: 4 }
 };
 
 export default function BoxModal ({ title, children, mode, handle, css }) {
@@ -21,37 +21,37 @@ export default function BoxModal ({ title, children, mode, handle, css }) {
       <Modal
         open={mode}
         onClose={handle}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
         sx={{
           ...css,
           backdropFilter: 'blur(2px)',
           overflowY: 'auto',
           display: 'flex',
           justifyContent: 'center',
-          p: 2,
+          p: 2
         }}
       >
-          <Box sx={style}>
-            <ContainsTooltip
-              label='cerrar'
-              placement='bottom-start'
-              handleClick={handle}
-              sx={{
-                position: 'absolute',
-                color: 'var(--box-primary)',
-                borderRadius: '50%',
-                right: 10,
-                top: 10,
-              }}
-            >
-              <CloseIcon />
-            </ContainsTooltip>
-            <Typography variant='h6' align='center' sx={{ mb: 2 }}>
-              {title}
-            </Typography>
-            {children}
-          </Box>
+        <Box sx={style}>
+          <ContainsTooltip
+            label='cerrar'
+            placement='bottom-start'
+            handleClick={handle}
+            sx={{
+              position: 'absolute',
+              color: 'var(--box-primary)',
+              borderRadius: '50%',
+              right: 10,
+              top: 10
+            }}
+          >
+            <CloseIcon />
+          </ContainsTooltip>
+          <Typography variant='h6' align='center' sx={{ mb: 2 }}>
+            {title}
+          </Typography>
+          {children}
+        </Box>
       </Modal>
     </>
   );

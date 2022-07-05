@@ -17,14 +17,12 @@ export default async function basicFetch ({ method, path, body }) {
     url: URL,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': jwt
+      Authorization: jwt
     },
     data: body
   }).then(res => {
-    if (!res.statusText)
-      throw new Error('Response is NOT ok');
-    if (res.status === 204)
-      return []
+    if (!res.statusText) { throw new Error('Response is NOT ok'); }
+    if (res.status === 204) { return []; }
     return res.data;
   }).catch(console.error);
 }

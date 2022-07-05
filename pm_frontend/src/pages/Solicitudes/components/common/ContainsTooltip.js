@@ -4,7 +4,6 @@ import IconButton from '@mui/material/IconButton';
 import Zoom from '@mui/material/Zoom';
 
 export default function ContainsTooltip ({ children, label, handleClick, render, placement, sx }) {
-
   return (
     <Grid item sx={{ ...sx }}>
       <Tooltip
@@ -22,5 +21,5 @@ export default function ContainsTooltip ({ children, label, handleClick, render,
         </IconButton>
       </Tooltip>
     </Grid>
-  )
+  );
 }

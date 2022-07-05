@@ -14,10 +14,10 @@ const URL = `${process.env.REACT_APP_API_URL}/user`;
 const customTheme = createTheme({
   palette: {
     background: {
-      default: 'rgba(240, 242, 245, 1)',
+      default: 'rgba(240, 242, 245, 1)'
     }
   }
-})
+});
 
 function App () {
   const [loading, setLoading] = useState(true);
@@ -32,10 +32,10 @@ function App () {
   const validateToken = () => {
     return axios.get(URL, {
       headers: {
-        'Authorization': window.localStorage.getItem('token')
+        Authorization: window.localStorage.getItem('token')
       }
-    })
-  }
+    });
+  };
 
   /**
    * Exceute an asynchronous call and resolve the response
@@ -44,7 +44,7 @@ function App () {
    * @return {Promise} A pending promise
    */
   const executeAsyncCall = async (asyncCall) => {
-    let result = undefined;
+    let result;
     try {
       result = await asyncCall();
     } catch (err) {
@@ -57,7 +57,7 @@ function App () {
       setLoading(false);
     }
     return result;
-  }
+  };
 
   // Validate the current session each time the component is mounted
   useEffect(() => {
@@ -70,34 +70,38 @@ function App () {
         dispatch(createUser(result.data));
       }
     });
-  }, [])
+  }, []);
 
   const getRoute = ({ path, key, component }) => {
     return <Route path={path} key={key} element={component} />;
-  }
+  };
 
   return (
     <>
-      { !loading ? (
-        <ThemeProvider theme={customTheme}>
-          {isLogged ? (
-            <Routes>
-              <Route path='/' element={<SideNav />} >
-                <Route index element={<Navigate to='/dashboard' />} />
-                {routes.privates.map(route => getRoute(route))}
-                <Route path='*' key='other' element={<Navigate to='/' />} />
-              </Route>
-            </Routes>
-          ) : (
-            <Routes>
-              {routes.publics.map(route => getRoute(route))}
-              <Route path='*' key='other'element={<Navigate to='/login' />} />
-            </Routes>
-          )}
-        </ThemeProvider>
-      ) : (
+      {!loading
+        ? (
+          <ThemeProvider theme={customTheme}>
+            {isLogged
+              ? (
+                <Routes>
+                  <Route path='/' element={<SideNav />}>
+                    <Route index element={<Navigate to='/dashboard' />} />
+                    {routes.privates.map(route => getRoute(route))}
+                    <Route path='*' key='other' element={<Navigate to='/' />} />
+                  </Route>
+                </Routes>
+                )
+              : (
+                <Routes>
+                  {routes.publics.map(route => getRoute(route))}
+                  <Route path='*' key='other' element={<Navigate to='/login' />} />
+                </Routes>
+                )}
+          </ThemeProvider>
+          )
+        : (
           <LoadingPage />
-      )}
+          )}
     </>
   );
 }

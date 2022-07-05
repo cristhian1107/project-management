@@ -20,28 +20,28 @@ export function useHandleState () {
    */
   const handleState = (e, request_id, code_sta, setOpen) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget)
-    let date_current = new Date();
+    const data = new FormData(e.currentTarget);
+    const date_current = new Date();
     // date_current.setDate(date_current.getDate() - 1)
-    date_current.setDate(date_current.getDate())
-    const date_issue = date_current.toISOString()
+    date_current.setDate(date_current.getDate());
+    const date_issue = date_current.toISOString();
 
     // Request body
     const payload = {
       request_id,
       date_issue,
       code_sta,
-      reason:data.get("reason_reject")
-    }
-    
+      reason: data.get('reason_reject')
+    };
+
     // Request to the backend to make the state change
     postEvent(payload).then(() => {
       getRequests(filters).then(setListRequests);
       setOpen(false);
-    })
-  }
+    });
+  };
 
   return {
     handleState
-  }
+  };
 }

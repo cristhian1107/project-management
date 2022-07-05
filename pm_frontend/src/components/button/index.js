@@ -11,10 +11,10 @@ export default function ItemButton ({ css, children, ...attributes }) {
         textTransform: 'none',
         px: 4,
         py: 0,
-        ...css,
+        ...css
       }}
     >
       {children}
     </Button>
-  )
+  );
 }

@@ -6,7 +6,6 @@ import {
 } from 'pages/Login/components/styled-components';
 
 export default function FormLayout ({ children }) {
-
   return (
     <FormCard>
       <CardHeader>

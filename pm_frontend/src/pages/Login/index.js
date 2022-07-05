@@ -19,7 +19,7 @@ export default function Login () {
 
   // Redirect user if logged in
   useEffect(() => {
-    if (isLogged) navigate('/dashboard', {replace: true});
+    if (isLogged) navigate('/dashboard', { replace: true });
   }, [isLogged, navigate]);
 
   const handleSubmit = (e) => {
@@ -32,9 +32,8 @@ export default function Login () {
 
     // Credential validation with the backend
     // If the credentials are incorrect, show alert
-    login({username, password}).then((res) => {
-      if (res !== 'Success')
-        setError(res);
+    login({ username, password }).then((res) => {
+      if (res !== 'Success') { setError(res); }
       setLoading(false);
     });
   };
@@ -44,16 +43,16 @@ export default function Login () {
       <FormLayout titleForm='Sign In'>
         <FormContainer
           container
-          component="form"
+          component='form'
           onSubmit={handleSubmit}
           autoComplete='off'
         >
           <FormField
             required
             fullWidth
-            id="username"
-            name="username"
-            type="text"
+            id='username'
+            name='username'
+            type='text'
             autoFocus
             label='Username'
             variant='outlined'
@@ -61,26 +60,28 @@ export default function Login () {
           <FormField
             required
             fullWidth
-            id="password"
-            name="password"
-            type="password"
+            id='password'
+            name='password'
+            type='password'
             label='Password'
             variant='outlined'
           />
-          {!loading ? (
-            <SubmitButton
-              id='btn-login'
-              type="submit"
-              fullWidth
-              variant="contained"
-            >
-              Log In
-            </SubmitButton>
-          ) : (
-            <SnipperContainer>
-              <LoadingButton />
-            </SnipperContainer>
-          )}
+          {!loading
+            ? (
+              <SubmitButton
+                id='btn-login'
+                type='submit'
+                fullWidth
+                variant='contained'
+              >
+                Log In
+              </SubmitButton>
+              )
+            : (
+              <SnipperContainer>
+                <LoadingButton />
+              </SnipperContainer>
+              )}
         </FormContainer>
       </FormLayout>
       {error && (

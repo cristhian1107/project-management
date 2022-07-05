@@ -18,13 +18,13 @@ export default function FormCancel ({ dataRequest, setOpen, mode, title }) {
   return (
     <Grid
       container
-      component="form"
+      component='form'
       onSubmit={e => handleState(e, dataRequest.id, 8, setOpen)}
       sx={{
         gap: 2,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
       }}
-      autoComplete="off"
+      autoComplete='off'
     >
       <CodeField
         mode={mode}
@@ -51,7 +51,7 @@ export default function FormCancel ({ dataRequest, setOpen, mode, title }) {
         label='Motivo de cancelación'
       />
 
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: ' flex-end', gap: 1 }}>
         <ButtonForm
           type='submit'
           variant='error'
@@ -61,5 +61,5 @@ export default function FormCancel ({ dataRequest, setOpen, mode, title }) {
         </ButtonForm>
       </Grid>
     </Grid>
-  )
+  );
 }

@@ -14,7 +14,7 @@ export default function StylesNavItem ({ route, icon, name }) {
         borderRadius: 1,
         overflow: 'hidden',
         color: 'white',
-        '&:hover': { background: 'rgba(255, 255, 255, 0.2)' },
+        '&:hover': { background: 'rgba(255, 255, 255, 0.2)' }
       }}
     >
       <NavLink

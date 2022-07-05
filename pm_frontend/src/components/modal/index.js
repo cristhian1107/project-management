@@ -15,10 +15,10 @@ const style = {
   minWidth: 400,
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: 4,
+  p: 4
 };
 
-export default function ModalFormInsertRequest(props) {
+export default function ModalFormInsertRequest (props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -34,11 +34,11 @@ export default function ModalFormInsertRequest(props) {
     const subject = data.get('subject');
     const code_pri = data.get('priority');
     const reason = data.get('reason');
-    let date_current = new Date();
+    const date_current = new Date();
     date_current.setDate(date_current.getDate() - 1);
     const date_issue = date_current.toISOString();
 
-    postRequest({subject, code_pri, reason, date_issue});
+    postRequest({ subject, code_pri, reason, date_issue });
   }
   return (
     <>
@@ -46,101 +46,102 @@ export default function ModalFormInsertRequest(props) {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
           <Button
             fullWidth
             onClick={handleClose}
             sx={{
-              justifyContent: 'end',
+              justifyContent: 'end'
             }}
           >
-            X</Button>
-            <Typography variant='h6' align='center'>
-              Nueva Solicitud
-            </Typography>
+            X
+          </Button>
+          <Typography variant='h6' align='center'>
+            Nueva Solicitud
+          </Typography>
+          <Grid
+            container
+            component='form'
+            onSubmit={handleSubmit}
+            sx={{
+              '& > :not(style)': { m: 1 },
+              justifyContent: 'space-between'
+            }}
+            noValidate
+            autoComplete='off'
+          >
             <Grid
-              container
-              component="form"
-              onSubmit= {handleSubmit}
-              sx={{
-                '& > :not(style)': { m: 1 },
-                justifyContent: 'space-between',
-              }}
-              noValidate
-              autoComplete="off"
+              item
+              xs={12}
+              sm={8}
             >
-              <Grid
-                item
-                xs={12}
-                sm={8}
+              <TextFieldFullWidth
+                required
+                id='outlined-basic'
+                label='Asunto'
+                name='subject'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={3}
+            >
+              <TextFieldFullWidth
+                required
+                select
+                id='outlined-basic'
+                label='Prioridad'
+                name='priority'
+                variant='outlined'
               >
-                <TextFieldFullWidth
-                  required
-                  id="outlined-basic"
-                  label="Asunto"
-                  name="subject"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={3}
-              >
-                <TextFieldFullWidth
-                  required
-                  select
-                  id="outlined-basic"
-                  label="Prioridad"
-                  name="priority"
-                  variant="outlined"
-                >
-                  {
+                {
                     priorities.map(({ alias, code, name }) => {
                       return (
                         <MenuItem key={alias} value={code}>{name}</MenuItem>);
                     })
                   }
-                </TextFieldFullWidth>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-              >
-                <TextFieldFullWidth
-                  css={{
-                    "& textarea" : {
-                      minHeight: 200,
-                    }
-                  }}
-                  required
-                  id="outlined-basic"
-                  label="Razon"
-                  name="reason"
-                  variant="outlined"
-                  multiline={true}
-                  inputProps={{ maxLength: 500 }}
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    mt: 3,
-                    mb: 2,
-                    background: 'var(--btn-gradient)',
-                  }}
-                >
-                  Enviar
-                </Button>
-              </Grid>
+              </TextFieldFullWidth>
             </Grid>
-          </Box>
+            <Grid
+              item
+              xs={12}
+            >
+              <TextFieldFullWidth
+                css={{
+                  '& textarea': {
+                    minHeight: 200
+                  }
+                }}
+                required
+                id='outlined-basic'
+                label='Razon'
+                name='reason'
+                variant='outlined'
+                multiline
+                inputProps={{ maxLength: 500 }}
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  background: 'var(--btn-gradient)'
+                }}
+              >
+                Enviar
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
       </Modal>
     </>
   );

@@ -1,4 +1,4 @@
-import { useState, useContext  } from 'react';
+import { useState, useContext } from 'react';
 import Grid from '@mui/material/Grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
@@ -25,9 +25,9 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
   const handleConfirm = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    let date_current = new Date();
-    date_current.setDate(date_current.getDate() - 1)
-    const date_issue = date_current.toISOString()
+    const date_current = new Date();
+    date_current.setDate(date_current.getDate() - 1);
+    const date_issue = date_current.toISOString();
     const payload = {
       id: dataRequest.id,
       date_issue,
@@ -42,66 +42,66 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
       getRequests(filters).then(setListRequests);
       setOpen(false);
     });
-  }
+  };
 
-    return (
-      <Grid
-        container
-        component="form"
-        onSubmit={handleConfirm}
-        sx={{
-          gap: 2,
-          justifyContent: 'space-between',
-        }}
-        autoComplete="off"
-      >
-        <TypeField
-          mode={mode}
-          value={dataRequest.name_typ}
-        />
-        <PriorityField
-          mode={mode}
-          name={dataRequest.name_pri}
-          code={dataRequest.code_pri}
-        />
-        <DateTentativeField
-          mode={mode}
-          value={dataRequest.date_tentative}
-          date={dateTentative}
-          handleDate={setDateTentative}
-        />
-        <CompanyField
-          value={dataRequest.company_tradename}
-        />
-        <DepartmentField
-          value={dataRequest.department}
-        />
-        <UserField
-          value={dataRequest.user_fullname}
-        />
-        <SubjectField
-          value={dataRequest.subject}
-        />
-        <ReasonField
-          value={dataRequest.reason}
-        />
-        <TitleField
-          mode={mode}
-          value={dataRequest.name}
-        />
-        <DescriptionField
-          mode={mode}
-          value={dataRequest.description}
-        />
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
-          <ButtonForm
-            type="submit"
-            variant="success"
-            startIcon={<ThumbUpIcon />}
-          >
-            {title}
-          </ButtonForm>
-        </Grid>
+  return (
+    <Grid
+      container
+      component='form'
+      onSubmit={handleConfirm}
+      sx={{
+        gap: 2,
+        justifyContent: 'space-between'
+      }}
+      autoComplete='off'
+    >
+      <TypeField
+        mode={mode}
+        value={dataRequest.name_typ}
+      />
+      <PriorityField
+        mode={mode}
+        name={dataRequest.name_pri}
+        code={dataRequest.code_pri}
+      />
+      <DateTentativeField
+        mode={mode}
+        value={dataRequest.date_tentative}
+        date={dateTentative}
+        handleDate={setDateTentative}
+      />
+      <CompanyField
+        value={dataRequest.company_tradename}
+      />
+      <DepartmentField
+        value={dataRequest.department}
+      />
+      <UserField
+        value={dataRequest.user_fullname}
+      />
+      <SubjectField
+        value={dataRequest.subject}
+      />
+      <ReasonField
+        value={dataRequest.reason}
+      />
+      <TitleField
+        mode={mode}
+        value={dataRequest.name}
+      />
+      <DescriptionField
+        mode={mode}
+        value={dataRequest.description}
+      />
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: ' flex-end', gap: 1 }}>
+        <ButtonForm
+          type='submit'
+          variant='success'
+          startIcon={<ThumbUpIcon />}
+        >
+          {title}
+        </ButtonForm>
       </Grid>
-    )
+    </Grid>
+  );
 }

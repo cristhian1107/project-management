@@ -21,12 +21,12 @@ export function LoginLayout (props) {
           width: '100%',
           height: '100%',
           background: '#000a',
-          backdropFilter: 'blur(10px)',
+          backdropFilter: 'blur(10px)'
         }
       }}
       {...props}
     />
-  )
+  );
 }
 
 export function FormCardContainer (props) {
@@ -36,9 +36,9 @@ export function FormCardContainer (props) {
         position: 'relative',
         boxShadow: 'none',
         pt: { xs: 2, sm: 8 },
-        px: 2,
+        px: 2
       }}
       {...props}
     />
-  )
+  );
 }

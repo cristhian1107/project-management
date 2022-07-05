@@ -8,7 +8,8 @@ export default function CustomModal ({ renderButton, children, title, open, setO
 
   return (
     <>
-      <Box sx={{ width: 'fit-content', height: 'fit-content' }}
+      <Box
+        sx={{ width: 'fit-content', height: 'fit-content' }}
         onClick={handleOpen}
       >
         {renderButton}
@@ -17,5 +18,5 @@ export default function CustomModal ({ renderButton, children, title, open, setO
         {children}
       </ModalForm>
     </>
-  )
+  );
 }

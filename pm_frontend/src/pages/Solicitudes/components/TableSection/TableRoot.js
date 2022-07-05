@@ -26,9 +26,9 @@ import { useBackend } from 'hooks/useBackend';
 // Context
 import FiltersContext from 'context/FiltersContext';
 // Parts of the component
-import ButtonActions from 'pages/Solicitudes/components/TableSection/ButtonActions'
+import ButtonActions from 'pages/Solicitudes/components/TableSection/ButtonActions';
 
-function descendingComparator(a, b, orderBy) {
+function descendingComparator (a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -38,7 +38,7 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-function getComparator(order, orderBy) {
+function getComparator (order, orderBy) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
@@ -46,7 +46,7 @@ function getComparator(order, orderBy) {
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
+function stableSort (array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -63,53 +63,53 @@ const headCells = [
     id: 'code',
     numeric: false,
     disablePadding: true,
-    label: 'Código',
+    label: 'Código'
   },
   {
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Nombre',
+    label: 'Nombre'
   },
   {
     id: 'date_issue',
     numeric: false,
     disablePadding: false,
-    label: 'Fecha de solicitud',
+    label: 'Fecha de solicitud'
   },
   {
     id: 'name_pri',
     numeric: false,
     disablePadding: false,
-    label: 'Prioridad',
+    label: 'Prioridad'
   },
   {
     id: 'user_fullname',
     numeric: false,
     disablePadding: false,
-    label: 'Solicitante',
+    label: 'Solicitante'
   },
   {
     id: 'company_tradename',
     numeric: false,
     disablePadding: false,
-    label: 'Empresa',
+    label: 'Empresa'
   },
   {
     id: 'name_sta',
     numeric: false,
     disablePadding: false,
-    label: 'Estado',
+    label: 'Estado'
   },
   {
     id: 'actions',
     numeric: false,
     disablePadding: false,
-    label: 'Acciones',
+    label: 'Acciones'
   }
 ];
 
-function EnhancedTableHead(props) {
+function EnhancedTableHead (props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
     props;
   const createSortHandler = (property) => (event) => {
@@ -120,7 +120,8 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         {headCells.map((headCell) => (
-          <TableCell sx={{pl: { sm: 2 }}}
+          <TableCell
+            sx={{ pl: { sm: 2 } }}
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
@@ -132,11 +133,13 @@ function EnhancedTableHead(props) {
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
+              {orderBy === headCell.id
+                ? (
+                  <Box component='span' sx={visuallyHidden}>
+                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  </Box>
+                  )
+                : null}
             </TableSortLabel>
           </TableCell>
         ))}
@@ -151,7 +154,7 @@ EnhancedTableHead.propTypes = {
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
+  rowCount: PropTypes.number.isRequired
 };
 
 const EnhancedTableToolbar = (props) => {
@@ -164,52 +167,56 @@ const EnhancedTableToolbar = (props) => {
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
+            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)
+        })
       }}
     >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Registros
-        </Typography>
-      )}
+      {numSelected > 0
+        ? (
+          <Typography
+            sx={{ flex: '1 1 100%' }}
+            color='inherit'
+            variant='subtitle1'
+            component='div'
+          >
+            {numSelected} selected
+          </Typography>
+          )
+        : (
+          <Typography
+            sx={{ flex: '1 1 100%' }}
+            variant='h6'
+            id='tableTitle'
+            component='div'
+          >
+            Registros
+          </Typography>
+          )}
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+      {numSelected > 0
+        ? (
+          <Tooltip title='Delete'>
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+          )
+        : (
+          <Tooltip title='Filter list'>
+            <IconButton>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+          )}
     </Toolbar>
   );
 };
 
 EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
+  numSelected: PropTypes.number.isRequired
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable () {
   const [order, setOrder] = useState('desc');
   const [orderBy, setOrderBy] = useState('date_issue');
   const [selected, setSelected] = useState([]);
@@ -225,11 +232,11 @@ export default function EnhancedTable() {
       setListRequests(res);
       setListShow(res);
     });
-  }, [getRequests, setListRequests, setListShow])
+  }, [getRequests, setListRequests, setListShow]);
 
   const handleRequestSort = (event, property) => {
-    console.log("ordenar")
-    console.log(property)
+    console.log('ordenar');
+    console.log(property);
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -257,7 +264,7 @@ export default function EnhancedTable() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -290,7 +297,7 @@ export default function EnhancedTable() {
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
+            aria-labelledby='tableTitle'
             size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
@@ -307,18 +314,20 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const date = new Date(row.date_issue)
+                  const date = new Date(row.date_issue);
                   return (
                     <TableRow key={row.id}>
-                      <TableCell sx={{pl: { sm: 2 }}}
-                        component="th"
+                      <TableCell
+                        sx={{ pl: { sm: 2 } }}
+                        component='th'
                         id={row.id}
-                        scope="row"
-                        padding="none">
+                        scope='row'
+                        padding='none'
+                      >
                         {row.code}
                       </TableCell>
-                      <TableCell align='left' sx={{maxWidth:"250px"}}>{row.name}</TableCell>
-                      <TableCell align='left' sx={{minWidth:"180px"}}>{date.toLocaleDateString('es-PE', {year:"numeric", month:"2-digit", day:"2-digit", hour:"numeric", minute:"numeric"})}</TableCell>
+                      <TableCell align='left' sx={{ maxWidth: '250px' }}>{row.name}</TableCell>
+                      <TableCell align='left' sx={{ minWidth: '180px' }}>{date.toLocaleDateString('es-PE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric' })}</TableCell>
                       <TableCell align='left'>{row.name_pri}</TableCell>
                       <TableCell align='left'>{row.user_fullname}</TableCell>
                       <TableCell align='left'>{row.company_tradename}</TableCell>
@@ -332,7 +341,7 @@ export default function EnhancedTable() {
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: (dense ? 33 : 53) * emptyRows
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -343,7 +352,7 @@ export default function EnhancedTable() {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
+          component='div'
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
@@ -353,7 +362,7 @@ export default function EnhancedTable() {
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
+        label='Dense padding'
       />
     </Box>
   );

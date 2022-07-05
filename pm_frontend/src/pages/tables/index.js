@@ -1,3 +1,3 @@
 export default function Tables () {
-  return <h1>Tables</h1>
+  return <h1>Tables</h1>;
 }

@@ -3,7 +3,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextFieldFullWidth from 'components/textFieldFullWidth';
 
 export default function FormFieldItem ({ bp, css, renderIcon, lines, maxChars, ...props }) {
-
   return (
     <Grid
       item
@@ -11,21 +10,21 @@ export default function FormFieldItem ({ bp, css, renderIcon, lines, maxChars, .
     >
       <TextFieldFullWidth
         css={{
-          background: props.disabled ? '#77a2': '#fff',
-          "& textarea" : {
+          background: props.disabled ? '#77a2' : '#fff',
+          '& textarea': {
             minHeight: lines && props?.value ? 'fit-content' : 200,
-            maxHeight: lines && props?.value && 200,
+            maxHeight: lines && props?.value && 200
           },
-          ...css,
+          ...css
         }}
-        variant="outlined"
-        multiline={lines?.multiline ? true : false}
+        variant='outlined'
+        multiline={!!lines?.multiline}
         {...props}
         inputProps={{
-          maxLength: lines?.multiline ? lines?.maxLength : (maxChars ? maxChars: 'auto'),
+          maxLength: lines?.multiline ? lines?.maxLength : (maxChars || 'auto')
         }}
         InputProps={{
-          sx: { fontSize: { xs: '.85rem', sm:'inherit' } },
+          sx: { fontSize: { xs: '.85rem', sm: 'inherit' } },
           endAdornment: renderIcon && (
             <InputAdornment
               position='end'
@@ -40,9 +39,9 @@ export default function FormFieldItem ({ bp, css, renderIcon, lines, maxChars, .
             >
               {renderIcon}
             </InputAdornment>
-          ),
+          )
         }}
       />
     </Grid>
-  )
+  );
 }

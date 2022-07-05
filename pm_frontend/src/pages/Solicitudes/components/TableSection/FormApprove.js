@@ -16,18 +16,18 @@ import {
 } from 'pages/Solicitudes/components/TableSection/FormFields';
 
 export default function FormApprove ({ dataRequest, setOpen, mode, title }) {
-  const { handleState }= useHandleState();
+  const { handleState } = useHandleState();
 
   return (
     <Grid
       container
-      component="form"
+      component='form'
       onSubmit={e => handleState(e, dataRequest.id, 3, setOpen)}
       sx={{
         gap: 2,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
       }}
-      autoComplete="off"
+      autoComplete='off'
     >
       <CodeField
         mode={mode}
@@ -65,15 +65,15 @@ export default function FormApprove ({ dataRequest, setOpen, mode, title }) {
         mode={mode}
         value={dataRequest.description}
       />
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: ' flex-end', gap: 1 }}>
         <ButtonForm
-          type="submit"
-          variant="success"
+          type='submit'
+          variant='success'
           startIcon={<ThumbUpIcon />}
         >
           {title}
         </ButtonForm>
       </Grid>
     </Grid>
-  )
+  );
 }

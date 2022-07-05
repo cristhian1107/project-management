@@ -17,10 +17,9 @@ export default function useUser () {
 
   // Validate credentials with a service
   const login = useCallback(async ({ username, password }) => {
-    return loginService({username, password})
+    return loginService({ username, password })
       .then(data => {
-        if (data?.status === 'failure')
-          return 'Username or Password incorrect';
+        if (data?.status === 'failure') { return 'Username or Password incorrect'; }
         // Store session token in local memory
         ls.setItem('token', data.jwt);
         // Loading data of the user in the global state
@@ -42,6 +41,6 @@ export default function useUser () {
   return {
     isLogged: Boolean(userState.jwt),
     login,
-    logout,
-  }
+    logout
+  };
 }

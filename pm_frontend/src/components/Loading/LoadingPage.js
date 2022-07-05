@@ -2,7 +2,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 export function LoadingPage () {
-
   return (
     <Box
       sx={{
@@ -16,7 +15,7 @@ export function LoadingPage () {
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: '1.5rem',
-        gap: 2,
+        gap: 2
       }}
     >
       Cargando

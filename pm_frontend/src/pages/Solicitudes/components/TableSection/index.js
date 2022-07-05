@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import FiltersContext from 'context/FiltersContext';
-import { useBackend } from 'hooks/useBackend'
+import { useBackend } from 'hooks/useBackend';
 import TableRoot from 'pages/Solicitudes/components/TableSection/TableRoot';
 import Button from 'components/button';
 import {
@@ -11,28 +11,23 @@ import {
   BoxInput, ContainerTable
 } from './styled-components';
 
-export default function TableSection({ css }) {
+export default function TableSection ({ css }) {
   const { setListShow, listRequests, localFilters, setLocalFilters } = useContext(FiltersContext);
   const { getEvents } = useBackend();
-  const [states, setStates] = useState([])
+  const [states, setStates] = useState([]);
 
   useEffect(() => {
     getEvents().then(setStates);
   }, [getEvents]);
 
   useEffect(() => {
-    if (localFilters.length > 0)
-      setListShow(() => listRequests.filter(record => localFilters.includes(record.code_sta)))
-    if (localFilters.length === 0)
-      setListShow(listRequests);
-  }, [localFilters, listRequests, setListShow])
+    if (localFilters.length > 0) { setListShow(() => listRequests.filter(record => localFilters.includes(record.code_sta))); }
+    if (localFilters.length === 0) { setListShow(listRequests); }
+  }, [localFilters, listRequests, setListShow]);
 
   const handleLocalFilters = (item) => {
-    if (localFilters.includes(item.code))
-      setLocalFilters(list => list.filter(elm => elm !== item.code));
-    else
-      setLocalFilters(list => [...list, item.code]);
-  }
+    if (localFilters.includes(item.code)) { setLocalFilters(list => list.filter(elm => elm !== item.code)); } else { setLocalFilters(list => [...list, item.code]); }
+  };
 
   return (
     <Box sx={{ ...css }}>
@@ -56,7 +51,7 @@ export default function TableSection({ css }) {
                 >
                   {state.name}
                 </ItemToFilter>
-              )
+              );
             })
           }
         </ListFilters>
@@ -84,5 +79,5 @@ export default function TableSection({ css }) {
         <TableRoot />
       </ContainerTable>
     </Box>
-  )
+  );
 }

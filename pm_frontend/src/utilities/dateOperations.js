@@ -3,5 +3,5 @@ export function subtractDays (dates, days) {
     const baseDate = new Date();
     baseDate.setDate(date.getDate() - days);
     return baseDate;
-  })
+  });
 }

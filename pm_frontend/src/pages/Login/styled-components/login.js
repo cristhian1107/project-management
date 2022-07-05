@@ -10,11 +10,11 @@ export function FormContainer (props) {
       sx={{
         mt: 4,
         px: { xs: 2, sm: 4 },
-        gap: 2,
+        gap: 2
       }}
       {...props}
     />
-  )
+  );
 }
 
 export function FormField (props) {
@@ -23,12 +23,12 @@ export function FormField (props) {
       sx={{
         fontWeight: 'bold',
         '& div': {
-          borderRadius: 50,
-        },
+          borderRadius: 50
+        }
       }}
       {...props}
     />
-  )
+  );
 }
 
 export function SubmitButton (props) {
@@ -41,11 +41,11 @@ export function SubmitButton (props) {
         textTransform: 'none',
         borderRadius: 50,
         letterSpacing: 1,
-        fontSize: '1.1rem',
+        fontSize: '1.1rem'
       }}
       {...props}
-    />   
-  )
+    />
+  );
 }
 
 export function SnipperContainer (props) {
@@ -55,11 +55,11 @@ export function SnipperContainer (props) {
         mt: 4,
         width: '100%',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'center'
       }}
       {...props}
-    />   
-  )
+    />
+  );
 }
 
 export function Alert (props) {
@@ -70,9 +70,9 @@ export function Alert (props) {
         mt: 2,
         mx: 'auto',
         borderRadius: 4,
-        maxWidth: '450px',
+        maxWidth: '450px'
       }}
       {...props}
-    />   
-  )
+    />
+  );
 }

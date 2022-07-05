@@ -1,7 +1,7 @@
 // React core
 import { useState } from 'react';
 // @mui
-import Grid from '@mui/material/Grid'
+import Grid from '@mui/material/Grid';
 import CheckIcon from '@mui/icons-material/Check'; // Confirmar
 import CloseIcon from '@mui/icons-material/Close'; // Rechazar
 import DeleteIcon from '@mui/icons-material/Delete'; // Cancelar
@@ -32,20 +32,20 @@ export default function ButtonActions ({ dataRequest }) {
   const [openResume, setOpenResume] = useState(false);
   const [openStop, setOpenStop] = useState(false);
   const [openAssign, setOpenAssign] = useState(false);
-  
+
   // Define the type and current state of the record
   const typeOf = dataRequest.name_typ ?? 'Solicitud';
   const currentState = dataRequest.name_sta;
 
   // Define permissions
-  const { filters, ...allowedActions } = userState.permissions
+  const { filters, ...allowedActions } = userState.permissions;
 
   // All actions grouped into states
   // Different actions correspond to a record in a current state.
   // Each action visually defines a modal and a button
-  // 
+  //
   const actions = {
-    'Solicitado': [
+    Solicitado: [
       {
         title: 'Confirmar',
         open: openReview,
@@ -53,7 +53,7 @@ export default function ButtonActions ({ dataRequest }) {
         setOpen: setOpenReview,
         Button: <ContainsTooltip label='Confirmar' render={<CheckIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormReview title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormReview title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       },
       {
@@ -63,19 +63,19 @@ export default function ButtonActions ({ dataRequest }) {
         isActive: allowedActions.btn_rechazar,
         Button: <ContainsTooltip label='Rechazar' render={<CloseIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       }
     ],
-    'Confirmado': [
+    Confirmado: [
       {
         title: 'Aprobar',
         open: openApprove,
         setOpen: setOpenApprove,
         isActive: allowedActions.btn_aprobar,
-        Button:<ContainsTooltip label='Aprobar' render={<DoneAllIcon />} />,
+        Button: <ContainsTooltip label='Aprobar' render={<DoneAllIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormApprove title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormApprove title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       },
       {
@@ -85,11 +85,11 @@ export default function ButtonActions ({ dataRequest }) {
         isActive: allowedActions.btn_rechazar,
         Button: <ContainsTooltip label='Rechazar' render={<CloseIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormReject title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       }
     ],
-    'Aprobado': [
+    Aprobado: [
       {
         title: 'Asignar',
         open: openAssign,
@@ -97,7 +97,7 @@ export default function ButtonActions ({ dataRequest }) {
         isActive: allowedActions.btn_asignar,
         Button: <ContainsTooltip label='Asignar' render={<CloseIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormReview title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormReview title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       },
       {
@@ -107,7 +107,7 @@ export default function ButtonActions ({ dataRequest }) {
         isActive: allowedActions.btn_cancelar,
         Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       }
     ],
@@ -119,7 +119,7 @@ export default function ButtonActions ({ dataRequest }) {
         isActive: allowedActions.btn_pausar,
         Button: <ContainsTooltip label='Pausar' render={<StopCircleIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormStop title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormStop title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       },
       {
@@ -129,14 +129,14 @@ export default function ButtonActions ({ dataRequest }) {
         isActive: allowedActions.btn_cancelar,
         Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       }
     ],
-    'Culminado': [],
-    'Rechazado': [],
-    'Cancelado': [],
-    'Pausado': [
+    Culminado: [],
+    Rechazado: [],
+    Cancelado: [],
+    Pausado: [
       {
         title: 'Reanudar',
         open: openResume,
@@ -144,7 +144,7 @@ export default function ButtonActions ({ dataRequest }) {
         isActive: allowedActions.btn_reanudar,
         Button: <ContainsTooltip label='Reaundar' render={<PlayCircleOutlineIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormResume title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormResume title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       },
       {
@@ -154,11 +154,11 @@ export default function ButtonActions ({ dataRequest }) {
         isActive: allowedActions.btn_cancelar,
         Button: <ContainsTooltip label='Cancelar' render={<DeleteIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
+          <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
       }
     ]
-  }
+  };
 
   // Component converts each action object to an element in the DOM
   const GenerateButton = ({ open, setOpen, typeOf, title, data, Form, Button }) => {
@@ -171,15 +171,14 @@ export default function ButtonActions ({ dataRequest }) {
       >
         <Form title={title} mode={data.name_sta} setOpen={setOpen} data={data} />
       </CustomModal>
-    )
-  }
+    );
+  };
 
   return (
     <Grid container sx={{ justifyContent: 'center', flexWrap: 'nowrap' }}>
       {
         actions[currentState]?.map(({ isActive, title, open, setOpen, Form, Button }) => {
-          if (!isActive)
-            return null;
+          if (!isActive) { return null; }
 
           return (
             <GenerateButton
@@ -192,7 +191,7 @@ export default function ButtonActions ({ dataRequest }) {
               Form={Form}
               Button={Button}
             />
-          )
+          );
         })
       }
       <ContainsTooltip label='Ver informe'>

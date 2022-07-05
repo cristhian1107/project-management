@@ -25,15 +25,15 @@ export default function FiltersSection ({ css }) {
     getCompanies().then(setCompanies);
   }, []);
 
-  const handleSubmit = (e)=> {
-    e.preventDefault()
+  const handleSubmit = (e) => {
+    e.preventDefault();
     getRequests(filters).then(res => {
       setListRequests(res);
     });
-  }
+  };
 
-  const handleChangeCompany = (e) => setFilters(obj => ({...obj, ...{idCompany: e.target.value}}));
-  const handleChangeDepartment = (e) => setFilters(obj => ({...obj, ...{department: e.target.value}}));
+  const handleChangeCompany = (e) => setFilters(obj => ({ ...obj, ...{ idCompany: e.target.value } }));
+  const handleChangeDepartment = (e) => setFilters(obj => ({ ...obj, ...{ department: e.target.value } }));
 
   const isActiveFilters = Boolean(userState.permissions.filters);
 
@@ -50,7 +50,7 @@ export default function FiltersSection ({ css }) {
           pt: 2,
           px: { sm: 2 },
           justifyContent: { xs: 'space-between', lg: 'center' },
-          gap: { xs: 1, xl: 2 },
+          gap: { xs: 1, xl: 2 }
         }}
       >
         <Grid item xs={5.8} sm={2.8} xl={2}>
@@ -58,7 +58,7 @@ export default function FiltersSection ({ css }) {
             variant='standard'
             label='Fecha inicio'
             value={startDate}
-            handleDate={e => setFilters(obj => ({...obj, ...{startDate:e}}))}
+            handleDate={e => setFilters(obj => ({ ...obj, ...{ startDate: e } }))}
           />
         </Grid>
         <Grid item xs={5.8} sm={2.8} xl={2}>
@@ -66,20 +66,20 @@ export default function FiltersSection ({ css }) {
             variant='standard'
             label='Fecha fin'
             value={endDate}
-            handleDate={e => setFilters(obj => ({...obj, ...{endDate:e}}))}
+            handleDate={e => setFilters(obj => ({ ...obj, ...{ endDate: e } }))}
           />
         </Grid>
         <Grid item xs={12} sm={2.8} xl={2}>
           <TextFieldFullWidth
             disabled={!isActiveFilters}
             select
-            defaultValue={""}
-            id="filter_empresa"
-            label="Empresa"
-            variant="standard"
+            defaultValue=''
+            id='filter_empresa'
+            label='Empresa'
+            variant='standard'
             onChange={handleChangeCompany}
           >
-            <MenuItem key="Todas" value="">{"< TODAS >"}</MenuItem>
+            <MenuItem key='Todas' value=''>{'< TODAS >'}</MenuItem>
             {
               companies.map(({ tradename, id }) => (
                 <MenuItem key={tradename} value={id}>{tradename}</MenuItem>
@@ -91,13 +91,13 @@ export default function FiltersSection ({ css }) {
           <TextFieldFullWidth
             disabled={!isActiveFilters}
             select
-            id="filter_area"
-            defaultValue={""}
-            label="Area"
-            variant="standard"
+            id='filter_area'
+            defaultValue=''
+            label='Area'
+            variant='standard'
             onChange={handleChangeDepartment}
           >
-            <MenuItem key="Todas" value="">{"< TODAS >"}</MenuItem>
+            <MenuItem key='Todas' value=''>{'< TODAS >'}</MenuItem>
             {
               departments.map(({ department: name }) => (
                 <MenuItem key={name} value={name}>{name}</MenuItem>
@@ -111,7 +111,7 @@ export default function FiltersSection ({ css }) {
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
-            mr: { lg: 2 },
+            mr: { lg: 2 }
           }}
           xs={12}
           xl={1}
@@ -129,8 +129,8 @@ export default function FiltersSection ({ css }) {
               py: 0.5,
               '&:hover': {
                 background: 'var(--box-gradient)',
-                color: '#fff',
-              },
+                color: '#fff'
+              }
             }}
           >
             <SearchIcon />
@@ -138,5 +138,5 @@ export default function FiltersSection ({ css }) {
         </Grid>
       </Grid>
     </Box>
-  )
+  );
 }

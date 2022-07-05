@@ -1,5 +1,5 @@
-import { useEffect, createRef } from 'react';
-import { useState } from 'react';
+import { useEffect, createRef, useState } from 'react';
+
 import Alert from '@mui/material/Alert';
 import './style.css';
 
@@ -9,8 +9,8 @@ export default function CustomAlert ({ time, children, setOpen, open, severity, 
 
   const handleClose = () => {
     setTimeout(() => setOpen(false), time);
-    setMounted(false)
-  }
+    setMounted(false);
+  };
 
   useEffect(() => {
     document.addEventListener('click', (e) => {
@@ -20,12 +20,12 @@ export default function CustomAlert ({ time, children, setOpen, open, severity, 
         } else {
           setTimeout(() => {
             setOpen(false);
-          }, time)
+          }, time);
         }
         setMounted(false);
       }
-    })
-  }, [ref, setOpen, time])
+    });
+  }, [ref, setOpen, time]);
 
   return (
     <>
@@ -47,5 +47,5 @@ export default function CustomAlert ({ time, children, setOpen, open, severity, 
         </Alert>
       )}
     </>
-  )
+  );
 }

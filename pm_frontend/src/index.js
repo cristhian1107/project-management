@@ -8,7 +8,7 @@ import store from 'redux/store';
 // React router dom
 import { BrowserRouter } from 'react-router-dom';
 // Global Styles
-import 'index.css'
+import 'index.css';
 // Componenet
 import App from './App';
 

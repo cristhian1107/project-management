@@ -8,9 +8,9 @@ export default function Solicitudes () {
     <>
       <FiltersContextProvider>
         <HeaderSection />
-        <FiltersSection css={{ my: 10 }}/>
+        <FiltersSection css={{ my: 10 }} />
         <TableSection />
       </FiltersContextProvider>
     </>
-  )
+  );
 }

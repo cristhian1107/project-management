@@ -14,23 +14,23 @@ export const ContainerFilters = (props) => (
       display: 'flex',
       alignItems: 'center',
       overflowX: 'auto',
-      flexWrap: 'wrap',
+      flexWrap: 'wrap'
     }}
     {...props}
   />
-)
+);
 
-export const  LabelTypography = (props) => (
+export const LabelTypography = (props) => (
   <Typography
     sx={{
       position: 'sticky',
       left: 0,
       fontSize: '1rem',
-      fontWeight: 'bold',
+      fontWeight: 'bold'
     }}
     {...props}
   />
-)
+);
 
 export const ListFilters = (props) => (
   <List
@@ -38,11 +38,11 @@ export const ListFilters = (props) => (
       minWidth: 558,
       display: 'flex',
       gap: 1,
-      pl: { sm: 1 },
+      pl: { sm: 1 }
     }}
     {...props}
   />
-)
+);
 
 export const ItemToFilter = ({ colorBorder, ...props }) => (
   <Button
@@ -50,21 +50,21 @@ export const ItemToFilter = ({ colorBorder, ...props }) => (
       minWidth: 'max-content',
       background: 'transparent',
       color: '#000',
-      border: `2px solid ${colorBorder}`,
+      border: `2px solid ${colorBorder}`
     }}
     {...props}
   />
-)
+);
 
 export const ContainerBoxSearch = (props) => (
   <Box
     sx={{
       display: 'flex',
-      justifyContent: { sm: 'flex-end' },
+      justifyContent: { sm: 'flex-end' }
     }}
     {...props}
   />
-)
+);
 
 export const FormGrid = (props) => (
   <Grid
@@ -73,11 +73,11 @@ export const FormGrid = (props) => (
       width: { xs: 'calc(100vw - 16px)', sm: '380px' },
       boxShadow: '2px 2px 5px #0005',
       borderRadius: 4,
-      overflow: 'hidden',
+      overflow: 'hidden'
     }}
     {...props}
   />
-)
+);
 
 export const BoxInput = (props) => (
   <Input
@@ -86,11 +86,11 @@ export const BoxInput = (props) => (
       background: 'none',
       color: '#000a',
       boxShadow: 'none',
-      '&::placeholder': { color: '#0007' },
+      '&::placeholder': { color: '#0007' }
     }}
     {...props}
   />
-)
+);
 
 export const ButtonToSearch = (props) => (
   <Button
@@ -105,12 +105,12 @@ export const ButtonToSearch = (props) => (
       '&:hover > svg': {
         background: 'var(--box-secondary)',
         color: '#fff',
-        boxShadow: '1px 1px 5px var(--box-secondary)',
-      },
+        boxShadow: '1px 1px 5px var(--box-secondary)'
+      }
     }}
     {...props}
   />
-)
+);
 
 export const StyleSearchIcon = (props) => (
   <SearchIcon
@@ -118,17 +118,17 @@ export const StyleSearchIcon = (props) => (
       width: 38,
       height: 38,
       p: 1,
-      borderRadius: '100%',
+      borderRadius: '100%'
     }}
     {...props}
   />
-)
+);
 
 export const ContainerTable = (props) => (
   <Box
     sx={{
-      mt: 2,
+      mt: 2
     }}
     {...props}
   />
-)
+);

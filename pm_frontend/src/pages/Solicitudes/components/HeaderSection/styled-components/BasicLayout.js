@@ -10,42 +10,42 @@ export const FormGridContainer = ({ children }) => (
   <Form
     sx={{
       '& > *:not(style)': { margin: 8 },
-      justifyContent: 'space-between',
+      justifyContent: 'space-between'
     }}
   >
     {children}
   </Form>
-)
+);
 
 export const ButtonModal = ({ children }) => (
   <Button
     sx={{
       margin: '8px 0',
-      background: 'var(--btn-gradient)',
+      background: 'var(--btn-gradient)'
     }}
   >
     {children}
   </Button>
-)
+);
 
 export const TextFieldTextarea = ({ children }) => (
   <TextFieldFullWidth
     sx={{
-      "& textarea" : {
-        minHeight: 200,
+      '& textarea': {
+        minHeight: 200
       }
     }}
   >
     {children}
   </TextFieldFullWidth>
-)
+);
 
 export const BLBox = styled(Box)({
   pt: 4,
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center'
-})
+});
 
 export const BLIconButton = styled(IconButton)({
   display: 'flex',
@@ -53,9 +53,9 @@ export const BLIconButton = styled(IconButton)({
   color: 'var(--btn-primary)',
   border: '1px solid var(--btn-primary)',
   '&:hover': { background: 'var(--btn-gradient)', color: '#fff' }
-})
+});
 
 export const BLTypography = styled(Typography)({
   fontWeight: 'inherit',
   fontSize: { lg: '1.15rem' }
-})
+});

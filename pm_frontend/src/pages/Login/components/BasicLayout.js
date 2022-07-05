@@ -1,15 +1,15 @@
-// Styles @mui 
+// Styles @mui
 import CssBaseline from '@mui/material/CssBaseline';
 import {
   LoginLayout,
   FormCardContainer
 } from 'pages/Login/components/styled-components';
 
-export default function BasicLayout({ children }) {
+export default function BasicLayout ({ children }) {
   return (
     <LoginLayout
       container
-      component="main"
+      component='main'
     >
       <CssBaseline />
       <FormCardContainer

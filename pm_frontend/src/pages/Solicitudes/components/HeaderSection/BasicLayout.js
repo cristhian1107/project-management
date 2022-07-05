@@ -1,10 +1,10 @@
-import Typography from "@mui/material/Typography";
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import IconButton from "@mui/material/IconButton";
+import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import CustomModal from 'components/CustomModal';
 
-export default function BasicLayout({ children, open, setOpen }) {
+export default function BasicLayout ({ children, open, setOpen }) {
   const ButtonToHandleModal = () => {
     return (
       <IconButton
@@ -13,7 +13,7 @@ export default function BasicLayout({ children, open, setOpen }) {
           borderRadius: 2,
           color: 'var(--btn-primary)',
           border: '1px solid var(--btn-primary)',
-          '&:hover': { background: 'var(--btn-gradient)', color: '#fff' },
+          '&:hover': { background: 'var(--btn-gradient)', color: '#fff' }
         }}
       >
         <AddIcon />
@@ -21,8 +21,8 @@ export default function BasicLayout({ children, open, setOpen }) {
           Nueva solicitud
         </Typography>
       </IconButton>
-    )
-  }
+    );
+  };
 
   return (
     <Box
@@ -30,7 +30,7 @@ export default function BasicLayout({ children, open, setOpen }) {
         pt: 4,
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'center'
       }}
     >
       <Typography variant='h4'>
@@ -45,5 +45,5 @@ export default function BasicLayout({ children, open, setOpen }) {
         {children}
       </CustomModal>
     </Box>
-  )
+  );
 }

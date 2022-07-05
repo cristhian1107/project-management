@@ -10,13 +10,13 @@ export default function ButtonForm ({ children, variant, sx, ...props }) {
         px: 4,
         background: `var(--${variant}-gradient)`,
         '&:hover': {
-          boxShadow: () => `0 3px 10px var(--${variant}-primary)`,
+          boxShadow: () => `0 3px 10px var(--${variant}-primary)`
         },
-        ...sx,
+        ...sx
       }}
       {...props}
     >
       {children}
     </Button>
-  )
+  );
 }

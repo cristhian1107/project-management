@@ -3,6 +3,8 @@ import Solicitudes from 'pages/Solicitudes';
 import Dashboard from 'pages/dashboard';
 import Tables from 'pages/tables';
 import Profile from 'pages/profile';
+import Tasks from 'pages/Tasks';
+
 
 const routes = {
   publics: [
@@ -24,6 +26,11 @@ const routes = {
       component: <Solicitudes />
     },
     {
+      path: '/tareas',
+      key: 'tareas',
+      component: <Tasks />
+    },
+    {
       path: '/tables',
       key: 'tables',
       component: <Tables />
@@ -34,6 +41,6 @@ const routes = {
       component: <Profile />
     }
   ]
-}
+};
 
 export { routes };

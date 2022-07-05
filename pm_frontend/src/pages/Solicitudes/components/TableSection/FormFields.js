@@ -17,9 +17,9 @@ function TypeField ({ mode, value }) {
 
   return (
     <FormFieldItem
-      disabled={mode !== 'Solicitado' ? true : false}
+      disabled={mode !== 'Solicitado'}
       required
-      select={mode !== 'Solicitado' ? false : true}
+      select={mode === 'Solicitado'}
       bp={{ xs: 5.5, sm: 3.8 }}
       label='Tipo'
       name='code_typ'
@@ -31,7 +31,7 @@ function TypeField ({ mode, value }) {
         ))
       }
     </FormFieldItem>
-  )
+  );
 }
 
 function PriorityField ({ mode, name, code }) {
@@ -46,9 +46,9 @@ function PriorityField ({ mode, name, code }) {
 
   return (
     <FormFieldItem
-      disabled={mode !== 'Solicitado' ? true : false}
+      disabled={mode !== 'Solicitado'}
       required
-      select={mode !== 'Solicitado' ? false : true}
+      select={mode === 'Solicitado'}
       bp={{ xs: 5.5, sm: 3.8 }}
       label='Prioridad'
       name='code_pri'
@@ -64,11 +64,10 @@ function PriorityField ({ mode, name, code }) {
 }
 
 function DateTentativeField ({ mode, value, date, handleDate }) {
-  
   return (
     <Grid item xs={12} sm={3.8}>
       <Calendar
-        disabled={mode !== 'Solicitado' ? true : false}
+        disabled={mode !== 'Solicitado'}
         required
         label='Fecha tentativa'
         name='date_tentative'
@@ -81,7 +80,6 @@ function DateTentativeField ({ mode, value, date, handleDate }) {
 }
 
 function CompanyField ({ value }) {
-
   return (
     <FormFieldItem
       disabled
@@ -90,11 +88,10 @@ function CompanyField ({ value }) {
       name='company_id'
       value={value}
     />
-  )
+  );
 }
 
 function DepartmentField ({ value }) {
-
   return (
     <FormFieldItem
       disabled
@@ -103,11 +100,10 @@ function DepartmentField ({ value }) {
       name='department'
       value={value}
     />
-  )
+  );
 }
 
 function UserField ({ value }) {
-
   return (
     <FormFieldItem
       disabled
@@ -116,11 +112,10 @@ function UserField ({ value }) {
       name='solicitante'
       value={value}
     />
-  )
+  );
 }
 
 function SubjectField ({ value }) {
-
   return (
     <FormFieldItem
       disabled
@@ -129,11 +124,10 @@ function SubjectField ({ value }) {
       name='subjects'
       value={value}
     />
-  )
+  );
 }
 
 function ReasonField ({ value }) {
-
   return (
     <FormFieldItem
       disabled
@@ -143,41 +137,38 @@ function ReasonField ({ value }) {
       value={value}
       lines={{ multiline: true, maxLength: 500 }}
     />
-  )
+  );
 }
 
 function TitleField ({ mode, value }) {
-
   return (
     <FormFieldItem
-      disabled={mode !== 'Solicitado' ? true : false}
+      disabled={mode !== 'Solicitado'}
       bp={{ xs: 12 }}
       required
       defaultValue={mode !== 'Solicitado' ? value : ''}
       label='Titulo'
       name='name'
-      maxChars= '50'
+      maxChars='50'
     />
-  )
+  );
 }
 
 function DescriptionField ({ mode, value }) {
-
   return (
     <FormFieldItem
-      disabled={mode !== 'Solicitado' ? true : false}
+      disabled={mode !== 'Solicitado'}
       bp={{ xs: 12 }}
       label='Descripcion'
       name='description'
-      defaultValue={ mode !== 'Solicitado' ? value : ''}
-      lines={{ multiline: mode !== 'Solicitado' ? false : true, maxLength: 500 }}
+      defaultValue={mode !== 'Solicitado' ? value : ''}
+      lines={{ multiline: mode === 'Solicitado', maxLength: 500 }}
       renderIcon={mode !== 'Solicitado' ? null : <p>Max length 500</p>}
     />
-  )
+  );
 }
 
 function ReasonRejecteField ({ label }) {
-
   return (
     <FormFieldItem
       bp={{ xs: 12 }}
@@ -186,11 +177,10 @@ function ReasonRejecteField ({ label }) {
       name='reason_reject'
       lines={{ multiline: true, maxLength: 500 }}
     />
-  )
+  );
 }
 
 function CodeField ({ value }) {
-
   return (
     <FormFieldItem
       disabled
@@ -199,7 +189,7 @@ function CodeField ({ value }) {
       name='code'
       value={value}
     />
-  )
+  );
 }
 
 export {

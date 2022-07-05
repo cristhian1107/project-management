@@ -14,7 +14,7 @@ export function FormCard (props) {
         flexDirection: 'column',
         alignItems: 'center',
         maxWidth: 450,
-        background: '#fff',
+        background: '#fff'
       }}
       {...props}
     />
@@ -28,7 +28,7 @@ export function CardHeader (props) {
         display: 'flex',
         alignItems: 'center',
         width: 'fit-content',
-        position: 'relative',
+        position: 'relative'
       }}
       {...props}
     />
@@ -46,7 +46,7 @@ export function AvatarStyled (props) {
         width: 90,
         height: 90,
         fontSize: '1.7rem',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
       }}
       {...props}
     />
@@ -59,9 +59,9 @@ export function LockIconStyled (props) {
       sx={{
         width: 40,
         height: 40,
-        color: 'var(--btn-primary)',
+        color: 'var(--btn-primary)'
       }}
       {...props}
     />
-  )
+  );
 }

@@ -4,7 +4,6 @@ import ProfileIcon from '@mui/icons-material/AccountCircle';
 import TablesIcon from '@mui/icons-material/BackupTable';
 import ProjectsIcon from '@mui/icons-material/AssignmentTurnedIn';
 
-
 const links = [
   {
     name: 'Dashboard',
@@ -30,7 +29,7 @@ const links = [
     key: 'profile',
     icon: <ProfileIcon />
   }
-]
+];
 
 const drawerWidth = 240;
 

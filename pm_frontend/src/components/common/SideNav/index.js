@@ -11,18 +11,17 @@ import CustomAppBar from 'components/common/AppBar';
 import DrawerType from 'components/common/SideNav/DrawerType';
 
 export default function SideNav () {
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <CustomAppBar />
       <Box
-        component="nav"
+        component='nav'
         sx={{
           width: { lg: drawerWidth },
-          flexShrink: { lg: 0 },
+          flexShrink: { lg: 0 }
         }}
-        aria-label="mailbox folders"
+        aria-label='mailbox folders'
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <DrawerType typeOfDrawer='temporary'>
@@ -33,12 +32,12 @@ export default function SideNav () {
         </DrawerType>
       </Box>
       <Box
-        component="main"
+        component='main'
         sx={{
           flexGrow: 1,
           p: { xs: 1, sm: 3, lg: 5 },
           width: { md: `calc(100% - ${drawerWidth}px)` },
-          overflowX: 'hidden',
+          overflowX: 'hidden'
         }}
       >
         <Toolbar />

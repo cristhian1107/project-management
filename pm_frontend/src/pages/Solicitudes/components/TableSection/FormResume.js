@@ -17,13 +17,13 @@ export default function FormResume ({ dataRequest, setOpen, mode, title }) {
   return (
     <Grid
       container
-      component="form"
+      component='form'
       onSubmit={e => handleState(e, dataRequest.id, 5, setOpen)}
       sx={{
         gap: 2,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
       }}
-      autoComplete="off"
+      autoComplete='off'
     >
       <CodeField
         mode={mode}
@@ -47,7 +47,7 @@ export default function FormResume ({ dataRequest, setOpen, mode, title }) {
         value={dataRequest.user_fullname}
       />
 
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: ' flex-end', gap: 1 }}>
         <ButtonForm
           type='submit'
           variant='success'
@@ -57,5 +57,5 @@ export default function FormResume ({ dataRequest, setOpen, mode, title }) {
         </ButtonForm>
       </Grid>
     </Grid>
-  )
+  );
 }

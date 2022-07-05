@@ -14,18 +14,18 @@ import {
 } from 'pages/Solicitudes/components/TableSection/FormFields';
 
 export default function FormStop ({ dataRequest, setOpen, mode, title }) {
-  const { handleState }= useHandleState();
+  const { handleState } = useHandleState();
 
   return (
     <Grid
       container
-      component="form"
+      component='form'
       onSubmit={e => handleState(e, dataRequest.id, 9, setOpen)}
       sx={{
         gap: 2,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
       }}
-      autoComplete="off"
+      autoComplete='off'
     >
       <CodeField
         mode={mode}
@@ -52,7 +52,7 @@ export default function FormStop ({ dataRequest, setOpen, mode, title }) {
         label='Motivo de pausa'
       />
 
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent:' flex-end', gap: 1 }}>
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: ' flex-end', gap: 1 }}>
         <ButtonForm
           type='submit'
           variant='success'
@@ -62,5 +62,5 @@ export default function FormStop ({ dataRequest, setOpen, mode, title }) {
         </ButtonForm>
       </Grid>
     </Grid>
-  )
+  );
 }

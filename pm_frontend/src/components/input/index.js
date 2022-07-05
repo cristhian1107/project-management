@@ -1,8 +1,7 @@
 // @mui
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 
-export default function Input({ css, ...data }) {
-
+export default function Input ({ css, ...data }) {
   return (
     <Grid
       item
@@ -18,8 +17,8 @@ export default function Input({ css, ...data }) {
         borderBottom: '1px solid #0005',
         color: '#000a',
         '&::placeholder': { color: '#0005' },
-        ...css,
+        ...css
       }}
     />
-  )
+  );
 }
