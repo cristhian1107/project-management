@@ -11,32 +11,34 @@ from database.db_procedure import DBProcedures
 from datetime import datetime
 from general.library import Libraries
 import asyncio
-
 # from flasgger.utils import swag_from
 
 time = '%Y-%m-%dT%H:%M:%S.%fZ'
 dt_date = '%Y-%m-%d'
 
 
-@app_views.route('/request/all', methods=['GET'],
-                 strict_slashes=False)
-@Libraries.validate_token  # Custom decorator to validate the token
+@app_views.route('/request/all', strict_slashes=False)
+@Libraries.validate_token
 def all_request(**kwargs):
-    """returns list of all projects"""
+    """API (GET) Route /request/all.
+
+    Returns:
+        response: JSON contains all register of requests.
+    """
     payload = kwargs.get('payload')
     date_begin = datetime.strptime(
         request.args.get('date_begin', None), dt_date)
     date_end = datetime.strptime(
         request.args.get('date_end', None), dt_date)
+
     if date_end is None or date_begin is None:
         return make_response(jsonify({'request': 'failure'}), 204)
+
     company_id = request.args.get('company_id', None)
     department = request.args.get('department', None)
     company_id = None if company_id == '' else company_id
     department = None if department == '' else department
     user_id = payload.get('id')
-    # Necesito una lista de diccionarios de todos los proyectos con
-    # todos sus datos en ese rango de fecha
     res = DBProcedures.requests_all(
         date_begin, date_end, company_id, department, user_id)
     if res is None:
@@ -44,15 +46,14 @@ def all_request(**kwargs):
     return make_response(jsonify(res), 200)
 
 
-@app_views.route('/request', methods=['GET'],
-                 strict_slashes=False)
-@Libraries.validate_token  # Custom decorator to validate the token
+@app_views.route('/request', strict_slashes=False)
+@Libraries.validate_token
 def get_request(**kwargs):
-    """returns a list of specific projects"""
+    """API (GET) Route /request.
 
-    payload = kwargs.get('payload')
-    # id = payload.get('id')
-    # Necesito un diccionario de el proyectos con todos sus datos
+    Returns:
+        response: JSON contains the registe of request.
+    """
     id = request.args.get('id', None)
     res = DBProcedures.requests_one(id, True)
     if res is None:
@@ -69,22 +70,21 @@ def insert_request(**kwargs):
     Returns:
         Response: JSON contain the object insert.
     """
-    # (Kwargs) contain the jwt values, deserialized.
     payload = kwargs.get('payload')
     data = request.get_json()
     item = Request()
     item.user_id = payload.get('id')
     item.date_issue = datetime.strptime(data.get('date_issue'), time)
-    # Validate date format.
+
     if item.date_issue is None or type(item.date_issue) is not datetime:
         return make_response(jsonify({'request': 'failure'}), 204)
+
     item.reason = data.get('reason', None)
     item.subject = data.get('subject', None)
     item.table_pri = tables.get('PRI')
     item.code_pri = data.get('code_pri', None)
     item.code = ''
     item.percentage = 0
-    # Save object in Database.
     res = DBProcedures.requests_insert(item)
     # Get values for email.
     # email = DBProcedures.requests_email(res.id)
@@ -93,14 +93,20 @@ def insert_request(**kwargs):
 
     if not res:
         return make_response(jsonify({'request': 'failure'}), 204)
-    return make_response(jsonify({'request': 'success', 'data': res.to_dict()}), 201)
+    return make_response(jsonify({
+        'request': 'success', 'data': res.to_dict()
+    }), 201)
 
 
-@app_views.route('/request', methods=['PUT'],
-                 strict_slashes=False)
-@Libraries.validate_token  # Custom decorator to validate the token
+@app_views.route('/request', methods=['PUT'], strict_slashes=False)
+@Libraries.validate_token
 def update_request(**kwargs):
-    """updates a new requirement/project"""
+    """API (PUT) router /request.
+    Update new requests in database.
+
+    Returns:
+        Response: JSON contain success or failure.
+    """
     payload = kwargs.get('payload')
     data = request.get_json()
     item = Request()
@@ -116,6 +122,7 @@ def update_request(**kwargs):
     item.table_pri = tables.get('PRI')
     item.code_typ = data.get('code_typ', None)
     item.code_pri = data.get('code_pri', None)
+
     res = DBProcedures.requests_update(item)
     # Get values for email.
     # email = DBProcedures.requests_email(item.id)
@@ -126,9 +133,8 @@ def update_request(**kwargs):
     return make_response(jsonify({'request': 'success'}), 201)
 
 
-@app_views.route('/request/event', methods=['POST'],
-                 strict_slashes=False)
-@Libraries.validate_token  # Custom decorator to validate the token
+@app_views.route('/request/event', methods=['POST'], strict_slashes=False)
+@Libraries.validate_token
 def update_event(**kwargs):
     """API (POST) Route /request/event.
     Change the status of the request.
