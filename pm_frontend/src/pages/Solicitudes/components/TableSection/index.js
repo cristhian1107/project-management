@@ -14,7 +14,8 @@ import {
 export default function TableSection ({ css }) {
   const { setListShow, listRequests, localFilters, setLocalFilters } = useContext(FiltersContext);
   const { getEvents } = useBackend();
-  const [states, setStates] = useState([]);
+  const [states, setStates] = useState([])
+  const [color, setColor] = useState(Array(8).fill(false))
 
   useEffect(() => {
     getEvents().then(setStates);
@@ -26,9 +27,24 @@ export default function TableSection ({ css }) {
   }, [localFilters, listRequests, setListShow]);
 
   const handleLocalFilters = (item) => {
-    if (localFilters.includes(item.code)) { setLocalFilters(list => list.filter(elm => elm !== item.code)); } else { setLocalFilters(list => [...list, item.code]); }
-  };
-
+    if (localFilters.includes(item.code)) {
+      setLocalFilters(list => list.filter(elm => elm !== item.code));
+      setColor((cl) => cl.map((elm, idx) => idx === item.code - 1 ? !elm : elm))
+    } else {
+      setLocalFilters(list => [...list, item.code]);
+      setColor((cl) => cl.map((elm, idx) => idx === item.code - 1 ? !elm : elm))
+    }
+  }
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if(result){
+      const r= parseInt(result[1], 16);
+      const g= parseInt(result[2], 16);
+      const b= parseInt(result[3], 16);
+      return [r, g, b];//return 23,14,45 -> reformat if needed 
+  } 
+  return null;
+}
   return (
     <Box sx={{ ...css }}>
       <ContainerFilters>
@@ -43,11 +59,13 @@ export default function TableSection ({ css }) {
           </Button>
           {
             states.map((state) => {
+              console.log(state.description)
               return (
                 <ItemToFilter
                   onClick={() => handleLocalFilters(state)}
                   colorBorder={state.description}
                   key={state.alias}
+                  BG={color[state.code - 1] ? hexToRgb(state.description) : false}
                 >
                   {state.name}
                 </ItemToFilter>

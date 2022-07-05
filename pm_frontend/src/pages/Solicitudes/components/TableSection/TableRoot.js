@@ -62,14 +62,14 @@ const headCells = [
   {
     id: 'code',
     numeric: false,
-    disablePadding: true,
-    label: 'Código'
+    disablePadding: false,
+    label: 'Código',
   },
   {
     id: 'name',
     numeric: false,
-    disablePadding: true,
-    label: 'Nombre'
+    disablePadding: false,
+    label: 'Nombre',
   },
   {
     id: 'date_issue',
@@ -326,8 +326,8 @@ export default function EnhancedTable () {
                       >
                         {row.code}
                       </TableCell>
-                      <TableCell align='left' sx={{ maxWidth: '250px' }}>{row.name}</TableCell>
-                      <TableCell align='left' sx={{ minWidth: '180px' }}>{date.toLocaleDateString('es-PE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric' })}</TableCell>
+                      <TableCell align='left' sx={{maxWidth:"260px"}}>{row.name}</TableCell>
+                      <TableCell align='left' sx={{minWidth:"180px"}}>{date.toLocaleDateString('es-PE', {year:"numeric", month:"2-digit", day:"2-digit", hour:"numeric", minute:"numeric"})}</TableCell>
                       <TableCell align='left'>{row.name_pri}</TableCell>
                       <TableCell align='left'>{row.user_fullname}</TableCell>
                       <TableCell align='left'>{row.company_tradename}</TableCell>
