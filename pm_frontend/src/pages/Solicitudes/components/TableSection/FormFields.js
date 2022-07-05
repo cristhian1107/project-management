@@ -156,6 +156,7 @@ function TitleField ({ mode, value }) {
       defaultValue={mode !== 'Solicitado' ? value : ''}
       label='Titulo'
       name='name'
+      maxChars= '50'
     />
   )
 }
