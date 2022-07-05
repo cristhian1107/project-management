@@ -8,9 +8,14 @@ import hashlib
 from general.library import Libraries
 
 
-@app_views.route('/user', methods=['GET'], strict_slashes=False)
+@app_views.route('/user', strict_slashes=False)
 @Libraries.validate_token
 def get_user(**kwargs):
+    """API (GET) Route /user
+
+    Returns:
+        response: JSON contain info user.
+    """
     payload = kwargs.get('payload')
     id = payload.get('id')
     item = User()
@@ -26,22 +31,22 @@ def get_user(**kwargs):
     return make_response(jsonify(item.to_dict()), 201)
 
 
-@app_views.route('/login', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/login', methods=['POST'], strict_slashes=False)
 def login():
-    """Validate login"""
+    """API (POST) Route /login
+
+    Returns:
+        response: JSON contain info user.
+    """
     body = request.get_json()
-    request.headers.get('jwt')
     name = body.get('username')
     password = body.get('password')
-    print(password)
     m = hashlib.md5()
     m.update(str.encode(password))
     password = m.hexdigest()
     item = User()
-    # item = DBProcedures.users_login('javier.pilco', password)
-    print(password)
     item = DBProcedures.users_login(name, password)
+
     if item is None or not item:
         return make_response(jsonify({'status': 'failure'}), 203)  # RFC 7235
 
@@ -52,6 +57,3 @@ def login():
     encoded_jwt = Libraries.generate_token(payload)
     setattr(item, 'jwt', encoded_jwt)
     return make_response(jsonify(item.to_dict()), 201)
-    # return make_response(jsonify({"jwt":"jwt"}), 201)
-    # res = make_response(jsonify(item.to_dict()), 201)
-    # return res.set_cookie("thiscookie", "cookie")
