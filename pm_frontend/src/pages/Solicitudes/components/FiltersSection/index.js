@@ -31,12 +31,10 @@ export default function FiltersSection ({ css }) {
       setListRequests(res);
     });
   };
-
   const handleChangeCompany = (e) => setFilters(obj => ({ ...obj, ...{ idCompany: e.target.value } }));
   const handleChangeDepartment = (e) => setFilters(obj => ({ ...obj, ...{ department: e.target.value } }));
-
   const isActiveFilters = Boolean(userState.permissions.filters);
-
+  console.log(userState.company_id)
   return (
     <Box sx={{ ...css }}>
       <Typography variant='h5' textAlign='center'>
@@ -73,7 +71,7 @@ export default function FiltersSection ({ css }) {
           <TextFieldFullWidth
             disabled={!isActiveFilters}
             select
-            defaultValue=''
+            defaultValue= {!isActiveFilters ? userState.company_id : ''}
             id='filter_empresa'
             label='Empresa'
             variant='standard'
@@ -92,7 +90,7 @@ export default function FiltersSection ({ css }) {
             disabled={!isActiveFilters}
             select
             id='filter_area'
-            defaultValue=''
+            defaultValue={!isActiveFilters ? userState.department : ''}
             label='Area'
             variant='standard'
             onChange={handleChangeDepartment}
