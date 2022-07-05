@@ -3,6 +3,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
 import TablesIcon from '@mui/icons-material/BackupTable';
 import ProjectsIcon from '@mui/icons-material/AssignmentTurnedIn';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 
 const links = [
   {
@@ -16,6 +17,12 @@ const links = [
     route: '/solicitudes',
     key: 'solicitudes',
     icon: <ProjectsIcon />
+  },
+  {
+    name: "Tareas",
+    route: '/tareas',
+    key: 'tareas',
+    icon: <PlaylistAddCheckIcon />
   },
   {
     name: 'Tables',
