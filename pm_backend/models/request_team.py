@@ -24,4 +24,5 @@ class RequestTeam(BaseModel):
         # Additional attributes.
         self.user_id = None
         self.date_issue = None
+        self.is_last = False
         super().__init__(**kwargs)
