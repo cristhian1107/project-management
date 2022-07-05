@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 """Route for table.
 """
-from models.companie import Companie
 from routes import app_views
 from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
+from general.library import Libraries
+from models.companie import Companie
 
 
-@app_views.route('/company/all', methods=['GET'], strict_slashes=False)
-def all_companies():
-    """API (GET) Route /companyall
+@app_views.route('/company/all', strict_slashes=False)
+@Libraries.validate_token
+def all_companies(**kwargs):
+    """API (GET) Route /company/all
 
     Returns:
         response: JSON contain records of tables.
