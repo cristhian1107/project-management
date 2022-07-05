@@ -6,10 +6,12 @@ from models.table import Table
 from routes import app_views
 from flask import jsonify, abort, request, make_response
 from database.db_procedure import DBProcedures
+from general.library import Libraries
 
 
-@app_views.route('/table/all', methods=['GET'], strict_slashes=False)
-def all_tables():
+@app_views.route('/table/all', strict_slashes=False)
+@Libraries.validate_token
+def all_tables(**kwargs):
     """API (GET) Route /table/all
 
     Returns:
@@ -22,9 +24,10 @@ def all_tables():
     return make_response(jsonify(res), 200)
 
 
-@app_views.route('/department/all', methods=['GET'], strict_slashes=False)
-def all_departments():
-    """API (GET) Route /departmentall
+@app_views.route('/department/all', strict_slashes=False)
+@Libraries.validate_token
+def all_departments(**kwargs):
+    """API (GET) Route /department/all
 
     Returns:
         response: JSON contain records of departments.
