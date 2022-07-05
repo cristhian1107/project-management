@@ -21,7 +21,8 @@ VALUES
 (1, 1, 'Tablas', 'TAB', 'Tablas generales', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (1, 2, 'Solicitudes', 'TYP', 'Tablas de solicitudes', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (1, 3, 'Estados', 'STA', 'Tablas de estados', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
-(1, 4, 'Prioridades', 'PRI', 'Tablas de prioridades', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+(1, 4, 'Prioridades', 'PRI', 'Tablas de prioridades', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(1, 5, 'Funciones', 'FUN', 'Tablas de funciones', 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
 
 -- * Solicitudes * --
 INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
@@ -48,3 +49,12 @@ VALUES
 (4, 1, 'Baja', 'BAJ', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (4, 2, 'Normal', 'NOR', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (4, 3, 'Alta', 'ALT', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+
+-- * Prioridades * --
+INSERT INTO tables (`table`, `code`, `name`, `alias`, `description`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
+VALUES
+(5, 1, 'Jefe de proyecto', 'JPR', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(5, 2, 'Agente', 'AGE', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(5, 3, 'Helpdesk', 'HEL', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(5, 4, 'Backend', 'BAC', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(5, 5, 'Frontend', 'FRO', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);

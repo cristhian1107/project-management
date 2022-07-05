@@ -307,6 +307,59 @@ END $$
 DELIMITER ;
 
 
+DROP PROCEDURE IF EXISTS requests_teams_insert;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-07-04
+-- Descripcion         : Update record from the table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE requests_teams_insert
+( IN pbigrequest_id bigint
+, IN pbigworker_id bigint
+, IN pinttable_fun int
+, IN pintcode_fun int
+, IN pbitis_active bit
+, IN pbiguser_id bigint
+, IN pdtmdate_issue datetime
+, IN pdtmcreate_at datetime
+, IN pvchcreate_by varchar(50)
+, IN pdtmupdate_at datetime
+, IN pvchupdate_by varchar(50) )
+BEGIN
+
+    DECLARE v_table_sta, v_code_sta int;
+
+    -- * User * --
+    SELECT user INTO pvchcreate_by
+    FROM users
+    WHERE
+        id = pbiguser_id;
+
+    -- * State * --
+    SELECT `table`, `code` INTO v_table_sta, v_code_sta
+    FROM tables
+    WHERE
+        `table` = 3 AND
+        `alias` = 'EPR';
+
+    -- * Insert request * --
+    INSERT INTO requests_teams
+        ( `request_id`, `worker_id`, `table_fun`, `code_fun`, `is_active`
+        , `create_at` , `create_by` , `update_at` , `update_by`)
+    VALUES
+        ( pbigrequest_id, pbigworker_id, pinttable_fun, pintcode_fun, pbitis_active
+        , CURRENT_TIMESTAMP(), pvchcreate_by , NULL , NULL);
+
+    -- * Insert event * --
+    call requests_events_insert
+        ( pbigrequest_id, NULL, v_table_sta, v_code_sta, pdtmdate_issue, pbiguser_id, 'Equipo asignado', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+
+END $$
+DELIMITER ;
+
+
 DROP PROCEDURE IF EXISTS requests_insert;
 -- =========================================================
 -- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-11

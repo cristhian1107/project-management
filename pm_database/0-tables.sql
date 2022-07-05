@@ -230,7 +230,7 @@ CONSTRAINT `fk_requests_events_users` FOREIGN KEY `user_id` (`user_id`) REFERENC
 CREATE TABLE IF NOT EXISTS `requests_teams`
 (
  `request_id` bigint NOT NULL ,
- `user_id`    bigint NOT NULL ,
+ `worker_id`    bigint NOT NULL ,
  `table_fun`  int NOT NULL ,
  `code_fun`   int NOT NULL ,
  `is_active`  bit NOT NULL ,
@@ -239,11 +239,11 @@ CREATE TABLE IF NOT EXISTS `requests_teams`
  `update_at`  datetime NULL ,
  `update_by`  varchar(50) NULL ,
 
-PRIMARY KEY (`request_id`, `user_id`),
+PRIMARY KEY (`request_id`, `worker_id`),
 KEY `request_id` (`request_id`),
 CONSTRAINT `fk_requests_teams` FOREIGN KEY `request_id` (`request_id`) REFERENCES `requests` (`id`),
-KEY `user_id` (`user_id`),
-CONSTRAINT `fk_requests_teams_users` FOREIGN KEY `user_id` (`user_id`) REFERENCES `users` (`id`),
+KEY `worker_id` (`worker_id`),
+CONSTRAINT `fk_requests_teams_users` FOREIGN KEY `worker_id` (`worker_id`) REFERENCES `users` (`id`),
 KEY `table_code_fun` (`table_fun`, `code_fun`),
 CONSTRAINT `fk_requests_teams_tables_fun` FOREIGN KEY `table_code_fun` (`table_fun`, `code_fun`) REFERENCES `tables` (`table`, `code`)
 );
