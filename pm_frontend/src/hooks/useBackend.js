@@ -47,6 +47,8 @@ function useBackend () {
 
   obj.postEvent = useCallback((body) => func({ method: 'POST', path: 'request/event', body }), []);
 
+  obj.postTeam = useCallback((body) => func({ method: 'POST', path: 'request/team', body }), []);
+
   return obj;
 }
 

@@ -23,6 +23,7 @@ import FormCancel from 'pages/Solicitudes/components/TableSection/FormCancel';
 import FormResume from 'pages/Solicitudes/components/TableSection/FormResume';
 import FormStop from 'pages/Solicitudes/components/TableSection/FormStop';
 import FormAssign from 'pages/Solicitudes/components/TableSection/FormAssign';
+import ReportContext from 'context/ReportContext';
 
 export default function ButtonActions ({ dataRequest }) {
   const { setReport } = useContext(ReportContext);
