@@ -440,38 +440,38 @@ BEGIN
         ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, NULL, pdtmcreate_at, pvchcreate_by, NULL, NULL);
 
 
-    -- * Roles * --
-    IF (v_role_id IN (2, 3)) -- Gerencia TI & Gerencia general.
-    THEN
+    -- -- * Roles * --
+    -- IF (v_role_id IN (2, 3)) -- Gerencia TI & Gerencia general.
+    -- THEN
 
-        -- * State * --
-        SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
-        FROM tables
-        WHERE
-            `table` = 3 AND
-            `alias` = 'CON';
+    --     -- * State * --
+    --     SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
+    --     FROM tables
+    --     WHERE
+    --         `table` = 3 AND
+    --         `alias` = 'CON';
 
-        -- * Insert event * --
-        call requests_events_insert
-        ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+    --     -- * Insert event * --
+    --     call requests_events_insert
+    --     ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
 
-    END If;
+    -- END If;
 
-    IF (v_role_id = 3) -- Gerencia general.
-    THEN
+    -- IF (v_role_id = 3) -- Gerencia general.
+    -- THEN
 
-        -- * State * --
-        SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
-        FROM tables
-        WHERE
-            `table` = 3 AND
-            `alias` = 'APR';
+    --     -- * State * --
+    --     SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
+    --     FROM tables
+    --     WHERE
+    --         `table` = 3 AND
+    --         `alias` = 'APR';
 
-        -- * Insert event * --
-        call requests_events_insert
-        ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+    --     -- * Insert event * --
+    --     call requests_events_insert
+    --     ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
 
-    END If;
+    -- END If;
 
     -- * Recovery requets * --
     call requests_one
@@ -679,14 +679,17 @@ BEGIN
               re.request_id , re.item , re.table_sta , re.code_sta
             , re.date_issue , re.user_id , sta.name as name_sta , re.reason
             , re.create_at , re.create_by , re.update_at , re.update_by
+            , CONCAT(usr.name, ' ', usr.lastname) as user_fullname
         FROM requests_events re
         LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+        LEFT JOIN users usr ON re.user_id = usr.id
         WHERE
             re.request_id = pbigid
         ORDER BY re.request_id desc, re.item desc;
 
         SELECT
               rt.request_id , rt.worker_id ,  rt.is_active
+            , us.name as worker_name, us.lastname as worker_lastname
             , CONCAT(us.name, ' ', us.lastname) as worker_fullname
             , rt.table_fun , rt.code_fun , fun.name as name_fun
             , rt.create_at , rt.create_by , rt.update_at , rt.update_by
