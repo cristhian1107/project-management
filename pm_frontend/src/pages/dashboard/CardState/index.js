@@ -51,7 +51,7 @@ export default function CardState ({ name_sta, number_sta, total, color_sta: clr
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              boxShadow: '5px 5px 5px black',
+              boxShadow: '50px 50px 50px rgb(0,0,0, 0.4)',
               position: 'relative',
               top: '-50px',
               '& svg': {

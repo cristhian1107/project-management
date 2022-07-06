@@ -36,15 +36,10 @@ export default function Dashboard () {
 
   return (
     <Box>
-      <h1> Dashboard
+      <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "end", flexWrap: "wrap"}}>
+        <h1> Dashboard </h1>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-          <Stack
-            spacing={3}
-            sx={{
-              display: 'flex',
-              alignItems: 'end'
-            }}
-          >
+
             <DatePicker
               views={['year', 'month']}
               label='Año y mes'
@@ -59,14 +54,13 @@ export default function Dashboard () {
                 {...params} helperText={null}
                 sx={{
                   display: 'flex',
-                  width: '300px',
+                  width: {xs:"100%", sm:'300px'},
                   justifyContent: 'end'
                 }}
-                                       />}
+              />}
             />
-          </Stack>
         </LocalizationProvider>
-      </h1>
+      </Box>
       <Grid
         container
         sx={{
