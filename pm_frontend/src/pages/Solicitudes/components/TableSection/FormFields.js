@@ -5,7 +5,7 @@ import Calendar from 'components/calendar';
 import { useBackend } from 'hooks/useBackend';
 import FormFieldItem from 'pages/Solicitudes/components/common/FormFieldItem';
 
-function TypeField ({ mode, value }) {
+function TypeField ({ mode, value, bp }) {
   const [types, setTypes] = useState([]);
   const { getTypes } = useBackend();
 
@@ -20,7 +20,7 @@ function TypeField ({ mode, value }) {
       disabled={mode !== 'Solicitado' ? true : false}
       required
       select={mode !== 'Solicitado' ? false : true}
-      bp={{ xs: 5.5, sm: 3.8 }}
+      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
       label='Tipo'
       name='code_typ'
       defaultValue={mode !== 'Solicitado' ? value : ''}
@@ -34,7 +34,7 @@ function TypeField ({ mode, value }) {
   )
 }
 
-function PriorityField ({ mode, name, code }) {
+function PriorityField ({ mode, name, code, bp }) {
   const [priorities, setPriorities] = useState([]);
   const { getPriorities } = useBackend();
 
@@ -49,7 +49,7 @@ function PriorityField ({ mode, name, code }) {
       disabled={mode !== 'Solicitado' ? true : false}
       required
       select={mode !== 'Solicitado' ? false : true}
-      bp={{ xs: 5.5, sm: 3.8 }}
+      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
       label='Prioridad'
       name='code_pri'
       defaultValue={mode !== 'Solicitado' ? name : code}
@@ -63,10 +63,11 @@ function PriorityField ({ mode, name, code }) {
   );
 }
 
-function DateTentativeField ({ mode, value, date, handleDate }) {
-  
+function DateTentativeField ({ mode, value, date, handleDate, bp }) {
+  const breakPoints = bp ? bp : {xs: 12, sm: 3.8};
+
   return (
-    <Grid item xs={12} sm={3.8}>
+    <Grid item {...breakPoints}>
       <Calendar
         disabled={mode !== 'Solicitado' ? true : false}
         required
@@ -80,12 +81,12 @@ function DateTentativeField ({ mode, value, date, handleDate }) {
   );
 }
 
-function CompanyField ({ value }) {
+function CompanyField ({ value, bp }) {
 
   return (
     <FormFieldItem
       disabled
-      bp={{ xs: 12, md: 3.8 }}
+      bp={bp ? bp : { xs: 12, md: 3.8 }}
       label='Empresa'
       name='company_id'
       value={value}
@@ -93,12 +94,12 @@ function CompanyField ({ value }) {
   )
 }
 
-function DepartmentField ({ value }) {
+function DepartmentField ({ value, bp }) {
 
   return (
     <FormFieldItem
       disabled
-      bp={{ xs: 12, md: 3.8 }}
+      bp={bp ? bp : { xs: 12, md: 3.8 }}
       label='Area'
       name='department'
       value={value}
@@ -106,12 +107,12 @@ function DepartmentField ({ value }) {
   )
 }
 
-function UserField ({ value }) {
+function UserField ({ value, bp }) {
 
   return (
     <FormFieldItem
       disabled
-      bp={{ xs: 12, md: 3.8 }}
+      bp={bp ? bp : { xs: 12, md: 3.8 }}
       label='Solicitante'
       name='solicitante'
       value={value}
@@ -119,12 +120,12 @@ function UserField ({ value }) {
   )
 }
 
-function SubjectField ({ value }) {
+function SubjectField ({ value, bp }) {
 
   return (
     <FormFieldItem
       disabled
-      bp={{ xs: 12 }}
+      bp={bp ? bp : { xs: 12 }}
       label='Asunto'
       name='subjects'
       value={value}
@@ -132,12 +133,12 @@ function SubjectField ({ value }) {
   )
 }
 
-function ReasonField ({ value }) {
+function ReasonField ({ value, bp }) {
 
   return (
     <FormFieldItem
       disabled
-      bp={{ xs: 12 }}
+      bp={bp ? bp : { xs: 12 }}
       label='Razon'
       name='reason'
       value={value}
@@ -146,12 +147,12 @@ function ReasonField ({ value }) {
   )
 }
 
-function TitleField ({ mode, value }) {
+function TitleField ({ mode, value, bp }) {
 
   return (
     <FormFieldItem
       disabled={mode !== 'Solicitado' ? true : false}
-      bp={{ xs: 12 }}
+      bp={bp ? bp : { xs: 12 }}
       required
       defaultValue={mode !== 'Solicitado' ? value : ''}
       label='Titulo'
@@ -161,12 +162,12 @@ function TitleField ({ mode, value }) {
   )
 }
 
-function DescriptionField ({ mode, value }) {
+function DescriptionField ({ mode, value, bp }) {
 
   return (
     <FormFieldItem
       disabled={mode !== 'Solicitado' ? true : false}
-      bp={{ xs: 12 }}
+      bp={bp ? bp : { xs: 12 }}
       label='Descripcion'
       name='description'
       defaultValue={ mode !== 'Solicitado' ? value : ''}
@@ -176,11 +177,11 @@ function DescriptionField ({ mode, value }) {
   )
 }
 
-function ReasonRejecteField ({ label }) {
+function ReasonRejecteField ({ label, bp }) {
 
   return (
     <FormFieldItem
-      bp={{ xs: 12 }}
+      bp={bp ? bp : { xs: 12 }}
       required
       label={label ?? 'Motivo de rechazo'}
       name='reason_reject'
@@ -189,12 +190,12 @@ function ReasonRejecteField ({ label }) {
   )
 }
 
-function CodeField ({ value }) {
+function CodeField ({ value, bp }) {
 
   return (
     <FormFieldItem
       disabled
-      bp={{ xs: 5.5, sm: 3.8 }}
+      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
       label='Code'
       name='code'
       value={value}
@@ -202,6 +203,48 @@ function CodeField ({ value }) {
   )
 }
 
+function UserForTeamField ({ value, bp, member, ...props }) {
+
+  return (
+    <FormFieldItem
+      required
+      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
+      label='Integrante'
+      name='name_user'
+      value={member}
+      variant='standard'
+      {...props}
+    />
+  )
+}
+
+function RolesForTeamField ({ value, bp, role, ...props }) {
+  const [roles, setRoles] = useState([]);
+  const { getTeamRoles } = useBackend();
+
+  useEffect(() => {
+    getTeamRoles().then(setRoles);
+  }, [getTeamRoles]);
+
+  return (
+    <FormFieldItem
+      required
+      select
+      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
+      label='Rol'
+      name='rol'
+      value={role}
+      variant='standard'
+      {...props}
+    >
+      {
+        roles.map(({ alias, code, name }) => (
+          <MenuItem key={alias} value={code}>{name}</MenuItem>
+        ))
+      }
+    </FormFieldItem>
+  )
+}
 export {
   TypeField,
   PriorityField,
@@ -214,5 +257,7 @@ export {
   TitleField,
   DescriptionField,
   ReasonRejecteField,
-  CodeField
+  CodeField,
+  RolesForTeamField,
+  UserForTeamField
 };
