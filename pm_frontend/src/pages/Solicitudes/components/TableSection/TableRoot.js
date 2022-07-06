@@ -327,7 +327,7 @@ export default function EnhancedTable () {
                         {row.code}
                       </TableCell>
                       <TableCell align='left' sx={{maxWidth:"375px", minWidth:"200px"}}>{row.name}</TableCell>
-                      <TableCell align='left' sx={{minWidth:"180px"}}>{date.toLocaleDateString('es-PE', {year:"numeric", month:"2-digit", day:"2-digit", hour:"numeric", minute:"numeric"})}</TableCell>
+                      <TableCell align='left' sx={{minWidth:"180px"}}>{date.toLocaleDateString('es-PE', {year:"numeric", month:"2-digit", day:"2-digit", hour:"numeric", minute:"numeric" })}</TableCell>
                       <TableCell align='left'>{row.name_pri}</TableCell>
                       <TableCell align='left'>{row.user_fullname}</TableCell>
                       <TableCell align='left'>{row.company_tradename}</TableCell>

@@ -7,6 +7,7 @@ import { useBackend } from 'hooks';
 import BasicLayout from 'pages/Solicitudes/components/HeaderSection/BasicLayout';
 import { FormFieldItem } from 'pages/Solicitudes/components/common';
 import FiltersContext from 'context/FiltersContext';
+import { getFormattedDate } from 'utilities';
 
 export default function HeaderSection () {
   const [open, setOpen] = useState(false);
@@ -32,10 +33,8 @@ export default function HeaderSection () {
     const subject = data.get('subject');
     const code_pri = data.get('priority');
     const reason = data.get('reason');
-    const date_current = new Date();
-    // date_current.setDate(date_current.getDate() - 1)
-    date_current.setDate(date_current.getDate());
-    const date_issue = date_current.toISOString();
+    const date_issue = getFormattedDate(new Date());
+
 
     // Making the request
     postRequest({ subject, code_pri, reason, date_issue })
