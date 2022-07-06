@@ -22,6 +22,8 @@ function useBackend () {
 
   obj.getRequest = useCallback((id) => func({ path: `request?id=${id}` }), []);
 
+  obj.getTeamRoles = useCallback(() => func({path: 'table/all?table_code=5'}), []);
+
   obj.getRequests = useCallback(({
     startDate,
     endDate,

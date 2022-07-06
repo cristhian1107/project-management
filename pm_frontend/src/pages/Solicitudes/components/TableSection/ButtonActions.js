@@ -9,6 +9,7 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'; // Re
 import FindInPageIcon from '@mui/icons-material/FindInPage'; // Ver informe
 import StopCircleIcon from '@mui/icons-material/StopCircle'; // Pausar
 import DoneAllIcon from '@mui/icons-material/DoneAll'; // Aprobar
+import GroupsIcon from '@mui/icons-material/Groups'; // Asignar
 // Redux
 import { useSelector } from 'react-redux';
 // Global components
@@ -21,7 +22,7 @@ import FormReject from 'pages/Solicitudes/components/TableSection/FormReject';
 import FormCancel from 'pages/Solicitudes/components/TableSection/FormCancel';
 import FormResume from 'pages/Solicitudes/components/TableSection/FormResume';
 import FormStop from 'pages/Solicitudes/components/TableSection/FormStop';
-import ReportContext from 'context/ReportContext';
+import FormAssign from 'pages/Solicitudes/components/TableSection/FormAssign';
 
 export default function ButtonActions ({ dataRequest }) {
   const { setReport } = useContext(ReportContext);
@@ -96,9 +97,9 @@ export default function ButtonActions ({ dataRequest }) {
         open: openAssign,
         setOpen: setOpenAssign,
         isActive: allowedActions.btn_asignar,
-        Button: <ContainsTooltip label='Asignar' render={<CloseIcon />} />,
+        Button: <ContainsTooltip label='Asignar equipo' render={<GroupsIcon />} />,
         Form: ({ title, mode, setOpen, data }) => (
-          <FormReview title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
+          <FormAssign title={title} mode={mode} setOpen={setOpen} dataRequest={data}/>
         )
       },
       {
@@ -168,7 +169,7 @@ export default function ButtonActions ({ dataRequest }) {
         open={open}
         setOpen={setOpen}
         renderButton={Button}
-        title={`Confirmar ${typeOf}`}
+        title={title !== 'Asignar' ? `Confirmar ${typeOf}` : 'Asignar Equipo'}
       >
         <Form title={title} mode={data.name_sta} setOpen={setOpen} data={data} />
       </CustomModal>
