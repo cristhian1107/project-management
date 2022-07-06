@@ -18,6 +18,8 @@ function useBackend () {
 
   obj.getDepartments = useCallback(() => func({path: 'department/all'}), []);
 
+  obj.getTeamRoles = useCallback(() => func({path: 'table/all?table_code=5'}), []);
+
   obj.getDashboard = useCallback(({year, month}) => func({path: `dashboard/all?year=${year}&month=${month}`}), []);
 
   obj.getRequests = useCallback(({
