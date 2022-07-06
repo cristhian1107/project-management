@@ -656,8 +656,8 @@ BEGIN
         , r.company_id , r.user_id , r.subject , r.reason
         , IFNULL(r.name, r.subject) as name , r.description , r.department , r.campus
         , r.date_issue , r.date_tentative , r.table_sta , r.code_sta
-        , r.table_pri , r.code_pri , r.percentage
-        , typ.name as name_typ, sta.name as name_sta, pri.name as name_pri
+        , r.table_pri , r.code_pri , r.percentage, sta.description as color_sta
+        , IFNULL(typ.name, 'Solicitud') as name_typ, sta.name as name_sta, pri.name as name_pri
 	    , com.name as company_name, com.tradename as company_tradename
 	    , usr.name as user_name, usr.lastname as user_lastname
 	    , CONCAT(usr.name, ' ', usr.lastname) as user_fullname

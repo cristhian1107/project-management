@@ -1,5 +1,5 @@
 // React core
-import { useState } from 'react';
+import { useState, useContext} from 'react';
 // @mui
 import Grid from '@mui/material/Grid';
 import CheckIcon from '@mui/icons-material/Check'; // Confirmar
@@ -21,8 +21,10 @@ import FormReject from 'pages/Solicitudes/components/TableSection/FormReject';
 import FormCancel from 'pages/Solicitudes/components/TableSection/FormCancel';
 import FormResume from 'pages/Solicitudes/components/TableSection/FormResume';
 import FormStop from 'pages/Solicitudes/components/TableSection/FormStop';
+import ReportContext from 'context/ReportContext';
 
 export default function ButtonActions ({ dataRequest }) {
+  const { setReport } = useContext(ReportContext);
   const userState = useSelector(state => state.user);
   // Define states to control modals
   const [openReview, setOpenReview] = useState(false);
@@ -43,7 +45,6 @@ export default function ButtonActions ({ dataRequest }) {
   // All actions grouped into states
   // Different actions correspond to a record in a current state.
   // Each action visually defines a modal and a button
-  //
   const actions = {
     Solicitado: [
       {
@@ -194,8 +195,11 @@ export default function ButtonActions ({ dataRequest }) {
           );
         })
       }
-      <ContainsTooltip label='Ver informe'>
-        <FindInPageIcon />
+      <ContainsTooltip
+        label='Ver informe'
+        handleClick={() => {setReport((current) => ({ ...current, showReport: true, requestId: dataRequest.id}));}}
+      >
+        <FindInPageIcon/>
       </ContainsTooltip>
     </Grid>
   );

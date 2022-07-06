@@ -12,8 +12,8 @@ import Stack from '@mui/material/Stack';
 import Graphic from 'pages/dashboard/Graphic';
 import RadarStatus from 'pages/dashboard/RadarStatus';
 import Area from 'pages/dashboard/Area';
-import PolarArea from 'pages/dashboard/PolarArea';
 import ProgressiveLine from 'pages/dashboard/ProgressiveLine';
+// import PolarArea from 'pages/dashboard/PolarArea';
 
 export default function Dashboard () {
   const [dashboard, setDashboard] = useState([]);

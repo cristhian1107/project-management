@@ -20,6 +20,8 @@ function useBackend () {
 
   obj.getDashboard = useCallback(({ year, month }) => func({ path: `dashboard/all?year=${year}&month=${month}` }), []);
 
+  obj.getRequest = useCallback((id) => func({ path: `request?id=${id}` }), []);
+
   obj.getRequests = useCallback(({
     startDate,
     endDate,

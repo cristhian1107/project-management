@@ -1,16 +1,11 @@
-import { FiltersContextProvider } from 'context/FiltersContext';
-import TableSection from 'pages/Solicitudes/components/TableSection';
-import HeaderSection from 'pages/Solicitudes/components/HeaderSection';
-import FiltersSection from 'pages/Solicitudes/components/FiltersSection';
+import { ReportContextProvider } from 'context/ReportContext';
+import DrawScreen from './DrawScreen';
 
-export default function Solicitudes () {
+
+export default function Solicitudes() {
   return (
-    <>
-      <FiltersContextProvider>
-        <HeaderSection />
-        <FiltersSection css={{ my: 10 }} />
-        <TableSection />
-      </FiltersContextProvider>
-    </>
+    <ReportContextProvider>
+      <DrawScreen />
+    </ReportContextProvider>
   );
 }
