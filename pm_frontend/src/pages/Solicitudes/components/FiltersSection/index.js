@@ -34,7 +34,6 @@ export default function FiltersSection ({ css }) {
   const handleChangeCompany = (e) => setFilters(obj => ({ ...obj, ...{ idCompany: e.target.value } }));
   const handleChangeDepartment = (e) => setFilters(obj => ({ ...obj, ...{ department: e.target.value } }));
   const isActiveFilters = Boolean(userState.permissions.filters);
-  console.log(userState.company_id)
   return (
     <Box sx={{ ...css }}>
       <Typography variant='h5' textAlign='center'>
@@ -79,9 +78,14 @@ export default function FiltersSection ({ css }) {
           >
             <MenuItem key='Todas' value=''>{'< TODAS >'}</MenuItem>
             {
-              companies.map(({ tradename, id }) => (
-                <MenuItem key={tradename} value={id}>{tradename}</MenuItem>
-              ))
+              isActiveFilters ?
+              (
+                companies.map(({ tradename, id }) => (
+                  <MenuItem key={tradename} value={id}>{tradename}</MenuItem>
+                ))
+              ) : (
+                <MenuItem key={userState.company_id} value={userState.company_id}>{userState.company_tradename}</MenuItem>
+              )
             }
           </TextFieldFullWidth>
         </Grid>
@@ -97,9 +101,14 @@ export default function FiltersSection ({ css }) {
           >
             <MenuItem key='Todas' value=''>{'< TODAS >'}</MenuItem>
             {
-              departments.map(({ department: name }) => (
-                <MenuItem key={name} value={name}>{name}</MenuItem>
-              ))
+              isActiveFilters ?
+              (
+                departments.map(({ department: name }) => (
+                  <MenuItem key={name} value={name}>{name}</MenuItem>
+                ))
+              ) : (
+                <MenuItem key={userState.department} value={userState.department}>{userState.department}</MenuItem>
+              )
             }
           </TextFieldFullWidth>
         </Grid>
