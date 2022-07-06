@@ -49,12 +49,14 @@ BEGIN
         id = pbigid;
 
     -- Info user.
-    SELECT id , company_id , role_id , name
+    SELECT usrs.id , company_id , role_id , usrs.name
         , lastname , email , user , password
         , gender , position , department , campus
-    FROM users
+	, com.tradename as company_tradename
+    FROM users as usrs
+    INNER JOIN companies as com ON com.id = usrs.company_id
     WHERE
-        id = pbigid;
+        usrs.id = pbigid;
 
     -- Info role.
     SELECT id , name , description , is_active
