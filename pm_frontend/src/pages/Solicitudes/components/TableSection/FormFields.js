@@ -20,7 +20,7 @@ function TypeField ({ mode, value, bp }) {
       disabled={mode !== 'Solicitado'}
       required
       select={mode !== 'Solicitado' ? false : true}
-      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
+      bp={bp ? bp : { xs: 5.5, md: 3.8 }}
       label='Tipo'
       name='code_typ'
       defaultValue={mode !== 'Solicitado' ? value : ''}
@@ -195,7 +195,7 @@ function CodeField ({ value, bp }) {
   return (
     <FormFieldItem
       disabled
-      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
+      bp={bp ? bp : { xs: 5.5, sm: 3.5, md: 3.8 }}
       label='Code'
       name='code'
       value={value}
@@ -203,34 +203,28 @@ function CodeField ({ value, bp }) {
   );
 }
 
-function UserForTeamField ({ value, bp, member, ...props }) {
+function UserForTeamField ({ value, bp, worker, ...props }) {
 
   return (
     <FormFieldItem
       required
-      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
+      bp={bp ? bp : { xs: 5.5, md: 3.8 }}
       label='Integrante'
       name='name_user'
-      value={member}
+      value={worker}
       variant='standard'
       {...props}
     />
   )
 }
 
-function RolesForTeamField ({ value, bp, role, ...props }) {
-  const [roles, setRoles] = useState([]);
-  const { getTeamRoles } = useBackend();
-
-  useEffect(() => {
-    getTeamRoles().then(setRoles);
-  }, [getTeamRoles]);
+function RolesForTeamField ({ value, bp, role, roles, ...props }) {
 
   return (
     <FormFieldItem
       required
       select
-      bp={bp ? bp : { xs: 5.5, sm: 3.8 }}
+      bp={bp ? bp : { xs: 5.5, md: 3.8 }}
       label='Rol'
       name='rol'
       value={role}

@@ -77,25 +77,6 @@ export default function TableSection ({ css }) {
           }
         </ListFilters>
       </ContainerFilters>
-      <ContainerBoxSearch>
-        <FormGrid container component='form'>
-          <BoxInput
-            xs={10}
-            component='input'
-            type='text'
-            placeholder='Buscar'
-          />
-          <Grid
-            item
-            xs={2}
-            component='div'
-          >
-            <ButtonToSearch>
-              <StyleSearchIcon />
-            </ButtonToSearch>
-          </Grid>
-        </FormGrid>
-      </ContainerBoxSearch>
       <ContainerTable>
         <TableRoot />
       </ContainerTable>
