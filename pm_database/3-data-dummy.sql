@@ -25,3 +25,19 @@ VALUES
 (3, 1, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (3, 2, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (3, 3, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+
+INSERT INTO users (`id`, `company_id`, `role_id`, `name`, `lastname`, `email`, `user`, `password`, `gender`, `position`, `department`, `campus`, `create_at`, `create_by`, `update_at`, `update_by`)
+VALUES
+(6, 1, 4, 'Jeshua', 'Cabanillas', 'cristhian.cjaa@gmail.com', 'jeshua.cabanillas', 'a282eb013b00b3672d21d67180b41797', 'M', 'Software Developer', 'TI', 'Arequipa', CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(7, 1, 4, 'Haru', 'Tejada', 'cristhian.cjaa@gmail.com', 'haru.tejada', 'a282eb013b00b3672d21d67180b41797', 'M', 'Software Developer', 'TI', 'Arequipa', CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(8, 1, 4, 'Carlos', 'Bentin', 'cristhian.cjaa@gmail.com', 'carlos.bentin', 'a282eb013b00b3672d21d67180b41797', 'M', 'Software Developer', 'TI', 'Arequipa', CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(10, 1, 5, 'Ruben', 'Cadenas', 'cristhian.cjaa@gmail.com', 'ruben.cadenas', 'a282eb013b00b3672d21d67180b41797', 'M', 'Jefe de Proyecto', 'TI', 'Arequipa', CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+
+INSERT INTO roles_options (`role_id`, `option_id`, `is_active`, `create_at`, `create_by`, `update_at`, `update_by`)
+VALUES
+(4, 1, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(4, 2, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(4, 3, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(5, 1, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(5, 2, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(5, 3, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);

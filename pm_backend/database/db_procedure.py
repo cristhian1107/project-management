@@ -108,6 +108,34 @@ class DBProcedures():
             del storage
 
     @staticmethod
+    def users_workers() -> list:
+        """Get users workers.
+
+        Returns:
+            list: List of users workers.
+        """
+        # TODO: Connect to Database.
+        storage = DBStorage()
+        try:
+            item = User()
+            items = []
+            storage.open_db()
+            tables = storage.exec_procedure('users_workers')
+            if not tables:
+                return (None)
+
+            for x in range(0, len(tables)):
+                for opt in tables[x]:
+                    item = User(**opt)
+                    items.append(item.to_dict())
+            return (items)
+        except BaseException as error:
+            Libraries.write_log(error.msg, traceback.format_exc())
+            return (None)
+        finally:
+            del storage
+
+    @staticmethod
     def requests_insert(item=Request()) -> Request:
         """Insert new requests
 

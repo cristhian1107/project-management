@@ -164,6 +164,34 @@ END $$
 DELIMITER ;
 
 
+DROP PROCEDURE IF EXISTS users_workers;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-07-06
+-- Descripcion         : Select all table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE users_workers()
+BEGIN
+
+    -- * Agentes y Jefes de proyectos * --
+    DECLARE v_agent_id, v_boss_id bigint;
+    SET v_agent_id = 4, v_boss_id = 5;
+
+    SELECT
+          id , company_id , role_id , name
+        , lastname , email , user
+        , CONCAT(name, ' ', lastname) as fullname
+        , gender , position , department , campus
+        , create_at , create_by , update_at , update_by
+    FROM users
+    WHERE
+        role_id IN (v_agent_id, v_boss_id);
+END $$
+DELIMITER ;
+
+
 DROP PROCEDURE IF EXISTS users_insert;
 -- =========================================================
 -- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-05
