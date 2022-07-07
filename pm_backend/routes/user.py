@@ -31,7 +31,7 @@ def get_user(**kwargs):
     return make_response(jsonify(item.to_dict()), 201)
 
 
-@app_views.route('/user/worked', strict_slashes=False)
+@app_views.route('/user/workers', strict_slashes=False)
 @Libraries.validate_token
 def get_user_worked(**kwargs):
     """API (GET) Route /user/worked
