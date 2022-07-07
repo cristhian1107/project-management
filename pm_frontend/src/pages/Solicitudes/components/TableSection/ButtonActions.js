@@ -178,7 +178,7 @@ export default function ButtonActions ({ dataRequest }) {
   };
 
   return (
-    <Grid container sx={{ justifyContent: 'center', flexWrap: 'nowrap' }}>
+    <Grid container sx={{ justifyContent: 'start', flexWrap: 'nowrap' }}>
       {
         actions[currentState]?.map(({ isActive, title, open, setOpen, Form, Button }) => {
           if (!isActive) { return null; }

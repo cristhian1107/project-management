@@ -88,12 +88,12 @@ export default function RequestsDetails() {
               borderRadius: 2,
               color: '#fff',
               border: '1px solid var(--box-primary)',
-              background: 'var(--box-gradient)',
-              '&:hover': { background: '#fff', color: 'var(--btn-gradient)' }
+              background: 'var(--btn-gradient)',
+              '&:hover': { background: '#aaa', color: 'var(--btn-gradient)' }
             }}
             onClick={() => { setReport((current) => ({ ...current, showReport: false, requestId: 0 })); }}
           >
-            <ArrowCircleLeftIcon />
+            <ArrowCircleLeftIcon sx={{fontSize: "50px"}}/>
             <Typography sx={{ fontWeight: 'inherit', fontSize: { lg: '1.15rem' } }}>
               &nbsp;Regresar
             </Typography>

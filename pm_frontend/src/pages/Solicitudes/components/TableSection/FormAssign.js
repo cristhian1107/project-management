@@ -24,7 +24,8 @@ import {
   UserForTeamField,
   RolesForTeamField
 } from 'pages/Solicitudes/components/TableSection/FormFields';
-
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 function WorkerList ({ workers, setWorkers }) {
 
   const removeWorker = (id) => {
@@ -78,23 +79,25 @@ function WorkerList ({ workers, setWorkers }) {
 function AssignTeam ({ workers, setWorkers }) {
   // for the data from Backend
   const [roles, setRoles] = useState([]);
-  const { getTeamRoles } = useBackend();
+  const [listWorkers, setListWorkers] = useState([]);
+  const { getTeamRoles, getWorkers } = useBackend();
   // For local data
   const [worker, setWorker] = useState('');
   const [role, setRole] = useState('');
 
+
   useEffect(() => {
     getTeamRoles().then(setRoles);
-  }, [getTeamRoles]);
-
+    getWorkers().then(setListWorkers);
+  }, [getTeamRoles, getWorkers]);
   const handleMembers = () => {
     if (workers.map(obj => obj.worker_id).includes(worker))
       return null;
 
     if (worker !== '' && role !== '') {
       const newMember = {
-        'worker_id': worker,
-        'worker_name': worker,
+        'worker_id': worker?.id,
+        'worker_name': worker?.fullname,
         'code_fun': role,
         'role_name': roles[role - 1]?.name,
       }
@@ -104,8 +107,7 @@ function AssignTeam ({ workers, setWorkers }) {
 
   return (
     <>
-      <Grid
-        item
+      <Grid item
         xs={12}
         container
         gap={{
@@ -117,13 +119,32 @@ function AssignTeam ({ workers, setWorkers }) {
           borderTop: '1px dashed #0005',
           justifyContent: {
             xs: 'center',
-          }
+          },
+          alignItems: 'end',
         }}
       >
-        <UserForTeamField
-          worker={worker}
-          onChange={(e) => setWorker(e.currentTarget.value)}
-        />
+        <Grid item xs={5} sm={3.9}>
+          <Autocomplete
+          fullWidth
+          freeSolo
+          id="free-solo-2-demo"
+          disableClearable
+          options={listWorkers}
+          getOptionLabel={(options) => options.fullname}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search input"
+              InputProps={{
+                ...params.InputProps,
+                type: 'search',
+              }}
+              variant='standard'
+            />
+            )}
+          onChange={(e, value) => setWorker(value)}
+          />
+        </Grid>
         <RolesForTeamField
           roles={roles}
           onChange={(e) => setRole(e.target.value)}
