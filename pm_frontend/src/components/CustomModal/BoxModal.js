@@ -10,9 +10,11 @@ const style = {
   height: 'fit-content',
   width: { sm: '90%' },
   maxWidth: 950,
+  maxHeight: 'calc(100vh - 32px)',
   bgcolor: 'background.paper',
+  overflowY: 'auto',
   boxShadow: 24,
-  p: { xs: 2, sm: 4 }
+  p: { xs: 2, md: 4 }
 };
 
 export default function BoxModal ({ title, children, mode, handle, css }) {
@@ -29,7 +31,7 @@ export default function BoxModal ({ title, children, mode, handle, css }) {
           overflowY: 'auto',
           display: 'flex',
           justifyContent: 'center',
-          p: 2
+          p: 2,
         }}
       >
         <Box sx={style}>
