@@ -23,7 +23,9 @@ import FormCancel from 'pages/Solicitudes/components/TableSection/FormCancel';
 import FormResume from 'pages/Solicitudes/components/TableSection/FormResume';
 import FormStop from 'pages/Solicitudes/components/TableSection/FormStop';
 import FormAssign from 'pages/Solicitudes/components/TableSection/FormAssign';
+import FormCulminate from 'pages/Solicitudes/components/TableSection/FormCulminate';
 import ReportContext from 'context/ReportContext';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 export default function ButtonActions ({ dataRequest }) {
   const { setReport } = useContext(ReportContext);
@@ -36,6 +38,7 @@ export default function ButtonActions ({ dataRequest }) {
   const [openResume, setOpenResume] = useState(false);
   const [openStop, setOpenStop] = useState(false);
   const [openAssign, setOpenAssign] = useState(false);
+  const [openCulminate, setOpenCulminate] = useState(false);
 
   // Define the type and current state of the record
   const typeOf = dataRequest.name_typ ?? 'Solicitud';
@@ -134,6 +137,16 @@ export default function ButtonActions ({ dataRequest }) {
         Form: ({ title, mode, setOpen, data }) => (
           <FormCancel title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
         )
+      },
+      {
+        title: 'Culminar',
+        open: openCulminate,
+        setOpen: setOpenCulminate,
+        isActive: allowedActions.btn_culminar,
+        Button: <ContainsTooltip label='Culminar' render={<FactCheckIcon />} />,
+        Form: ({ title, mode, setOpen, data }) => (
+          <FormCulminate title={title} mode={mode} setOpen={setOpen} dataRequest={data} />
+        )
       }
     ],
     Culminado: [],
@@ -170,7 +183,7 @@ export default function ButtonActions ({ dataRequest }) {
         open={open}
         setOpen={setOpen}
         renderButton={Button}
-        title={title !== 'Asignar' ? `Confirmar ${typeOf}` : 'Asignar Equipo'}
+        title={title !== 'Asignar' ? `${title} ${typeOf}` : 'Asignar Equipo'}
       >
         <Form title={title} mode={data.name_sta} setOpen={setOpen} data={data} />
       </CustomModal>

@@ -49,6 +49,8 @@ function useBackend () {
 
   obj.getWorkers = useCallback((body) => func({ method: 'GET', path: 'user/workers', body }), []);
 
+  obj.postTeam = useCallback((body) => func({ method: 'POST', path: 'request/team', body }), []);
+
   return obj;
 }
 

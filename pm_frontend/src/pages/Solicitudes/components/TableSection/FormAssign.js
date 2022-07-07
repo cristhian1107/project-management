@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
@@ -26,12 +26,13 @@ import {
 } from 'pages/Solicitudes/components/TableSection/FormFields';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import FiltersContext from 'context/FiltersContext';
+
 function WorkerList ({ workers, setWorkers }) {
 
   const removeWorker = (id) => {
     setWorkers(current => current.filter(obj => obj.worker_id !== id))
   }
-
   return (
     <List dense={true} sx={{ maxWidth: '300px' }}>
       {workers.map(({ worker_name, role_name, worker_id }) => (
@@ -62,7 +63,7 @@ function WorkerList ({ workers, setWorkers }) {
         >
           <ListItemAvatar>
             <Avatar>
-              <FolderIcon />
+              {worker_name.split(" ").map((value)=> value[0])}
             </Avatar>
           </ListItemAvatar>
           <ListItemText
@@ -91,7 +92,7 @@ function AssignTeam ({ workers, setWorkers }) {
     getWorkers().then(setListWorkers);
   }, [getTeamRoles, getWorkers]);
   const handleMembers = () => {
-    if (workers.map(obj => obj.worker_id).includes(worker))
+    if (workers.map(obj => obj.worker_id).includes(worker.id))
       return null;
 
     if (worker !== '' && role !== '') {
@@ -207,7 +208,8 @@ function AssignTeam ({ workers, setWorkers }) {
 
 export default function FormAssign ({ dataRequest, setOpen, mode, title }) {
   const [workers, setWorkers] = useState([]);
-  const { postTeam } = useBackend();
+  const { postTeam, getRequests } = useBackend();
+  const { filters, setListRequests } = useContext(FiltersContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -224,6 +226,7 @@ export default function FormAssign ({ dataRequest, setOpen, mode, title }) {
     }
 
     postTeam(payload).then(() => {
+      getRequests(filters).then(setListRequests);
       setOpen(false);
     })
 

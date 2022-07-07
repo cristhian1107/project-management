@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useBackend } from 'hooks/useBackend';
 import FiltersContext from 'context/FiltersContext';
+import { getFormattedDate } from 'utilities/dateOperations';
 
 /**
  * Custom hooks that provide functions to manipulate the
@@ -21,10 +22,7 @@ export function useHandleState () {
   const handleState = (e, request_id, code_sta, setOpen) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const date_current = new Date();
-    // date_current.setDate(date_current.getDate() - 1)
-    date_current.setDate(date_current.getDate());
-    const date_issue = date_current.toISOString();
+    const date_issue = getFormattedDate(new Date());
 
     // Request body
     const payload = {
