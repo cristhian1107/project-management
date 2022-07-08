@@ -49,7 +49,7 @@ export default function BasicLayout ({ children }) {
             }}
           >
             {userState.company_id === 1 && 'Autrisa'}
-            {userState.company_id === 2 && 'IncaMotors'}
+            {userState.company_id === 2 && 'Incamotors'}
             {userState.company_id === 3 && 'Nova Autos'}
           </Typography>
         </Box>

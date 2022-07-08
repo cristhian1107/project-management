@@ -121,7 +121,7 @@ function EnhancedTableHead (props) {
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
-            sx={{ pl: { sm: 2 } }}
+            sx={{ pl: { sm: 2 }, fontWeight: "bold" }}
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
