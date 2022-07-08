@@ -844,7 +844,7 @@ BEGIN
           re.*
         , CONCAT(us.name, ' ', us.lastname) as `cc_name`
         , us.email as `cc_email`
-        , CONCAT(re.message, sta.name, ' por ', re.to_name) as `text`
+        , CONCAT(re.message, sta.name, ' por ', CONCAT(us.name, ' ', us.lastname)) as `text`
         , sta.alias as `alias`
     FROM requests_events rv
     INNER JOIN tmp_requests re ON re.id = rv.request_id
@@ -854,7 +854,7 @@ BEGIN
         rv.request_id desc, rv.item desc
     LIMIT 1);
 
-    -- SELECT * from tmp_email;
+    SELECT * from tmp_email;
     -- * Part 3 * --
     SELECT `to_name`, `to_email` INTO v_to_name, v_to_email FROM tmp_email;
     IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'SOL'))
@@ -865,7 +865,7 @@ BEGIN
         , `to_email` = 'miguelgrillo22@gmail.com'
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
-        , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', `to_name`);
+        , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', v_to_name);
     END IF;
     IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'CON'))
     THEN
@@ -875,7 +875,7 @@ BEGIN
         , `to_email` = 'miguelgrillo22@gmail.com' -- `cc_email`
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
-        , `text` = CONCAT('Tiene un nueva solicitud por aprobar en el sistema de gestión de proyectos realizada por ', `to_name`);
+        , `text` = CONCAT('Tiene un nueva solicitud por aprobar en el sistema de gestión de proyectos realizada por ', v_to_name);
     END IF;
 
     -- * Part 4 * --
