@@ -4,6 +4,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
 import { useBackend } from 'hooks/useBackend';
 import FiltersContext from 'context/FiltersContext';
+import { getFormattedDate } from 'utilities';
 import {
   TypeField,
   PriorityField,
@@ -25,9 +26,7 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
   const handleConfirm = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const date_current = new Date();
-    date_current.setDate(date_current.getDate() - 1);
-    const date_issue = date_current.toISOString();
+    const date_issue = getFormattedDate(new Date());
     const payload = {
       id: dataRequest.id,
       date_issue,

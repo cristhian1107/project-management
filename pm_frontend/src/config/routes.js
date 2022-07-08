@@ -25,7 +25,7 @@ const routes = {
       key: 'solicitudes',
       component: <Solicitudes />
     },
-    {
+    /*{
       path: '/tareas',
       key: 'tareas',
       component: <Tasks />
@@ -34,7 +34,7 @@ const routes = {
       path: '/tables',
       key: 'tables',
       component: <Tables />
-    },
+    },*/
     {
       path: '/profile',
       key: 'profile',
