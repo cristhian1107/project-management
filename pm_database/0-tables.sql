@@ -208,6 +208,7 @@ CREATE TABLE IF NOT EXISTS `requests_events`
  `code_sta`   int NOT NULL ,
  `date_issue` datetime NOT NULL ,
  `user_id`    bigint NOT NULL ,
+ `reason`     varchar(100) NOT NULL,
  `create_at`  datetime NOT NULL ,
  `create_by`  varchar(50) NOT NULL ,
  `update_at`  datetime NULL ,
