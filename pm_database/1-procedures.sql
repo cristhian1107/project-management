@@ -854,7 +854,7 @@ BEGIN
         rv.request_id desc, rv.item desc
     LIMIT 1);
 
-    SELECT * from tmp_email;
+    -- SELECT * from tmp_email;
     -- * Part 3 * --
     SELECT `to_name`, `to_email` INTO v_to_name, v_to_email FROM tmp_email;
     IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'SOL'))
