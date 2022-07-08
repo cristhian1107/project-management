@@ -865,7 +865,7 @@ BEGIN
         , `to_email` = 'miguelgrillo22@gmail.com'
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
-        , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', v_to_name);
+        , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', `to_name`);
     END IF;
     IF (EXISTS(SELECT `alias` FROM tmp_email WHERE `alias` = 'CON'))
     THEN
@@ -875,7 +875,7 @@ BEGIN
         , `to_email` = 'miguelgrillo22@gmail.com' -- `cc_email`
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
-        , `text` = CONCAT('Tiene un nueva solicitud por aprobar en el sistema de gestión de proyectos realizada por ', v_to_name);
+        , `text` = CONCAT('Tiene un nueva solicitud por aprobar en el sistema de gestión de proyectos realizada por ', `to_name`);
     END IF;
 
     -- * Part 4 * --
