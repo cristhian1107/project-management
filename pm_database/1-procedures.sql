@@ -862,7 +862,7 @@ BEGIN
         UPDATE tmp_email
         SET
           `to_name` = 'Javier Pilco'
-        , `to_email` = 'cristhian.cjaa@outlook.com'
+        , `to_email` = 'miguelgrillo22@gmail.com'
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
         , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', v_to_name);
@@ -872,7 +872,7 @@ BEGIN
         UPDATE tmp_email
         SET
           `to_name` = 'Gerente' -- `cc_name`
-        , `to_email` = 'cristhian.apaza@autrisa.com' -- `cc_email`
+        , `to_email` = 'miguelgrillo22@gmail.com' -- `cc_email`
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
         , `text` = CONCAT('Tiene un nueva solicitud por aprobar en el sistema de gestión de proyectos realizada por ', v_to_name);
