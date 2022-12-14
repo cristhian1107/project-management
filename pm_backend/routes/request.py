@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """route for request"""
-from sqlalchemy import true
 from database import tables
 from models.request import Request
 from models.request_event import RequestEvent
