@@ -2,6 +2,7 @@
 """Contains:
     (class) DBStorage.
 """
+from os import getenv
 import mysql.connector
 import traceback
 from general.library import Libraries
@@ -17,10 +18,10 @@ class DBStorage:
         """Initialize a new instance of the class.
         """
         self.__connector = mysql.connector.connect(
-                                    user='development',
-                                    password='dev_pwd(001)',
-                                    host='127.0.0.1',
-                                    database='project_management')
+                                    user=getenv('DB_USERNAME'),
+                                    password=getenv('DB_PASSWORD'),
+                                    host=getenv('DB_HOST'),
+                                    database=getenv('DB_DATABASE'))
 
         self.__connector.autocommit = False
 
