@@ -354,7 +354,7 @@ export default function EnhancedTable () {
           rowsPerPageOptions={[5, 10, 25]}
           labelRowsPerPage="Filas por páginas"
           component='div'
-          count={rows.length}
+          count={rows?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
