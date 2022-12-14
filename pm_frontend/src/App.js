@@ -61,15 +61,21 @@ function App () {
 
   // Validate the current session each time the component is mounted
   useEffect(() => {
-    executeAsyncCall(validateToken).then(result => {
-      if (result.status === 203) {
-        window.localStorage.removeItem('token');
-        navigate('/login');
-      }
-      if (result.status === 201) {
-        dispatch(createUser(result.data));
-      }
-    });
+    if (window.localStorage.getItem('token')) {
+      executeAsyncCall(validateToken).then(result => {
+        if (result.status === 203) {
+          window.localStorage.removeItem('token');
+          navigate('/login');
+        }
+        if (result.status === 201) {
+          dispatch(createUser(result.data));
+        }
+      });
+    } else {
+      setLoading(false);
+      dispatch(resetUser())
+      navigate('/login');
+    }
   }, []);
 
   const getRoute = ({ path, key, component }) => {
