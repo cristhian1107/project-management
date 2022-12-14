@@ -69,8 +69,9 @@ export default function Dashboard () {
           justifyContent: 'space-between'
         }}
       >
+        {console.log(dashboard[0])}
         {
-          dashboard[0] && dashboard[0].map((obj) => (
+          dashboard && dashboard[0] && dashboard[0].map((obj) => (
             <CardState
               key={obj.name_sta}
               {...obj}
