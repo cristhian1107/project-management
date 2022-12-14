@@ -47,7 +47,7 @@ function getComparator (order, orderBy) {
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort (array=[], comparator) {
-  const stabilizedThis = array=[].map((el, index) => [el, index]);
+  const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -235,8 +235,6 @@ export default function EnhancedTable () {
   }, [getRequests, setListRequests, setListShow]);
 
   const handleRequestSort = (event, property) => {
-    console.log('ordenar');
-    console.log(property);
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
