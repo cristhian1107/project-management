@@ -35,4 +35,4 @@ def error(e):
 if __name__ == '__main__':
     host = getenv("APP_HOST") if getenv("APP_HOST") else "0.0.0.0"
     port = getenv("APP_PORT") if getenv("APP_PORT") else 5000
-    app.run(host=host, port=port, threaded=True, debug=True)
+    app.run(host=host, port=port, threaded=True, debug=getenv('APP_DEBUG'))
