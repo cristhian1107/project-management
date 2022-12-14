@@ -10,6 +10,7 @@ dev = "python server.py"
 flask = "*"
 flask-cors = "*"
 pyjwt = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
