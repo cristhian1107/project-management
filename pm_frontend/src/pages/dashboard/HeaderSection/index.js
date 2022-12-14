@@ -69,7 +69,6 @@ export default function Dashboard () {
           justifyContent: 'space-between'
         }}
       >
-        {console.log(dashboard[0])}
         {
           dashboard && dashboard[0] && dashboard[0].map((obj) => (
             <CardState
