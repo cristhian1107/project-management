@@ -70,7 +70,7 @@ export default function Dashboard () {
         }}
       >
         {
-          dashboard[0] && dashboard[0].map((obj) => (
+          dashboard && dashboard[0] && dashboard[0].map((obj) => (
             <CardState
               key={obj.name_sta}
               {...obj}
@@ -80,30 +80,30 @@ export default function Dashboard () {
       </Grid>
       <Grid container>
         {
-          dashboard[1] && <Graphic dashboard={dashboard[1]} />
+          dashboard && dashboard[1] && <Graphic dashboard={dashboard[1]} />
         }
         {
-         dashboard[2] && <RadarStatus dashboard={dashboard[2]} />
-        }
-      </Grid>
-      <Grid container>
-        {
-          dashboard[3] && <Area dashboard={dashboard[3]} />
+         dashboard && dashboard[2] && <RadarStatus dashboard={dashboard[2]} />
         }
       </Grid>
       <Grid container>
         {
-          dashboard[4] && <ProgressiveLine dashboard={dashboard[4]} company='AUTRISA' />
+          dashboard && dashboard[3] && <Area dashboard={dashboard[3]} />
         }
       </Grid>
       <Grid container>
         {
-          dashboard[5] && <ProgressiveLine dashboard={dashboard[5]} company='INCAMOTORS' />
+          dashboard && dashboard[4] && <ProgressiveLine dashboard={dashboard[4]} company='AUTRISA' />
         }
       </Grid>
       <Grid container>
         {
-          dashboard[6] && <ProgressiveLine dashboard={dashboard[6]} company='NOVA AUTOS' />
+          dashboard && dashboard[5] && <ProgressiveLine dashboard={dashboard[5]} company='INCAMOTORS' />
+        }
+      </Grid>
+      <Grid container>
+        {
+          dashboard && dashboard[6] && <ProgressiveLine dashboard={dashboard[6]} company='NOVA AUTOS' />
         }
       </Grid>
     </Box>

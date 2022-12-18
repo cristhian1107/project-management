@@ -75,7 +75,7 @@ export default function HeaderSection () {
           defaultValue=''
         >
           {
-            priorities.map(({ alias, code, name }) => (
+            priorities && priorities.map(({ alias, code, name }) => (
               <MenuItem key={alias} value={code}>{name}</MenuItem>
             ))
           }
