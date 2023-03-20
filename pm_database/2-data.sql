@@ -57,4 +57,5 @@ VALUES
 (5, 2, 'Agente', 'AGE', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (5, 3, 'Helpdesk', 'HEL', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (5, 4, 'Backend', 'BAC', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
-(5, 5, 'Frontend', 'FRO', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+(5, 5, 'Frontend', 'FRO', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
+(5, 6, 'Database', 'DBM', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);

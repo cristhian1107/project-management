@@ -31,6 +31,20 @@ def get_user(**kwargs):
     return make_response(jsonify(item.to_dict()), 201)
 
 
+@app_views.route('/user/workers', strict_slashes=False)
+@Libraries.validate_token
+def get_user_worked(**kwargs):
+    """API (GET) Route /user/worked
+
+    Returns:
+        response: JSON contain info user.
+    """
+    items = DBProcedures.users_workers()
+    if items is None:
+        return make_response(jsonify({'request': 'empty'}), 204)
+    return make_response(jsonify(items), 200)
+
+
 @app_views.route('/login', methods=['POST'], strict_slashes=False)
 def login():
     """API (POST) Route /login

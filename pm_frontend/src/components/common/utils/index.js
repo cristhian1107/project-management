@@ -18,7 +18,7 @@ const links = [
     key: 'solicitudes',
     icon: <ProjectsIcon />
   },
-  {
+/*  {
     name: "Tareas",
     route: '/tareas',
     key: 'tareas',
@@ -29,7 +29,7 @@ const links = [
     route: '/tables',
     key: 'tables',
     icon: <TablesIcon />
-  },
+  },*/
   {
     name: 'Profile',
     route: '/profile',

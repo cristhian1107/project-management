@@ -164,6 +164,34 @@ END $$
 DELIMITER ;
 
 
+DROP PROCEDURE IF EXISTS users_workers;
+-- =========================================================
+-- Autor - Fecha Crea  : Cristhian Apaza - 2022-07-06
+-- Descripcion         : Select all table
+-- Autor - Fecha Modif :
+-- Descripcion         :
+-- =========================================================
+DELIMITER $$
+CREATE PROCEDURE users_workers()
+BEGIN
+
+    -- * Agentes y Jefes de proyectos * --
+    DECLARE v_agent_id, v_boss_id bigint;
+    SET v_agent_id = 4, v_boss_id = 5;
+
+    SELECT
+          id , company_id , role_id , name
+        , lastname , email , user
+        , CONCAT(name, ' ', lastname) as fullname
+        , gender , position , department , campus
+        , create_at , create_by , update_at , update_by
+    FROM users
+    WHERE
+        role_id IN (v_agent_id, v_boss_id);
+END $$
+DELIMITER ;
+
+
 DROP PROCEDURE IF EXISTS users_insert;
 -- =========================================================
 -- Autor - Fecha Crea  : Cristhian Apaza - 2022-06-05
@@ -440,38 +468,38 @@ BEGIN
         ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, NULL, pdtmcreate_at, pvchcreate_by, NULL, NULL);
 
 
-    -- * Roles * --
-    IF (v_role_id IN (2, 3)) -- Gerencia TI & Gerencia general.
-    THEN
+    -- -- * Roles * --
+    -- IF (v_role_id IN (2, 3)) -- Gerencia TI & Gerencia general.
+    -- THEN
 
-        -- * State * --
-        SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
-        FROM tables
-        WHERE
-            `table` = 3 AND
-            `alias` = 'CON';
+    --     -- * State * --
+    --     SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
+    --     FROM tables
+    --     WHERE
+    --         `table` = 3 AND
+    --         `alias` = 'CON';
 
-        -- * Insert event * --
-        call requests_events_insert
-        ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+    --     -- * Insert event * --
+    --     call requests_events_insert
+    --     ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
 
-    END If;
+    -- END If;
 
-    IF (v_role_id = 3) -- Gerencia general.
-    THEN
+    -- IF (v_role_id = 3) -- Gerencia general.
+    -- THEN
 
-        -- * State * --
-        SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
-        FROM tables
-        WHERE
-            `table` = 3 AND
-            `alias` = 'APR';
+    --     -- * State * --
+    --     SELECT `table`, `code` INTO pinttable_sta, pintcode_sta
+    --     FROM tables
+    --     WHERE
+    --         `table` = 3 AND
+    --         `alias` = 'APR';
 
-        -- * Insert event * --
-        call requests_events_insert
-        ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
+    --     -- * Insert event * --
+    --     call requests_events_insert
+    --     ( pbigid, NULL, pinttable_sta, pintcode_sta, pdtmdate_issue, pbiguser_id, 'Cambio de estado automático', pdtmcreate_at, pvchcreate_by, NULL, NULL);
 
-    END If;
+    -- END If;
 
     -- * Recovery requets * --
     call requests_one
@@ -679,14 +707,17 @@ BEGIN
               re.request_id , re.item , re.table_sta , re.code_sta
             , re.date_issue , re.user_id , sta.name as name_sta , re.reason
             , re.create_at , re.create_by , re.update_at , re.update_by
+            , CONCAT(usr.name, ' ', usr.lastname) as user_fullname
         FROM requests_events re
         LEFT JOIN tables sta ON re.table_sta = sta.table AND re.code_sta = sta.code
+        LEFT JOIN users usr ON re.user_id = usr.id
         WHERE
             re.request_id = pbigid
         ORDER BY re.request_id desc, re.item desc;
 
         SELECT
               rt.request_id , rt.worker_id ,  rt.is_active
+            , us.name as worker_name, us.lastname as worker_lastname
             , CONCAT(us.name, ' ', us.lastname) as worker_fullname
             , rt.table_fun , rt.code_fun , fun.name as name_fun
             , rt.create_at , rt.create_by , rt.update_at , rt.update_by
@@ -813,7 +844,7 @@ BEGIN
           re.*
         , CONCAT(us.name, ' ', us.lastname) as `cc_name`
         , us.email as `cc_email`
-        , CONCAT(re.message, sta.name, ' por ', re.to_name) as `text`
+        , CONCAT(re.message, sta.name, ' por ', CONCAT(us.name, ' ', us.lastname)) as `text`
         , sta.alias as `alias`
     FROM requests_events rv
     INNER JOIN tmp_requests re ON re.id = rv.request_id
@@ -831,7 +862,7 @@ BEGIN
         UPDATE tmp_email
         SET
           `to_name` = 'Javier Pilco'
-        , `to_email` = 'cristhian.cjaa@outlook.com'
+        , `to_email` = 'miguelgrillo22@gmail.com'
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
         , `text` = CONCAT('Tiene un nueva solicitud en el sistema de gestión de proyectos realizada por ', v_to_name);
@@ -841,7 +872,7 @@ BEGIN
         UPDATE tmp_email
         SET
           `to_name` = 'Gerente' -- `cc_name`
-        , `to_email` = 'cristhian.apaza@autrisa.com' -- `cc_email`
+        , `to_email` = 'miguelgrillo22@gmail.com' -- `cc_email`
         , `cc_name` = v_to_name
         , `cc_email` = v_to_email
         , `text` = CONCAT('Tiene un nueva solicitud por aprobar en el sistema de gestión de proyectos realizada por ', v_to_name);

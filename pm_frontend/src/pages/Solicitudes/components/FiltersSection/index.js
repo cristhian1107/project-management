@@ -80,7 +80,7 @@ export default function FiltersSection ({ css }) {
             {
               isActiveFilters ?
               (
-                companies.map(({ tradename, id }) => (
+                companies && companies.map(({ tradename, id }) => (
                   <MenuItem key={tradename} value={id}>{tradename}</MenuItem>
                 ))
               ) : (
@@ -103,7 +103,7 @@ export default function FiltersSection ({ css }) {
             {
               isActiveFilters ?
               (
-                departments.map(({ department: name }) => (
+                departments && departments.map(({ department: name }) => (
                   <MenuItem key={name} value={name}>{name}</MenuItem>
                 ))
               ) : (

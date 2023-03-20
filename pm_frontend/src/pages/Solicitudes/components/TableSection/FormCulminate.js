@@ -1,12 +1,8 @@
-import { useState, useContext } from 'react';
 import Grid from '@mui/material/Grid';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ButtonForm from 'components/ButtonForm';
-import { useBackend } from 'hooks/useBackend';
-import FiltersContext from 'context/FiltersContext';
-import { getFormattedDate } from 'utilities';
+import { useHandleState } from 'pages/Solicitudes/components/TableSection/hooks';
 import {
-  TypeField,
   PriorityField,
   DateTentativeField,
   CompanyField,
@@ -15,48 +11,27 @@ import {
   SubjectField,
   ReasonField,
   TitleField,
-  DescriptionField
+  DescriptionField,
+  CodeField
 } from 'pages/Solicitudes/components/TableSection/FormFields';
 
-export default function FormReview ({ dataRequest, setOpen, mode, title }) {
-  const [dateTentative, setDateTentative] = useState(null);
-  const { putRequest, getRequests } = useBackend();
-  const { filters, setListRequests } = useContext(FiltersContext);
-
-  const handleConfirm = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const date_issue = getFormattedDate(new Date());
-    const payload = {
-      id: dataRequest.id,
-      date_issue,
-      date_tentative: dateTentative.toISOString(),
-      name: data.get('name'),
-      description: data.get('description'),
-      code_typ: data.get('code_typ'),
-      code_pri: data.get('code_pri')
-    };
-
-    putRequest(payload).then(() => {
-      getRequests(filters).then(setListRequests);
-      setOpen(false);
-    });
-  };
+export default function FormCulminate ({ dataRequest, setOpen, mode, title }) {
+  const { handleState } = useHandleState();
 
   return (
     <Grid
       container
       component='form'
-      onSubmit={handleConfirm}
+      onSubmit={e => handleState(e, dataRequest.id, 6, setOpen)}
       sx={{
         gap: 2,
         justifyContent: 'space-between'
       }}
       autoComplete='off'
     >
-      <TypeField
+      <CodeField
         mode={mode}
-        value={dataRequest.name_typ}
+        value={dataRequest.code}
       />
       <PriorityField
         mode={mode}
@@ -66,8 +41,6 @@ export default function FormReview ({ dataRequest, setOpen, mode, title }) {
       <DateTentativeField
         mode={mode}
         value={dataRequest.date_tentative}
-        date={dateTentative}
-        handleDate={setDateTentative}
       />
       <CompanyField
         value={dataRequest.company_tradename}

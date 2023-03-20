@@ -62,7 +62,7 @@ export default function TableSection ({ css }) {
             Todos
           </Button>
           {
-            states.map((state) => {
+            states && states.map((state) => {
               return (
                 <ItemToFilter
                   onClick={() => handleLocalFilters(state)}
