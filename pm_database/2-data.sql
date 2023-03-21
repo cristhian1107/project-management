@@ -59,3 +59,15 @@ VALUES
 (5, 4, 'Backend', 'BAC', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (5, 5, 'Frontend', 'FRO', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL),
 (5, 6, 'Database', 'DBM', NULL, 1, CURRENT_TIMESTAMP(), 'preloaded.data', NULL, NULL);
+
+
+-- * Colors * --
+UPDATE tables set description = '#a6c7ea' WHERE `table` = 3 AND code = 1;
+UPDATE tables set description = '#bbdcad' WHERE `table` = 3 AND code = 2;
+UPDATE tables set description = '#9ee09e' WHERE `table` = 3 AND code = 3;
+UPDATE tables set description = '#8E44AD' WHERE `table` = 3 AND code = 4;
+UPDATE tables set description = '#cc99c9' WHERE `table` = 3 AND code = 5;
+UPDATE tables set description = '#9ec1cf' WHERE `table` = 3 AND code = 6;
+UPDATE tables set description = '#ff6663' WHERE `table` = 3 AND code = 7;
+UPDATE tables set description = '#feb144' WHERE `table` = 3 AND code = 8;
+UPDATE tables set description = '#f9a586' WHERE `table` = 3 AND code = 9;
