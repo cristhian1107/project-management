@@ -46,7 +46,7 @@ function getComparator (order, orderBy) {
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
-function stableSort (array, comparator) {
+function stableSort (array=[], comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -235,8 +235,6 @@ export default function EnhancedTable () {
   }, [getRequests, setListRequests, setListShow]);
 
   const handleRequestSort = (event, property) => {
-    console.log('ordenar');
-    console.log(property);
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -306,7 +304,7 @@ export default function EnhancedTable () {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={rows?.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -354,7 +352,7 @@ export default function EnhancedTable () {
           rowsPerPageOptions={[5, 10, 25]}
           labelRowsPerPage="Filas por páginas"
           component='div'
-          count={rows.length}
+          count={rows?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

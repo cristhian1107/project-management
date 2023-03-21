@@ -8,7 +8,7 @@ from routes import app_views
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.teardown_appcontext
@@ -33,6 +33,6 @@ def error(e):
 
 
 if __name__ == '__main__':
-    host = getenv("HBNB_API_HOST") if getenv("HBNB_API_HOST") else "0.0.0.0"
-    port = getenv("HBNB_API_PORT") if getenv("HBNB_API_PORT") else 5000
-    app.run(host=host, port=port, threaded=True, debug=True)
+    host = getenv("APP_HOST") if getenv("APP_HOST") else "0.0.0.0"
+    port = getenv("APP_PORT") if getenv("APP_PORT") else 5000
+    app.run(host=host, port=port, threaded=True, debug=getenv('APP_DEBUG'))
